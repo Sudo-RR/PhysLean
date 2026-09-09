@@ -1,7 +1,7 @@
 /-
-Copyright (c) 2026 Sudo-RR. All rights reserved.
+Copyright (c) 2026 Rithwik Ranganathan. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: Sudo-RR
+Authors: Rithwik Ranganathan
 -/
 module
 
@@ -73,9 +73,9 @@ analytic input is needed here, only the two special values of the energy at time
 /-- Along a solution of the simple pendulum with `θ 0 0 = θ₀` and released from rest,
   `∂ₜ θ 0 = 0`, the energy first integral holds at every instant in the form
   `I θ̇² = 2 m g ℓ (cos θ - cos θ₀)`, with the moment of inertia `I` and the mass `m` not yet
-  cancelled. This is Landau & Lifshitz's quadrature (§11, Problem 1), read off from energy
-  conservation (`IsSolution.energy_eq`) at the two special values of the energy at time `0`: zero
-  kinetic energy and potential energy `m g ℓ (1 - cos θ₀)`. -/
+  cancelled. This is read off from energy conservation (`IsSolution.energy_eq`) at the two
+  special values of the energy at time `0`: zero kinetic energy and potential energy
+  `m g ℓ (1 - cos θ₀)`. -/
 lemma inertia_mul_sq_deriv_eq_of_isSolution_of_deriv_zero
     {θ : Time → EuclideanSpace ℝ (Fin 1)} {θ₀ : ℝ} (h : S.IsSolution θ) (hx0 : θ 0 0 = θ₀)
     (hv0 : ∂ₜ θ 0 = 0) (t : Time) :
@@ -99,8 +99,8 @@ lemma sq_deriv_eq_of_isSolution_of_deriv_zero
   exact sub_eq_zero.mp ((mul_eq_zero.mp h').resolve_left S.inertia_ne_zero)
 
 /-- Along a solution of the simple pendulum with `θ 0 0 = θ₀` and released from rest,
-  `∂ₜ θ 0 = 0`, the energy first integral in the classical form of Landau & Lifshitz, §11,
-  Problem 1: `θ̇² = (2 g / ℓ) (cos θ - cos θ₀)`. -/
+  `∂ₜ θ 0 = 0`, the energy first integral in the classical `g / ℓ` form:
+  `θ̇² = (2 g / ℓ) (cos θ - cos θ₀)`. -/
 lemma sq_deriv_eq_of_isSolution_of_deriv_zero'
     {θ : Time → EuclideanSpace ℝ (Fin 1)} {θ₀ : ℝ} (h : S.IsSolution θ) (hx0 : θ 0 0 = θ₀)
     (hv0 : ∂ₜ θ 0 = 0) (t : Time) :
