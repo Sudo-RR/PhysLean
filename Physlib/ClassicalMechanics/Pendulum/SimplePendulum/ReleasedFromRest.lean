@@ -30,10 +30,10 @@ with a genuine (globally defined) solution. Those remain open; see the module do
 `PeriodFormula` for the full list of milestones.
 
 For the small-angle approximation, this module also records the linearized motion released from
-rest, the cosine `θ₀ cos (ω t)`, moved here from `SimplePendulum/SmallAngle.lean`: its
-identification with the small-angle trajectory of the corresponding initial data, its initial
-angle and vanishing initial angular velocity, and its dynamics — satisfying the linearized
-equation of motion and being periodic with the small-angle period.
+rest, the cosine `θ₀ cos (ω t)`: its identification with the small-angle trajectory of the
+corresponding initial data, its initial angle and vanishing initial angular velocity, and its
+dynamics — satisfying the linearized equation of motion and being periodic with the small-angle
+period.
 
 ## ii. Key results
 
@@ -135,8 +135,7 @@ The classical small-angle experiment: the pendulum is displaced to an angle `θ�
 from rest. Its small-angle motion is the cosine `θ₀ cos (ω t)`, the small-angle trajectory of
 the initial conditions with initial angle `θ₀` and zero initial angular velocity; it starts at
 the angle `θ₀` with vanishing angular velocity, and satisfies the linearized equation of
-motion. Moved here from `SimplePendulum/SmallAngle.lean`, alongside the exact-equation results
-of section A.
+motion.
 
 -/
 
