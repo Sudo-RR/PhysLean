@@ -12,13 +12,13 @@
 
 [![](https://img.shields.io/badge/Getting-Started-darkgreen)](https://physlib.io/GettingStarted.html)
 [![](https://img.shields.io/badge/The-Website-darkgreen)](https://physlib.io)
-[![](https://img.shields.io/badge/How_To-Get_Involved-darkgreen)](https://physlib.io/GetInvolved.html)
+[![](https://img.shields.io/badge/How_To-Get_Involved-darkgreen)](https://physlib.io/get-involved)
 [![](https://img.shields.io/badge/Physlib_Zulip-Discussion-darkgreen)](https://leanprover.zulipchat.com/#narrow/channel/479953-Physlib/)
-[![](https://img.shields.io/badge/TODO-List-darkgreen)](https://physlib.io/TODOList)
+[![](https://img.shields.io/badge/TODO-List-darkgreen)](https://physlib.io/todo)
 
 
 [![](https://img.shields.io/badge/View_The-Stats-blue)](https://physlib.io/Stats)
-[![](https://img.shields.io/badge/Lean-v4.33.0-blue)](https://github.com/leanprover/lean4/releases/tag/v4.33.0)
+[![](https://img.shields.io/badge/Lean-v4.34.1-blue)](https://github.com/leanprover/lean4/releases/tag/v4.34.1)
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/leanprover-community/physlib)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/leanprover-community/physlib)
 [![api_docs](https://img.shields.io/badge/doc-API_docs-blue)](https://physlib.io/docs/)
@@ -108,13 +108,14 @@ Because of the lower-review bar for PhyslibAlpha we cannot promise to maintain c
 Physlib is open-source and community run, and we welcome contributions from anyone.
 All you need to do is open a pull-request with your changes
 and our team of maintainers will review it and iterate with you on feedback until it
-can be merged.
+can be merged. Please add references to the `## References` section at the top of the file
+and add them to the .bib file.
 
 If you unsure where you would like to contribute, you may find ideas on:
 - our [open issues](https://github.com/leanprover-community/physlib/issues).
-- our [todo list](https://physlib.io/TODOList)
-- our [Get Involved page](https://physlib.io/GetInvolved.html)
-- the [quantumInfo todo page](./QuantumInfo/WildeTODO.md)
+- our [todo list](https://physlib.io/todo)
+- our [Get Involved page](https://physlib.io/get-involved)
+- the [quantumInfo todo page](./docs/WildeTODO.md)
 > [!NOTE]
 > If stuck at any point there are lots of people happly to help on the [Physlib zulip](https://leanprover.zulipchat.com/#narrow/channel/479953-Physlib)
 

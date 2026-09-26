@@ -38,9 +38,8 @@ boosts in the 'x' direction. We do this in full-generality for `d+1` space dimen
 
 ## iv. References
 
-See e.g.
-- https://en.wikipedia.org/wiki/Classical_electromagnetism_and_special_relativity
-
+* https://en.wikipedia.org/wiki/Classical_electromagnetism_and_special_relativity.
+  [ref: wiki_classical_em_and_sr]
 -/
 
 @[expose] public section
@@ -82,7 +81,7 @@ lemma electricField_apply_x_boost_zero {d : ℕ} {c : SpeedOfLight} (β : ℝ) (
     enter [2]
     rw [toFieldStrength_eval_antisymm]
   trans γ β ^ 2 * (1 - β ^ 2) *
-      toField {A.toFieldStrength
+      toScalar {A.toFieldStrength
       ((boost (d := d.succ) 0 β hβ)⁻¹ • (SpaceTime.toTimeAndSpace c).symm (t, x)) |
       [Sum.inl 0] [Sum.inr 0]}ᵀ
   · ring

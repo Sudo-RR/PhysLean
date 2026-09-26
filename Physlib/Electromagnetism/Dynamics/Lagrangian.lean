@@ -55,9 +55,8 @@ In this implementation we set `μ₀ = 1`. It is a TODO to introduce this consta
 
 ## iv. References
 
-- https://quantummechanics.ucsd.edu/ph130a/130_notes/node452.html
-- https://ph.qmul.ac.uk/sites/default/files/EMT10new.pdf
-
+* https://quantummechanics.ucsd.edu/ph130a/130_notes/node452.html. [ref: ucsd_ph130a_node452]
+* https://ph.qmul.ac.uk/sites/default/files/EMT10new.pdf. [ref: qmul_emt10_notes]
 -/
 
 @[expose] public section
@@ -309,7 +308,7 @@ lemma lagrangian_hasVarGradientAt_gradLagrangian {𝓕 : FreeSpace}
 lemma gradLagrangian_eq_sum_toFieldStrength_eval {𝓕 : FreeSpace} (A : ElectromagneticPotential d)
     (hA : ContDiff ℝ ∞ A) (J : LorentzCurrentDensity d) (hJ : ContDiff ℝ ∞ J) :
     A.gradLagrangian 𝓕 J = fun x => ∑ ν,
-      (η ν ν • (1 / 𝓕.μ₀ * ∑ μ, ∂_ μ (fun x => toField {A.toFieldStrength x | [μ] [ν]}ᵀ) x
+      (η ν ν • (1 / 𝓕.μ₀ * ∑ μ, ∂_ μ (fun x => toScalar {A.toFieldStrength x | [μ] [ν]}ᵀ) x
       - J x ν) • Lorentz.Vector.basis ν) := by
   rw [gradLagrangian_eq_kineticTerm_sub A hA J hJ]
   funext x

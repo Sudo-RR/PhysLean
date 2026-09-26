@@ -85,8 +85,13 @@ In the `Solution` module:
 ## iv. References
 
 References for the classical harmonic oscillator include:
-- Landau & Lifshitz, Mechanics, page 58, section 21.
 
+* Landau & Lifshitz, Mechanics, page 58, section 21. [ref: landau_mechanics]
+
+A reference for the geometric model of position/velocity discussed in a TODO below:
+
+* https://web.williams.edu/Mathematics/it3/texts/var_noether.pdf.
+  [ref: terek_variational_manifolds]
 -/
 
 @[expose] public section
@@ -100,7 +105,7 @@ TODO "Create a new file for the geometric model which properly models the positi
     configuration space and velocity as its tangent space, then show explicitly how this
     coordinate model is a simplification of the geometric model.
     A nice reference for such an analysis is:
-    https://web.williams.edu/Mathematics/it3/texts/var_noether.pdf"
+    https://web.williams.edu/Mathematics/it3/texts/var_noether.pdf [ref: terek_variational_manifolds]"
 
 /-!
 
@@ -742,11 +747,11 @@ lemma equationOfMotion_tfae (xₜ : Time → EuclideanSpace ℝ (Fin 1)) (hx : C
         ∫ t, ⟪(pq' t).1, ∂ₜ (Prod.snd ∘ pq') t⟫_ℝ - S.hamiltonian t (pq' t).1 (pq' t).2) = 0] := by
   rw [← equationOfMotion_iff_hamiltonEqOp_eq_zero, ← equationOfMotion_iff_newtons_2nd_law]
   rw [hamiltons_equations_varGradient, euler_lagrange_varGradient]
-  simp only [List.tfae_cons_self]
+  simp only [List.tfae_cons_of_mem, List.mem_cons_self]
   rw [← gradLagrangian_eq_eulerLagrangeOp, ← equationOfMotion_iff_gradLagrangian_zero]
-  simp only [List.tfae_cons_self]
+  simp only [List.tfae_cons_of_mem, List.mem_cons_self]
   erw [← equationOfMotion_iff_hamiltonEqOp_eq_zero]
-  simp only [List.tfae_cons_self, List.tfae_singleton]
+  simp only [List.tfae_cons_of_mem, List.mem_cons_self, List.tfae_singleton]
   repeat fun_prop
   simp [toCanonicalMomentum_eq]
   repeat fun_prop

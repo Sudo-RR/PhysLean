@@ -60,11 +60,11 @@ lift of the angle they are equivalent to the equation of motion of `SimplePendul
 ## iv. References
 
 References for the Hamiltonian formulation of the simple pendulum include:
-- Landau & Lifshitz, Mechanics, 3rd ed., §40, for the canonical momentum, the Hamiltonian as
-  the Legendre transform of the Lagrangian, and Hamilton's equations.
-- The module `Physlib.ClassicalMechanics.Pendulum.SimplePendulum.Basic`, whose Lagrangian,
-  energy and equation of motion this module reformulates.
 
+* Landau & Lifshitz, Mechanics, 3rd ed., §40, for the canonical momentum, the Hamiltonian as the
+  Legendre transform of the Lagrangian, and Hamilton's equations. [ref: landau_mechanics]
+* The module `Physlib.ClassicalMechanics.Pendulum.SimplePendulum.Basic`, whose Lagrangian, energy
+  and equation of motion this module reformulates.
 -/
 
 @[expose] public section
@@ -309,14 +309,14 @@ lemma equationOfMotion_tfae (θ : Time → EuclideanSpace ℝ (Fin 1)) (hθ : Co
   rw [← S.equationOfMotion_iff_hamiltonEqOp_eq_zero θ hθ,
     ← S.equationOfMotion_iff_scalar θ]
   rw [hamiltons_equations_varGradient, euler_lagrange_varGradient]
-  simp only [List.tfae_cons_self]
+  simp only [List.tfae_cons_of_mem, List.mem_cons_self]
   rw [← S.gradLagrangian_eq_eulerLagrangeOp θ hθ,
     ← S.equationOfMotion_iff_gradLagrangian_zero θ hθ]
-  simp only [List.tfae_cons_self]
+  simp only [List.tfae_cons_of_mem, List.mem_cons_self]
   show List.TFAE [S.EquationOfMotion θ,
     S.hamiltonEqOp (fun t => S.canonicalMomentum t (θ t) (∂ₜ θ t)) θ = 0]
   rw [← S.equationOfMotion_iff_hamiltonEqOp_eq_zero θ hθ]
-  simp only [List.tfae_cons_self, List.tfae_singleton]
+  simp only [List.tfae_cons_of_mem, List.mem_cons_self, List.tfae_singleton]
   · exact hθ
   · exact S.contDiff_lagrangian _
   · simp only [S.canonicalMomentum_eq]; fun_prop

@@ -38,8 +38,8 @@ in the case of three spatial dimensions.
 
 ## iv. References
 
-- https://quantummechanics.ucsd.edu/ph130a/130_notes/node452.html
-- https://ph.qmul.ac.uk/sites/default/files/EMT10new.pdf
+* https://quantummechanics.ucsd.edu/ph130a/130_notes/node452.html. [ref: ucsd_ph130a_node452]
+* https://ph.qmul.ac.uk/sites/default/files/EMT10new.pdf. [ref: qmul_emt10_notes]
 -/
 
 @[expose] public section
@@ -129,7 +129,7 @@ lemma canonicalMomentum_eq_gradient_kineticTerm {d}
 lemma canonicalMomentum_eq {d} {𝓕 : FreeSpace} (A : ElectromagneticPotential d)
     (hA : ContDiff ℝ 2 A) (J : LorentzCurrentDensity d) :
     A.canonicalMomentum 𝓕 J = fun x => fun μ =>
-      (1/𝓕.μ₀) * η μ μ • toField {A.toFieldStrength x | [μ] [Sum.inl 0]}ᵀ := by
+      (1/𝓕.μ₀) * η μ μ • toScalar {A.toFieldStrength x | [μ] [Sum.inl 0]}ᵀ := by
   rw [canonicalMomentum_eq_gradient_kineticTerm A hA J]
   funext x
   apply ext_inner_right (𝕜 := ℝ)
