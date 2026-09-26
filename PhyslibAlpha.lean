@@ -21,6 +21,7 @@ public import PhyslibAlpha.ClassicalFieldTheory.Local.TotalDivergence
 public import PhyslibAlpha.ClassicalFieldTheory.Local.TotalDivergenceEquivalence
 public import PhyslibAlpha.ClassicalFieldTheory.Local.Variation
 public import PhyslibAlpha.ClassicalMechanics.CoupledSpringPotential
+public import PhyslibAlpha.ClassicalMechanics.LiouvilleIntegrable.Basic
 public import PhyslibAlpha.ClassicalMechanics.MomentMap.Basic
 public import PhyslibAlpha.ClassicalMechanics.MomentMap.Cohomology
 public import PhyslibAlpha.ClassicalMechanics.MomentMap.GalileanMass
@@ -33,6 +34,7 @@ public import PhyslibAlpha.ClassicalMechanics.NortonDome.PhysicalSpace
 public import PhyslibAlpha.ClassicalMechanics.NortonDome.PosPartPow
 public import PhyslibAlpha.ClassicalMechanics.NortonDome.Solution
 public import PhyslibAlpha.ClassicalMechanics.NortonDome.Sqrt
+public import PhyslibAlpha.ClassicalMechanics.PoissonBracket.Basic
 public import PhyslibAlpha.CondensedMatter.TightBindingChain.OpenBoundary
 public import PhyslibAlpha.CondensedMatter.TightBindingChain.Uncertainty
 public import PhyslibAlpha.Mathematics.Analysis.Normed.HolderDual
