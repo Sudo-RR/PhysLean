@@ -30,8 +30,9 @@ derivatives on phase space.
 
 - `poissonBracket` : the Poisson bracket of two phase-space functions.
 - `poissonBracket_antisymm` : the bracket is antisymmetric.
-- `poissonBracket_add_left`, `poissonBracket_const_mul_left` : the bracket is additive and
-  homogeneous in its first argument (the right-argument versions follow by antisymmetry).
+- `poissonBracket_add_left`, `poissonBracket_add_right`, `poissonBracket_const_mul_left`,
+  `poissonBracket_const_mul_right` : the bracket is bilinear, that is additive and homogeneous in
+  each argument.
 - `deriv_comp_eq_inner_gradient_add` : the time derivative of a phase-space function composed with
   a trajectory is the sum of its gradients paired with the trajectory's velocities.
 - `deriv_comp_eq_poissonBracket` : along a solution of Hamilton's equations, the time derivative of
