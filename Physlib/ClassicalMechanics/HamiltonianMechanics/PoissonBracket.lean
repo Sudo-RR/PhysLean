@@ -5,7 +5,7 @@ Authors: Rithwik Ranganathan
 -/
 module
 
-public import Physlib.ClassicalMechanics.HamiltonsEquations
+public import Physlib.ClassicalMechanics.HamiltonianMechanics.HamiltonsEquations
 public import Physlib.Mathematics.Calculus.Gradient
 /-!
 
@@ -157,7 +157,7 @@ lemma poissonBracket_const_mul_right (c : ℝ) (f g : X → X → ℝ) (p q : X)
 
 /-- The time derivative of a phase-space function `f` composed with trajectories `p q : Time → X`
 is the sum of the gradients of `f` paired with the velocities `∂ₜ p` and `∂ₜ q`. -/
-theorem deriv_comp_eq_inner_gradient_add (f : X → X → ℝ) (p q : Time → X) (t : Time)
+lemma deriv_comp_eq_inner_gradient_add (f : X → X → ℝ) (p q : Time → X) (t : Time)
     (hp : DifferentiableAt ℝ p t) (hq : DifferentiableAt ℝ q t)
     (hf : DifferentiableAt ℝ (Function.uncurry f) (p t, q t)) :
     ∂ₜ (fun t => f (p t) (q t)) t =
