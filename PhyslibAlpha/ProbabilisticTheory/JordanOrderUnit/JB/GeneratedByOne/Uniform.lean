@@ -12,6 +12,8 @@ public import Mathlib.Analysis.Normed.Algebra.Spectrum
 
 # The norm of `C(a)` is uniform
 
+In `C(a)` the JB axiom `‖x²‖ = ‖x‖²` holds, so `‖x^(2ⁿ)‖ = ‖x‖^(2ⁿ)`.
+
 ## i. Overview
 
 The JB axiom `‖x²‖ = ‖x‖²` holds in `C(a)`, so `‖x^(2ⁿ)‖ = ‖x‖^(2ⁿ)` and the spectral radius is at
@@ -26,9 +28,15 @@ most the norm.
 
 - A. Uniform square norm
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 namespace JBAlgebra
 
@@ -69,3 +77,5 @@ lemma norm_pow_two_pow (x : ClosedGeneratedByOne a) (n : ℕ) :
 end ClosedGeneratedByOne
 
 end JBAlgebra
+
+end ProbabilisticTheory

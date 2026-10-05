@@ -11,6 +11,8 @@ public import PhyslibAlpha.ProbabilisticTheory.JordanOrderUnit.Basic
 
 # Powers, multiplication operators and the quadratic representation
 
+Jordan powers, multiplication operators `L_a` and the quadratic representation `U_a`.
+
 ## i. Overview
 
 Powers of an observable are `a⁰ = 1` and `aⁿ⁺¹ = a ∘ aⁿ`. The multiplication operator is `L_a b = a
@@ -31,9 +33,15 @@ The Jordan identity says that `L_a` and `L_{a²}` commute.
 - D. The Jordan commutation law
 - E. The inner derivation `D_{a,b}`
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 namespace JordanAlgebra
 
@@ -212,7 +220,7 @@ lemma quadRepPolar_apply (a b x : E) :
 lemma quadRepPolar_comm (a b : E) : quadRepPolar a b = quadRepPolar b a := by
   ext x
   rw [quadRepPolar_apply, quadRepPolar_apply, mul_comm b a]
-  abel
+  abel_nf
 
 /-- The polarization is additive in its first outer variable. -/
 lemma quadRepPolar_add_left (a b c : E) :
@@ -426,3 +434,5 @@ lemma innerDerivation_swap (a b : E) : innerDerivation a b = -innerDerivation b 
 end Linear
 
 end JordanAlgebra
+
+end ProbabilisticTheory

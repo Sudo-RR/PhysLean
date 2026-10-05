@@ -6,7 +6,7 @@ Authors: Tom Ole Diem
 module
 
 public import PhyslibAlpha.ProbabilisticTheory.CStarAlgebra.OrderUnit
-public import PhyslibAlpha.ProbabilisticTheory.Effect.Sharp
+public import Physlib.ProbabilisticTheory.Effect.Sharp
 public import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Basic
 public import Mathlib.Analysis.CStarAlgebra.Basic
 public import Mathlib.Algebra.Module.Torsion.Free
@@ -14,6 +14,8 @@ public import Mathlib.Algebra.Module.Torsion.Free
 /-!
 
 # Projections are sharp
+
+An idempotent effect of a C⋆-algebra is not a proper mixture of two different effects.
 
 ## i. Overview
 
@@ -24,12 +26,31 @@ y₁ + s y₂`, conjugating by `1 - p` kills both `y₁` and `y₂`, so by the C
 ## ii. Key results
 
 - `IsIdempotentElem.isSharp` : idempotent effects are sharp.
+- `ProbabilisticTheory.eq_of_mem_openSegment_of_isIdempotentElem` : the algebraic heart of the
+  proof, stated on bare elements.
+
+## iii. Table of contents
+
+- A. Consequences of the C⋆-identity
+- B. Projections are sharp
+
+## iv. References
+
+* None.
 
 -/
 
 @[expose] public section
 
+namespace ProbabilisticTheory
+
 variable {A : Type*} [CStarAlgebra A] [PartialOrder A] [StarOrderedRing A]
+
+/-!
+
+## A. Consequences of the C⋆-identity
+
+-/
 
 /-- In a partially ordered additive group, two nonnegative terms summing to zero vanish. -/
 lemma nonneg_add_eq_zero {x y : A} (hx : 0 ≤ x) (hy : 0 ≤ y) (hxy : x + y = 0) :
@@ -129,9 +150,15 @@ lemma eq_of_mem_openSegment_of_isIdempotentElem {a y₁ y₂ : A} (ha0 : 0 ≤ a
   have h3 : a - y₁ = 0 := (smul_eq_zero.mp hz3).resolve_left ht.ne'
   exact (sub_eq_zero.mp h3).symm
 
+/-!
+
+## B. Projections are sharp
+
+-/
+
 /-- **Projections are sharp**: an idempotent effect is not a proper mixture of two different
 effects. -/
-lemma IsIdempotentElem.isSharp {e : Effect (selfAdjoint A)}
+lemma _root_.IsIdempotentElem.isSharp {e : Effect (selfAdjoint A)}
     (h : IsIdempotentElem ((e : selfAdjoint A) : A)) : Effect.IsSharp e := by
   refine ⟨e.2, fun x₁ hx₁ x₂ hx₂ hseg => ?_⟩
   obtain ⟨t, s, ht, hs, hts, hz⟩ := hseg
@@ -141,3 +168,5 @@ lemma IsIdempotentElem.isSharp {e : Effect (selfAdjoint A)}
     simpa using hz'
   exact eq_of_mem_openSegment_of_isIdempotentElem e.2.1 e.2.2 h hx₁.1 hx₁.2 hx₂.1 hx₂.2 ht hs hts
     heq
+
+end ProbabilisticTheory

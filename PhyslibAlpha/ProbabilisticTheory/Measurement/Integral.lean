@@ -11,6 +11,8 @@ public import PhyslibAlpha.ProbabilisticTheory.Measurement.EffectValuedMeasure
 
 # Integrating simple functions against an effect-valued measure
 
+The integral of simple functions against an effect-valued measure, linear and positive.
+
 ## i. Overview
 
 An effect-valued measure `μ` assigns an effect to every event. Integrating a simple function `∑ᵢ cᵢ
@@ -33,9 +35,15 @@ same value, by passing to their common refinement. The integral is linear and po
 - B. Finite additivity
 - C. The integral of a simple function
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 namespace EffectValuedMeasure
 
@@ -329,3 +337,5 @@ lemma simpleIntegral_nonneg (μ : EffectValuedMeasure Ω E) {c : ι → ℝ} (hc
   Finset.sum_nonneg fun i _ => smul_nonneg (hc i) (μ (s i) (hs.measurable i)).2.1
 
 end EffectValuedMeasure
+
+end ProbabilisticTheory

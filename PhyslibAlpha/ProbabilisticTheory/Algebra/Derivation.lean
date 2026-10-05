@@ -13,6 +13,8 @@ public import Mathlib.Tactic.Abel
 
 # Derivations
 
+Derivations of a bilinear multiplication and their closure under linear operations.
+
 ## i. Overview
 
 A derivation of a multiplication is a linear map `D` with `D (a b) = D a b + a D b`. The notion only
@@ -29,9 +31,15 @@ real vector space.
 - A. The Leibniz rule
 - B. Closure properties
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 /-! ## A. The Leibniz rule -/
 
@@ -64,3 +72,5 @@ lemma IsDerivation.smul [SMulCommClass ℝ E E] [IsScalarTower ℝ E E] (c : ℝ
     (h : IsDerivation D) : IsDerivation (c • D) := by
   intro a b
   simp only [LinearMap.smul_apply, h a b, smul_add, smul_mul_assoc, mul_smul_comm]
+
+end ProbabilisticTheory

@@ -13,6 +13,8 @@ public import Mathlib.Analysis.VonNeumannAlgebra.Basic
 
 # W⋆-algebra structures are W⋆-algebras
 
+A W⋆-algebra structure with a chosen predual gives a W⋆-algebra in Mathlib's sense.
+
 ## i. Overview
 
 Mathlib's `WStarAlgebra` asks for a conjugate-linear isometric isomorphism from the dual of a Banach
@@ -32,11 +34,17 @@ W⋆-algebra in Mathlib's sense, when the predual lives in the same universe as 
 - A. The conjugate-linear self-duality `Phi` of the strong dual, via `ConjSpace`
 - B. Closing the connection to Mathlib's `WStarAlgebra`
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
 
 noncomputable section
+
+namespace ProbabilisticTheory
 
 open scoped ComplexConjugate
 open ConjSpace
@@ -140,3 +148,5 @@ lemma WStarAlgebraStructure.toWStarAlgebra
   ⟨ConjSpace (WStarAlgebraStructure.Predual A), inferInstance, inferInstance, inferInstance,
     ⟨(PhiEquiv (X := WStarAlgebraStructure.Predual A)).symm.trans
       (WStarAlgebraStructure.toDual (A := A)).symm⟩⟩
+
+end ProbabilisticTheory

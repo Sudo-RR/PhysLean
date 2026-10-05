@@ -12,6 +12,8 @@ public import PhyslibAlpha.Mathematics.Order.PositiveDual.UpperEnvelope
 /-!
 # Refinement of ensembles
 
+Refinement of ensembles, its consequences for pure states, and refinement on a simplex.
+
 ## i. Overview
 
 An ensemble is a recipe for preparing a state: choose one of finitely many states with given
@@ -47,9 +49,15 @@ and down and of spin left and right, and these two ensembles have no common refi
 - C. Upper envelopes on refining ensembles
 - D. Ensembles refine on a simplex
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 open MeasureTheory PureState PositiveLinearMap
 open scoped NNReal
@@ -156,3 +164,5 @@ lemma IsSimplexStateSpace.isClassical : IsClassical E := by
 /-- **On a simplex, ensembles refine.** -/
 lemma IsSimplexStateSpace.ensemblesRefine : EnsemblesRefine E :=
   (IsSimplexStateSpace.isClassical h).ensemblesRefine
+
+end ProbabilisticTheory

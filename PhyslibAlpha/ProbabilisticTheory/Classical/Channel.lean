@@ -13,6 +13,8 @@ public import Mathlib.Probability.Kernel.Composition.MeasureComp
 /-!
 # Classical channels
 
+Normal channels between classical systems of observables are exactly Markov kernels.
+
 ## i. Overview
 
 A channel between two classical systems sends observables of the target system `Ω` to observables
@@ -40,11 +42,16 @@ kernel.
 - C. The Markov kernel of a normal channel
 - D. The correspondence
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
 
 namespace BoundedMeasurable
+open ProbabilisticTheory
 
 open UnitalPositiveLinearMap MeasureTheory ProbabilityTheory
 
@@ -163,3 +170,4 @@ noncomputable def kernelEquiv :
   right_inv κ := by have := κ.2; exact Subtype.ext (toKernel_ofKernel κ.1)
 
 end BoundedMeasurable
+

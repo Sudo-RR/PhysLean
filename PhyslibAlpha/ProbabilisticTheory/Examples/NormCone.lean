@@ -15,6 +15,8 @@ public import Mathlib.LinearAlgebra.Basis.Defs
 /-!
 # Order-unit spaces built from a normed vector space
 
+The order-unit space `ℝ × V` ordered by the norm cone of `V`, and its states as the dual ball.
+
 ## i. Overview
 
 Any real normed vector space `V` carries a natural order-unit structure on `ℝ × V`: order unit
@@ -54,6 +56,8 @@ with the sup norm: same dimension, different norm, different state space.
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 /-!
 
@@ -178,7 +182,6 @@ lemma mem_effect_iff {z : NormCone V} :
     z ∈ (Effect (NormCone V) : Set (NormCone V)) ↔
       ‖(toProd z).2‖ ≤ (toProd z).1 ∧ ‖(toProd z).2‖ ≤ 1 - (toProd z).1 := by
   simp [Set.mem_Icc, le_iff]
-
 
 /-!
 
@@ -382,3 +385,5 @@ lemma supCone_mem_effect_iff {m : ℕ} {z : NormCone (Fin m → ℝ)} :
   mem_effect_iff
 
 end NormCone
+
+end ProbabilisticTheory

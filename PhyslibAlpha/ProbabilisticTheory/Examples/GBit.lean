@@ -15,6 +15,8 @@ public import Mathlib.LinearAlgebra.Dual.Lemmas
 /-!
 # The generalized bit
 
+The generalized bit: the sup-norm cone over `ℝ³`, with an octahedral, non-simplex state space.
+
 ## i. Overview
 
 The generalized bit is the norm cone over `ℝ³` with the sup norm in place of the Euclidean norm
@@ -44,6 +46,8 @@ not a qubit either: the shape of the cone matters, not just the dimension.
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 /-!
 
@@ -106,3 +110,5 @@ lemma not_isSimplex_stateSpace :
     simp [finrank_eq_four] at this
 
 end GBit
+
+end ProbabilisticTheory

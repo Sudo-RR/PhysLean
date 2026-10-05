@@ -12,6 +12,8 @@ public import PhyslibAlpha.ProbabilisticTheory.JordanOrderUnit.CStarAlgebra.Basi
 
 # Commuting observables are Jordan compatible
 
+Commuting self-adjoint elements of a C⋆-algebra are Jordan compatible.
+
 ## i. Overview
 
 If two self-adjoint elements of a C⋆-algebra commute, their Jordan multiplication operators commute.
@@ -26,9 +28,15 @@ a`.
 
 - A. Commuting observables
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 namespace JB
 
@@ -60,3 +68,5 @@ lemma isJordanCompatible_of_commute {a b : selfAdjoint A}
   abel
 
 end JB
+
+end ProbabilisticTheory

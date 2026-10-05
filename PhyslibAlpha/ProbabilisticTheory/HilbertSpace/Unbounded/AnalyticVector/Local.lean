@@ -11,6 +11,8 @@ public import PhyslibAlpha.ProbabilisticTheory.HilbertSpace.Unbounded.AnalyticVe
 
 # Local and global analytic orbits
 
+Local analytic orbits agree on overlaps and glue into a global orbit orthogonal to deficiencies.
+
 ## i. Overview
 
 A local analytic orbit is the exponential series of an analytic vector on a finite time interval.
@@ -802,7 +804,7 @@ lemma eq_of_adjacent_of_le
           F (j + 1) (s - ((j + 1 : ℤ) : ℝ) * δ) := by
         convert hstep using 1
         push_cast
-        ring
+        ring_nf
       exact hprev.trans hstep'
   exact hchain n hmn le_rfl hn
 
@@ -1174,3 +1176,4 @@ lemma inner_deficiency_eq_zero_neg
 end GlobalAnalyticOrbit
 
 end LinearPMap
+

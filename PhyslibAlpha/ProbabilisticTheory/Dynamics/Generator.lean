@@ -12,6 +12,8 @@ public import Mathlib.Analysis.Calculus.Deriv.Basic
 
 # Generators of one-parameter groups
 
+The generator of a one-parameter family on a normed space, and its uniqueness.
+
 ## i. Overview
 
 The generator of a one-parameter family `α` on a normed space is `D a = lim_{t → 0} (α t a - a) /
@@ -27,9 +29,15 @@ it exists.
 
 - A. The generator
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
 
@@ -46,3 +54,5 @@ derivatives (`HasDerivAt.unique`). -/
 lemma IsGenerator.unique {α : ℝ → E → E} {D₁ D₂ : E → E} (h₁ : IsGenerator α D₁)
     (h₂ : IsGenerator α D₂) : D₁ = D₂ :=
   funext fun a => (h₁ a).unique (h₂ a)
+
+end ProbabilisticTheory

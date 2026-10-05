@@ -13,6 +13,8 @@ public import Mathlib.MeasureTheory.Integral.RieszMarkovKakutani.Real
 /-!
 # Uniqueness of pure decompositions
 
+Choquet–Meyer uniqueness: when ensembles refine, pure decompositions are unique.
+
 ## i. Overview
 
 When ensembles refine, every state has at most one pure decomposition. This is the uniqueness half
@@ -54,6 +56,8 @@ agree.
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 open MeasureTheory PositiveLinearMap PureState Set ArchimedeanOrderUnitSpace
 open scoped ENNReal
@@ -432,3 +436,5 @@ lemma EnsemblesRefine.hasUniquePureDecomposition (hE : EnsemblesRefine E) {ω : 
   obtain ⟨μ, hμr, hμp, hμf⟩ := h
   refine ⟨μ, ⟨hμr, hμp, hμf⟩, fun ν ⟨hνr, hνp, hνf⟩ => ?_⟩
   exact hE.eq_of_toPositive_eq (PositiveLinearMap.ext fun f => (hνf f).trans (hμf f).symm)
+
+end ProbabilisticTheory
