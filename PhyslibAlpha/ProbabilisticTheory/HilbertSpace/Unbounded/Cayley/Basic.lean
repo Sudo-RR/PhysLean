@@ -12,6 +12,8 @@ public import Mathlib.MeasureTheory.Constructions.BorelSpace.Complex
 
 # The Cayley transform
 
+The Cayley transform of a self-adjoint operator is a unitary.
+
 ## i. Overview
 
 The Cayley transform `c(x) = (x - i) / (x + i)` maps the real line onto the unit circle without `1`.
@@ -30,11 +32,17 @@ unitary. This reduces the spectral theory of unbounded self-adjoint operators to
 - B. The Cayley transform of a partial operator
 - C. The bounded, unitary Cayley transform
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
 
 noncomputable section
+
+namespace ProbabilisticTheory
 
 open Function MeasureTheory Set
 open scoped ComplexOrder InnerProductSpace
@@ -432,5 +440,7 @@ lemma cayleyUnitary_apply (T : H →ₗ.[ℂ] H) (hT : IsSelfAdjoint T) (x : H) 
   rfl
 
 end QuantumMechanics
+
+end ProbabilisticTheory
 
 end

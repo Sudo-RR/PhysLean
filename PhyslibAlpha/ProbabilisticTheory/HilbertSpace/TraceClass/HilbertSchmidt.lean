@@ -12,6 +12,8 @@ public import Mathlib.Analysis.MeanInequalities
 
 # Hilbert–Schmidt operators
 
+Hilbert–Schmidt operators: a ⋆-closed two-sided ideal whose products have summable diagonals.
+
 ## i. Overview
 
 A bounded operator `S` is Hilbert–Schmidt when `∑ᵢ ‖S eᵢ‖²` converges for a Hilbert basis `{eᵢ}`.
@@ -35,11 +37,17 @@ diagonal in every basis, with the diagonal sum symmetric in the two factors.
 - B. Cauchy–Schwarz estimates on Hilbert–Schmidt diagonals
 - C. Quantitative right-multiplication estimate
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
 
 noncomputable section
+
+namespace ProbabilisticTheory
 
 open scoped ComplexOrder InnerProductSpace
 
@@ -521,5 +529,7 @@ lemma tsum_norm_sq_mul_right_le_of_selfAdjoint {S A : H →L[ℂ] H}
     _ = ‖A‖ ^ 2 * (∑' j : w, ‖S (b j)‖ ^ 2) := tsum_mul_left
 
 end HilbertSchmidt
+
+end ProbabilisticTheory
 
 end

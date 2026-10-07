@@ -16,6 +16,8 @@ public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
 
 # Stinespring's dilation theorem
 
+Stinespring's theorem: every completely positive map has the form J a = V⋆ π(a) V.
+
 ## i. Overview
 
 Every completely positive map `J` from a C⋆-algebra `A` into the bounded operators on `H` has the
@@ -37,9 +39,15 @@ commutative `A` this contains Naimark's dilation of a POVM.
 - A. The seminorm and pre-Hilbert structures induced by the kernel
 - B. The canonical CP-dependent Hilbert space
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 open scoped ComplexOrder CStarAlgebra TensorProduct
 open ContinuousLinearMap
@@ -739,3 +747,7 @@ lemma exists_stinespringWitness (J : A →CP (H →L[ℂ] H)) :
   ⟨Canonical.canonicalWitness J⟩
 
 end Stinespring
+
+end
+
+end ProbabilisticTheory

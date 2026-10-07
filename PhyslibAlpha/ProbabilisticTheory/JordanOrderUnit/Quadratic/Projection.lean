@@ -12,6 +12,8 @@ public import PhyslibAlpha.ProbabilisticTheory.JordanOrderUnit.Quadratic.Fundame
 
 # Peirce decomposition
 
+The Peirce decomposition for a Jordan projection `p`; `U_p` projects onto the `1`-component.
+
 ## i. Overview
 
 For a Jordan projection `p` every observable splits into the Peirce components where `L_p` acts by
@@ -31,9 +33,15 @@ For a Jordan projection `p` every observable splits into the Peirce components w
 - A. The Peirce polynomial
 - B. The Peirce-`1` compression
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 namespace JordanAlgebra
 
@@ -314,3 +322,5 @@ lemma quadRep_add_sub_quadRep [SMulCommClass ℝ E E] (p x : E) :
   abel
 
 end JordanAlgebra
+
+end ProbabilisticTheory

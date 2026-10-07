@@ -15,6 +15,8 @@ public import Mathlib.Probability.Kernel.CompProdEqIff
 /-!
 # Purity is the absence of side information
 
+A normal state is pure exactly when no preparation of it carries side information.
+
 ## i. Overview
 
 Roll a die and, depending on the roll, prepare a state; then perform a measurement. Someone who is
@@ -54,9 +56,15 @@ trivial, with every expectation value almost surely independent of the roll.
 - D. Side information
 - E. Purity is the absence of side information
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 open MeasureTheory ProbabilityTheory UnitalPositiveLinearMap
 
@@ -260,3 +268,5 @@ lemma isMixed_iff_exists_sideInfo (hω : ω.IsNormal) :
   exact h (isPure_of_isTrivial hω fun p hp => p.isTrivial_iff_noSideInfo.2 (hno p hp))
 
 end UnitalPositiveLinearMap
+
+end ProbabilisticTheory

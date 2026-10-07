@@ -12,6 +12,8 @@ public import PhyslibAlpha.ProbabilisticTheory.State.WeightEquivalence
 
 # Normal states give normal weights
 
+The weight of a normal state is a normal weight.
+
 ## i. Overview
 
 The weight of a normal state is normal: suprema of directed families of nonnegative observables are
@@ -21,13 +23,25 @@ suprema in the whole space, where the state is normal.
 
 - `UnitalPositiveLinearMap.IsNormal.toWeight_isNormal` : normal states give normal weights.
 
+## iii. Table of contents
+
+- A. Normal weights from normal states
+
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
 
+namespace ProbabilisticTheory
+
 open scoped ENNReal
 
 variable {E : Type*} [OrderUnitSpace E]
+
+/-! ## A. Normal weights from normal states -/
 
 namespace UnitalPositiveLinearMap
 
@@ -72,3 +86,5 @@ lemma IsNormal.toWeight_isNormal {s : 𝓢[ℝ, E]} (hs : s.IsNormal) : s.toWeig
   exact hENN
 
 end UnitalPositiveLinearMap
+
+end ProbabilisticTheory
