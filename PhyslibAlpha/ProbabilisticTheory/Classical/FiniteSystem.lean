@@ -5,7 +5,7 @@ Authors: Tom Ole Diem
 -/
 module
 
-public import PhyslibAlpha.ProbabilisticTheory.Effect.Sharp
+public import Physlib.ProbabilisticTheory.Effect.Sharp
 public import Physlib.ProbabilisticTheory.OrderUnit.Archimedean
 public import PhyslibAlpha.ProbabilisticTheory.State.Convex
 public import PhyslibAlpha.Mathematics.Geometry.Simplex
@@ -13,6 +13,8 @@ public import Mathlib.Topology.UnitInterval
 
 /-!
 # Finite classical systems
+
+The classical system with finitely many outcomes: states are probability vectors.
 
 ## i. Overview
 
@@ -37,9 +39,15 @@ system classical. The classical bit is `ι = Fin 2`.
 - C. The simplex of states
 - D. Effects of `ℝ`
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 /-!
 
@@ -178,3 +186,5 @@ end FiniteClassicalSystem
 lemma Effect.isSharp_iff_eq_zero_or_eq_one {e : Effect ℝ} :
     Effect.IsSharp e ↔ (e : ℝ) = 0 ∨ (e : ℝ) = 1 := by
   simp [Effect.IsSharp, Set.extremePoints_Icc zero_le_one]
+
+end ProbabilisticTheory

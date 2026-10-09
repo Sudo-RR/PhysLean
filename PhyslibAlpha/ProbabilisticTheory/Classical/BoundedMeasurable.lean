@@ -12,6 +12,8 @@ public import PhyslibAlpha.ProbabilisticTheory.Measurement.EffectValuedMeasure
 /-!
 # Observables of a sample space
 
+Bounded measurable functions on a sample space as a classical order-unit lattice.
+
 ## i. Overview
 
 The observables of a sample space `Ω` are the bounded measurable functions on `Ω`, ordered
@@ -31,9 +33,15 @@ observables are even a lattice. For a mechanical system, `Ω` is its phase space
 - A. The order-unit space
 - B. Indicator effects
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 /-!
 
@@ -41,7 +49,10 @@ observables are even a lattice. For a mechanical system, `Ω` is its phase space
 
 -/
 
+end ProbabilisticTheory
+
 namespace BoundedMeasurable
+open ProbabilisticTheory
 
 variable {Ω : Type*} [MeasurableSpace Ω]
 
@@ -63,6 +74,7 @@ instance : OrderUnitLattice (BoundedMeasurable Ω) :=
 end BoundedMeasurable
 
 namespace BoundedMeasurable
+open ProbabilisticTheory
 
 variable {Ω : Type*} [MeasurableSpace Ω]
 
@@ -88,3 +100,4 @@ noncomputable def outcomeMeasurement : EffectValuedMeasure Ω (BoundedMeasurable
   countably_additive' _ hs hd := isLUB_sum_indicator hs hd
 
 end BoundedMeasurable
+

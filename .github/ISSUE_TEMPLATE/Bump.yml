@@ -19,9 +19,10 @@ body:
     description: Please check off these items as you complete them
     options:
       - label: Update mathlib rev in lakefile.toml.
-      - label: Update doc-gen4 rev in lakefile.toml.
+      - label: Update doc-gen4 rev in docs/build/lakefile.toml.
       - label: Remove the `.lake` file, e.g. on unix run `rm -rf .lake`.
       - label: Run `lake update`.
+      - label: In `docs/build/`, run `MATHLIB_NO_CACHE_ON_UPDATE=1 lake update doc-gen4 Physlib`.
       - label: Check `lean-toolchain` updates correctly.
       - label: Update the Lean version badge in the `README.md` file.
   validations:
@@ -42,11 +43,7 @@ body:
     description: Please check off these items as you complete them
     options:
       - label: Ensure `lake exe lint_all` runs without errors.
-      - label: Ensure `lake exe TODO_to_yml mkFile` runs without errors.
-      - label: Ensure `lake exe stats mkHTML` runs without errors.
-      - label: Ensure `lake exe informal mkFile mkDot mkHTML` runs without errors.
-      - label: Ensure `lake exe make_tag` runs without errors.
-      - label: Remove the created files `rm ./docs/Informal.md; rm ./docs/InformalDot.dot; rm ./docs/InformalGraph.html; rm ./docs/Stats.html; rm ./docs/_data/TODO.yml`.
+      - label: Ensure `lake exe auxillary_script_test` runs without errors (this runs `TODO_to_yml`, `stats`, `informal` and `make_tag`, and leaves no files behind).
   validations:
     required: false
 - type: checkboxes

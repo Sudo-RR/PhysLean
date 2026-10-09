@@ -12,6 +12,8 @@ public import PhyslibAlpha.ProbabilisticTheory.Classical.Compatibility
 /-!
 # Classical theories compose uniquely with the square
 
+Namioka–Phelps square test: classical exactly when composition with the square is unique.
+
 ## i. Overview
 
 When a system is combined with another, the parts do not decide which composite observables are
@@ -55,6 +57,8 @@ that every two yes/no measurements are compatible.
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 open TensorProduct Square
 
@@ -156,7 +160,7 @@ lemma hasRieszDecomposition_of_minTensorCone_eq_square
 
 /-- With the Riesz decomposition, every composite observable with the square in the maximal cone
 is in the minimal cone. -/
-lemma HasRieszDecomposition.maxTensorCone_subset_square (hE : HasRieszDecomposition E) :
+lemma _root_.HasRieszDecomposition.maxTensorCone_subset_square (hE : HasRieszDecomposition E) :
     maxTensorCone E Square ≤ minTensorCone E Square := fun z hz => by
   have hA := mem_maxTensorCone_iff.1 hz
   have hd := vals_diagonal z
@@ -206,3 +210,5 @@ lemma jointlyMeasurable_iff_minTensorCone_eq_square :
 end Complete
 
 end Archimedean
+
+end ProbabilisticTheory

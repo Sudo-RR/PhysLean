@@ -11,6 +11,8 @@ public import PhyslibAlpha.ProbabilisticTheory.HilbertSpace.Unbounded.ScalarMeas
 
 # Transporting spectral measures along unitaries
 
+Conjugating operators and spectral measures by a unitary.
+
 ## i. Overview
 
 A unitary `u : H ≃ₗᵢ[ℂ] H'` conjugates operators on `H` to operators on `H'`, and conjugation is a
@@ -31,11 +33,17 @@ along `u`.
 - B. Conjugation of a spectral measure
 - C. Interaction with the scalar and diagonal measures
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
 
 noncomputable section
+
+namespace ProbabilisticTheory
 
 open scoped Topology InnerProductSpace Function
 open ContinuousLinearMap ContinuousLinearMapWOT MeasureTheory Set
@@ -190,5 +198,7 @@ lemma unitaryConjSpectralMeasure_diagonalMeasure
 end WOTSpectralMeasure
 
 end QuantumMechanics
+
+end ProbabilisticTheory
 
 end

@@ -11,6 +11,8 @@ public import PhyslibAlpha.ProbabilisticTheory.Measurement.Postprocessing
 /-!
 # Compatibility of measurements
 
+Compatible and jointly measurable measurements, with an order criterion for binary ones.
+
 ## i. Overview
 
 Two measurements are compatible when both can be obtained from one measurement by classical
@@ -37,9 +39,15 @@ and below `e` and `f`: `g` is the effect of both outcomes being `true`.
 - B. Joint measurements
 - C. Binary compatibility
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 open scoped ProbabilityTheory
 
@@ -204,24 +212,25 @@ section BinaryJoint
 variable {e f : Effect E}
 
 /-- The effect of the joint outcome `p`. -/
-noncomputable def _root_.Measurement.Joint.jointAtom
+noncomputable def _root_.ProbabilisticTheory.Measurement.Joint.jointAtom
     (J : Joint (binaryMeasurement e) (binaryMeasurement f)) (p : Bool × Bool) : E :=
   J.joint {p} (measurableSet_singleton p)
 
 variable (J : Joint (binaryMeasurement e) (binaryMeasurement f))
 
-lemma _root_.Measurement.Joint.jointAtom_nonneg (p : Bool × Bool) : 0 ≤ J.jointAtom p :=
+lemma _root_.ProbabilisticTheory.Measurement.Joint.jointAtom_nonneg (p : Bool × Bool) :
+    0 ≤ J.jointAtom p :=
   (J.joint {p} _).2.1
 
 open Classical in
-lemma _root_.Measurement.Joint.coe_joint_eq_sum (s : Set (Bool × Bool))
+lemma _root_.ProbabilisticTheory.Measurement.Joint.coe_joint_eq_sum (s : Set (Bool × Bool))
     (hs : MeasurableSet s) :
     (J.joint s hs : E) = ∑ p, if p ∈ s then J.jointAtom p else 0 := by
   conv_lhs => rw [J.joint.eq_ofAtoms]
   rw [coe_ofAtoms_apply]; rfl
 
 /-- The first marginal: the joint outcomes with first entry `true` add up to `e`. -/
-lemma _root_.Measurement.Joint.jointAtom_fst :
+lemma _root_.ProbabilisticTheory.Measurement.Joint.jointAtom_fst :
     J.jointAtom (true, true) + J.jointAtom (true, false) = e := by
   have h := congrArg (fun M : Measurement Bool E => (M {true} .of_discrete : E))
     J.fst_marginal
@@ -230,7 +239,7 @@ lemma _root_.Measurement.Joint.jointAtom_fst :
   simpa [Fintype.sum_prod_type] using h
 
 /-- The second marginal: the joint outcomes with second entry `true` add up to `f`. -/
-lemma _root_.Measurement.Joint.jointAtom_snd :
+lemma _root_.ProbabilisticTheory.Measurement.Joint.jointAtom_snd :
     J.jointAtom (true, true) + J.jointAtom (false, true) = f := by
   have h := congrArg (fun M : Measurement Bool E => (M {true} .of_discrete : E))
     J.snd_marginal
@@ -239,7 +248,7 @@ lemma _root_.Measurement.Joint.jointAtom_snd :
   simpa [Fintype.sum_prod_type, add_comm] using h
 
 /-- The four joint outcomes add up to the unit. -/
-lemma _root_.Measurement.Joint.jointAtom_sum :
+lemma _root_.ProbabilisticTheory.Measurement.Joint.jointAtom_sum :
     J.jointAtom (true, true) + J.jointAtom (true, false) +
     (J.jointAtom (false, true) + J.jointAtom (false, false)) = 1 := by
   have h := J.coe_joint_eq_sum .univ .univ
@@ -248,7 +257,7 @@ lemma _root_.Measurement.Joint.jointAtom_sum :
 
 /-- The `(true, true)` effect of a joint measurement of two binary measurements satisfies the
 joint-effect conditions. -/
-lemma _root_.Measurement.Joint.isBinaryJointEffect_jointAtom :
+lemma _root_.ProbabilisticTheory.Measurement.Joint.isBinaryJointEffect_jointAtom :
     IsBinaryJointEffect e f (J.jointAtom (true, true)) := by
   refine ⟨J.jointAtom_nonneg _, ?_, ?_, ?_⟩
   · rw [← J.jointAtom_fst]; exact le_add_of_nonneg_right (J.jointAtom_nonneg _)
@@ -276,3 +285,5 @@ lemma compatible_binaryMeasurement {e f : Effect E} {g : E} (hg : IsBinaryJointE
   JointlyMeasurable.compatible ⟨binaryJoint hg⟩
 
 end Effect
+
+end ProbabilisticTheory

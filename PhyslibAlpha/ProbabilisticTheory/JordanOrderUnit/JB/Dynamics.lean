@@ -12,6 +12,8 @@ public import PhyslibAlpha.ProbabilisticTheory.Dynamics.GeneratorIsDerivation
 
 # Generators of JB automorphism groups
 
+The Jordan product is bounded, and generators of Jordan automorphism families are derivations.
+
 ## i. Overview
 
 The Jordan product of a normed Jordan algebra is a bounded bilinear map, so multiplication operators
@@ -25,6 +27,7 @@ one-parameter family of Jordan automorphisms is a Jordan derivation.
   linear maps.
 - `NormedJordanAlgebra.isDerivation_of_isAutomorphismFamily` : the generator of a family of
   automorphisms is a derivation.
+- `NormedJordanAlgebra.norm_quadRep_le` : `‖U_a b‖ ≤ 3 ‖a‖² ‖b‖`.
 
 ## iii. Table of contents
 
@@ -32,9 +35,15 @@ one-parameter family of Jordan automorphisms is a Jordan derivation.
 - B. Continuous multiplication and quadratic operators
 - C. The derivation corollary
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 namespace NormedJordanAlgebra
 
@@ -107,3 +116,5 @@ lemma isDerivation_of_isAutomorphismFamily {α : ℝ → E → E}
   IsGenerator.isDerivation_of_isAutomorphismFamily isBoundedBilinearMap_mul hα0 hmul hD
 
 end NormedJordanAlgebra
+
+end ProbabilisticTheory

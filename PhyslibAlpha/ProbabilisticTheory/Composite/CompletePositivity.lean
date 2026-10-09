@@ -10,6 +10,8 @@ public import PhyslibAlpha.ProbabilisticTheory.Classical.Nuclear
 /-!
 # Complete positivity of classical channels
 
+Channels into or out of a classical (nuclear) system are completely positive.
+
 ## i. Overview
 
 A channel acting on one part of a composite system should keep every nonnegative composite
@@ -41,9 +43,15 @@ for a classical output any positive map works.
 - B. Nuclear inputs and outputs
 - C. Classical inputs and outputs
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 open TensorProduct
 
@@ -119,3 +127,5 @@ lemma map_mem_of_isClassical_right {F : Type*} [ArchimedeanOrderUnitSpace F] (hF
   map_mem_of_isNuclear_right' hF.isNuclear φ C₁ hC₂ hz
 
 end CompositeCone
+
+end ProbabilisticTheory

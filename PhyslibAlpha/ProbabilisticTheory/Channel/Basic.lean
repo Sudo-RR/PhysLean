@@ -11,6 +11,8 @@ public import PhyslibAlpha.ProbabilisticTheory.OrderUnit.PositiveDual
 /-!
 # Channels
 
+Channels as unital positive linear maps between order-unit spaces, and their composition.
+
 ## i. Overview
 
 A channel is a transformation of a system, described by what it does to observables: it sends
@@ -33,9 +35,15 @@ and measurements. Quantum channels additionally stay positive on composite syste
 - C. Composing channels
 - D. Channels
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 /-!
 
@@ -168,3 +176,5 @@ end UnitalPositiveLinearMap
 
 /-- A channel between two systems: a unital positive map between their order-unit spaces. -/
 abbrev Channel (E F : Type*) [OrderUnitSpace E] [OrderUnitSpace F] := E →ₚ₁[ℝ] F
+
+end ProbabilisticTheory

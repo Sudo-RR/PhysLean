@@ -11,6 +11,8 @@ public import PhyslibAlpha.ProbabilisticTheory.HilbertSpace.Unbounded.Cayley.Bas
 
 # The inverse Cayley transform
 
+The inverse Cayley transform of a unitary without eigenvalue 1 is self-adjoint.
+
 ## i. Overview
 
 For a unitary `u`, the inverse Cayley transform is the operator `i (1 + u)(1 - u)⁻¹`, defined on the
@@ -32,11 +34,17 @@ Cayley transform is self-adjoint. It inverts the Cayley transform of a self-adjo
 - C. Self-adjointness of the inverse Cayley transform
 - D. Round trip with the forward Cayley transform
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
 
 noncomputable section
+
+namespace ProbabilisticTheory
 
 open scoped ComplexOrder InnerProductSpace
 open Function Set
@@ -635,5 +643,7 @@ lemma CayleyUnitaryData.inverse_isSelfAdjoint {u : H ≃ₗᵢ[ℂ] H}
   inverseCayleyPMap_isSelfAdjoint_of_ker_eq_bot hu.one_sub_injective
 
 end QuantumMechanics
+
+end ProbabilisticTheory
 
 end

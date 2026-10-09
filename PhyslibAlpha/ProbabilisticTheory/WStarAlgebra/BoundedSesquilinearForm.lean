@@ -11,6 +11,8 @@ public import Mathlib.Analysis.InnerProductSpace.Adjoint
 
 # Bounded sesquilinear forms
 
+A bounded sesquilinear form on a Hilbert space is represented by a bounded operator.
+
 ## i. Overview
 
 A bounded sesquilinear form `B` on a Hilbert space, conjugate-linear in the first argument, is
@@ -22,15 +24,32 @@ represented by a bounded operator `T` with `⟪y, T x⟫ = conj (B x y)`.
 - `BoundedSesquilinearForm.operator` : the representing operator.
 - `BoundedSesquilinearForm.operator_inner` : `⟪y, T x⟫ = conj (B x y)`.
 
+## iii. Table of contents
+
+- A. Bounded sesquilinear forms
+- B. The representing operator
+
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
 
 noncomputable section
 
+namespace ProbabilisticTheory
+
 open scoped InnerProductSpace
 
 variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+
+/-!
+
+## A. Bounded sesquilinear forms
+
+-/
 
 /-- A bounded sesquilinear form in the orientation expected by Mathlib's Riesz representation
 theorem. -/
@@ -59,6 +78,12 @@ noncomputable def continuous : H →L⋆[ℂ] H →L[ℂ] ℂ :=
 lemma continuous_apply (x y : H) : B.continuous x y = B.form x y :=
   LinearMap.mkContinuous₂_apply B.form B.boundConstant_spec x y
 
+/-!
+
+## B. The representing operator
+
+-/
+
 /-- The unique bounded operator represented by `B`. -/
 noncomputable def operator : H →L[ℂ] H :=
   InnerProductSpace.continuousLinearMapOfBilin B.continuous
@@ -70,3 +95,5 @@ lemma operator_inner (x y : H) :
   rw [← inner_conj_symm, h]
 
 end BoundedSesquilinearForm
+
+end ProbabilisticTheory

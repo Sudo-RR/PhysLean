@@ -21,6 +21,8 @@ public import Mathlib.Order.Filter.AtTopBot.Ring
 
 # Analytic vectors
 
+Analytic and entire vectors, their exponential series and an essential self-adjointness test.
+
 ## i. Overview
 
 A vector `ψ` in the domain of all powers of an operator `T` is analytic when `∑ₙ ‖Tⁿ ψ‖ tⁿ / n!`
@@ -1356,5 +1358,5 @@ structure LocalAnalyticOrbit (T : H →ₗ.[ℂ] H) (x : H) where
       (Complex.I • T.closure ⟨toFun s, mem_domain s hs⟩) s
   norm_eq : ∀ (s : ℝ) (_hs : |s| < radius), ‖toFun s‖ = ‖x‖
 
-
 end LinearPMap
+
