@@ -13,6 +13,8 @@ public import Mathlib.Analysis.Normed.Module.WeakDual
 
 # W⋆-algebras and normal states
 
+W⋆-algebras with a chosen predual, their weak-⋆ topology, and normal states.
+
 ## i. Overview
 
 A W⋆-algebra is a C⋆-algebra that is the dual of a Banach space, its predual. Mathlib's
@@ -35,11 +37,17 @@ for the weak-⋆ topology.
 - B. The predual pairing
 - C. Normal states
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
 
 noncomputable section
+
+namespace ProbabilisticTheory
 
 open scoped ComplexOrder Topology
 open TopologicalSpace
@@ -182,3 +190,5 @@ lemma continuous (ω : NormalState A) : Continuous (ω : A → ℂ) :=
   continuous_le_dom (WStarAlgebraStructure.norm_le_weakStarTopology A) ω.weakStar_continuous
 
 end NormalState
+
+end ProbabilisticTheory

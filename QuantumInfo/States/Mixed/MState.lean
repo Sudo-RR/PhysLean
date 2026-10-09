@@ -6,21 +6,17 @@ Authors: Alex Meiburg, Leonardo A. Lessa
 module
 
 public import QuantumInfo.ForMathlib.ContinuousLinearMap
-public import QuantumInfo.ForMathlib.ComplexLaplaceTransform
-public import QuantumInfo.ForMathlib.ContinuousSup
-public import QuantumInfo.ForMathlib.Filter
 public import QuantumInfo.ForMathlib.HermitianMat
 public import QuantumInfo.ForMathlib.Isometry
 public import QuantumInfo.ForMathlib.LinearEquiv
 public import QuantumInfo.ForMathlib.MatrixNorm.TraceNorm
 public import QuantumInfo.ForMathlib.Matrix
-public import QuantumInfo.ForMathlib.Minimax
 public import QuantumInfo.ForMathlib.Misc
-public import QuantumInfo.ForMathlib.Unitary
 public import QuantumInfo.ClassicalInfo.Distribution
 public import QuantumInfo.States.Pure.Braket
 
 public import Mathlib.Logic.Equiv.Basic
+public import Mathlib.Tactic.LinearCombinationPrime
 
 /-!
 Finite dimensional quantum mixed states, ρ.
@@ -1326,6 +1322,13 @@ def piProd (ρi : (i:ι) → MState (dI i)) : MState ((i:ι) → dI i) where
     rw [zero_le_iff]
     exact Matrix.PosSemidef.piProd (fun i => psd (ρi i))
   tr := by simp [trace, Matrix.trace_piProd]
+
+/-- The pure state of `Ket.piProd ψ` is `MState.piProd` of the pure states `pure (ψ i)`,
+generalizing `MState.pure_prod_pure`. -/
+lemma pure_piProd (ψ : (i : ι) → Ket (dI i)) :
+    pure (Ket.piProd ψ) = piProd (fun i ↦ pure (ψ i)) := by
+  ext : 3
+  simp [piProd, Matrix.piProd, -mat_apply, Finset.prod_mul_distrib]
 
 /-- The n-copy "power" of a mixed state, with the standard basis indexed by pi types. -/
 def npow (ρ : MState d) (n : ℕ) : MState (Fin n → d) :=

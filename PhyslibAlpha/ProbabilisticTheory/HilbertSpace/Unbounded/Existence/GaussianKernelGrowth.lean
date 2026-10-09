@@ -17,6 +17,8 @@ public import Mathlib.MeasureTheory.Function.L2Space
 
 # Growth of the derivatives of the heat kernel
 
+Hermite polynomial bounds on the L¹ norms of the heat kernel's derivatives.
+
 ## i. Overview
 
 The `n`-th derivative of the heat kernel is a Hermite polynomial times a Gaussian. The probabilists'
@@ -32,15 +34,34 @@ derivative of the heat kernel by `C^(n + 1) √(n!)`.
   polynomials.
 - `gaussianKernel_iteratedDeriv_L1_bound` : the `L¹` bound on the derivatives of the heat kernel.
 
+## iii. Table of contents
+
+- A. The Hermite derivative identity
+- B. Integrability against Gaussian weights
+- C. The norm of the Hermite polynomials
+- D. Derivatives of the heat kernel
+
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 namespace QuantumMechanics
 
 noncomputable section
 
 open MeasureTheory Polynomial
+
+/-!
+
+## A. The Hermite derivative identity
+
+-/
 
 /-- The polynomial identity `Hₙ₊₁' = (n+1) · Hₙ`, absent from Mathlib, proved directly from the
 defining recursion `hermite_succ : Hₙ₊₁ = X·Hₙ - Hₙ'` by induction. -/
@@ -76,6 +97,12 @@ lemma hermite_aeval_deriv_succ (n : ℕ) (x : ℝ) :
 lemma hermite_aeval_succ (n : ℕ) (x : ℝ) :
     aeval x (hermite (n + 1)) = x * aeval x (hermite n) - aeval x (derivative (hermite n)) := by
   simp [hermite_succ]
+
+/-!
+
+## B. Integrability against Gaussian weights
+
+-/
 
 /-- A monomial times a Gaussian weight is integrable (the `n`-th-power case of
 `integrable_aeval_mul_gaussian`, via the real-exponent Gaussian-tail estimate specialized to a
@@ -114,6 +141,12 @@ lemma gaussian_hasDerivAt (x : ℝ) :
     simp [mul_comm]
   have h := hdiff.hasDerivAt
   rwa [heq] at h
+
+/-!
+
+## C. The norm of the Hermite polynomials
+
+-/
 
 /-- `Iₙ₊₁ = (n + 1) Iₙ` for `Iₙ = ∫ Hₙ(x)² exp(-x²/2) dx`, by integration by parts. -/
 lemma hermite_gaussian_sq_integral_succ (n : ℕ) :
@@ -198,7 +231,7 @@ lemma hermite_gaussian_sq_integral (n : ℕ) :
       have hb : Real.pi / (1 / 2 : ℝ) = 2 * Real.pi := by ring
       rw [hb] at h
       convert h using 2
-      ring
+      ring_nf
   | succ n ih =>
       rw [hermite_gaussian_sq_integral_succ n, ih]
       push_cast [Nat.factorial_succ]
@@ -275,6 +308,12 @@ lemma hermite_gaussian_L1_bound (n : ℕ) :
       mul_comm (A * (n.factorial : ℝ)) A, ← mul_assoc, ← pow_two, Real.sqrt_mul (sq_nonneg A),
       Real.sqrt_sq hApos]
   exact hCS.trans_eq hRHS_eq
+
+/-!
+
+## D. Derivatives of the heat kernel
+
+-/
 
 /-- The `n`-th derivative of the heat kernel is a rescaled Hermite polynomial times the kernel. -/
 lemma gaussianKernel_iteratedDeriv_eq {ε : ℝ} (hε : 0 < ε) (n : ℕ) (t : ℝ) :
@@ -421,3 +460,5 @@ lemma gaussianKernel_iteratedDeriv_L1_bound {ε : ℝ} (hε : 0 < ε) :
 end
 
 end QuantumMechanics
+
+end ProbabilisticTheory

@@ -12,6 +12,8 @@ public import Mathlib.Logic.Function.Basic
 
 # One-parameter groups
 
+Defines one-parameter groups `α : ℝ → E → E` satisfying `α 0 = id` and the group law.
+
 ## i. Overview
 
 A one-parameter group is a family `α : ℝ → E → E` with `α 0 = id` and `α (s + t) = α s ∘ α t`. It is
@@ -25,9 +27,15 @@ stated for an arbitrary type `E`; preservation of structure and continuity are s
 
 - A. The group law
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 /-! ## A. The group law -/
 
@@ -59,3 +67,5 @@ lemma bijective (t : ℝ) : Function.Bijective (α t) :=
   Function.bijective_iff_has_inverse.mpr ⟨α (-t), h.left_inv t, h.right_inv t⟩
 
 end IsOneParameterGroup
+
+end ProbabilisticTheory

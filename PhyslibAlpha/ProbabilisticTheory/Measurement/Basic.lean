@@ -11,6 +11,8 @@ public import PhyslibAlpha.ProbabilisticTheory.Measurement.Pushforward
 /-!
 # Measurements
 
+Measurements as normal channels from the classical outcome system, and their Born laws.
+
 ## i. Overview
 
 A measurement with outcomes in `Ω` turns the system into a classical record: its outcome. So a
@@ -41,9 +43,15 @@ the Born law. Measuring the outcome of a classical system itself is the identity
 - B. The Born law
 - C. Measuring after a channel
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 open MeasureTheory UnitalPositiveLinearMap
 
@@ -131,7 +139,12 @@ lemma coe_map_apply (M : Measurement Ω E) (φ : Channel E F) (hφ : φ.IsNormal
 
 end Measurement
 
+end ProbabilisticTheory
+
 namespace BoundedMeasurable
+open ProbabilisticTheory
+open MeasureTheory UnitalPositiveLinearMap
+open MeasureTheory UnitalPositiveLinearMap
 
 variable {Ω : Type*} [MeasurableSpace Ω]
 
@@ -150,3 +163,4 @@ lemma probabilityLaw_outcome (ω : 𝓢[ℝ, BoundedMeasurable Ω]) (hω : ω.Is
   simp only [Measurement.probabilityLaw, outcome, comp_id]
 
 end BoundedMeasurable
+

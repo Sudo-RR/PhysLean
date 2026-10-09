@@ -12,6 +12,8 @@ public import PhyslibAlpha.ProbabilisticTheory.CStarAlgebra.QuantumChannel
 /-!
 # Matrices over a C⋆-algebra as a composite system
 
+Matrices over a C⋆-algebra as composite observables with an n-level ancilla, and positivity.
+
 ## i. Overview
 
 Coupling a quantum system with observables `A` to an `n`-level ancilla gives the `n × n` matrices
@@ -45,14 +47,19 @@ systems, and for maps out of commutative C⋆-algebras it follows from classical
 - E. Applying a map entrywise
 - F. Channels out of commutative algebras
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
 
-open TensorProduct
-open scoped ComplexOrder
 
 namespace CStarMatrix
+open ProbabilisticTheory
+open TensorProduct
+open scoped ComplexOrder
 
 variable {n : Type} {A : Type*} [CStarAlgebra A]
 
@@ -358,6 +365,11 @@ end Map
 
 end CStarMatrix
 
+namespace ProbabilisticTheory
+
+open TensorProduct
+open scoped ComplexOrder
+
 /-! ## F. Channels out of commutative algebras -/
 
 namespace QuantumChannel
@@ -393,3 +405,5 @@ noncomputable def ofCommutative (f : C →ₚ₁[ℂ] B) : QuantumChannel C B wh
 lemma ofCommutative_apply (f : C →ₚ₁[ℂ] B) (x : C) : ofCommutative f x = f x := rfl
 
 end QuantumChannel
+
+end ProbabilisticTheory

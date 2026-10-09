@@ -13,6 +13,8 @@ public import Mathlib.Analysis.Normed.Operator.ContinuousLinearMap
 
 # Finite weights are continuous
 
+Positive functionals are order-unit-norm bounded, so finite weights are continuous functionals.
+
 ## i. Overview
 
 A positive functional is bounded for the order-unit norm, `|ψ a| ≤ ψ 1 ‖a‖`. So every finite weight
@@ -23,15 +25,31 @@ is a continuous linear functional on the observables with the order-unit norm.
 - `PositiveLinearMap.abs_apply_le_apply_one_mul_orderUnitNorm` : `|ψ a| ≤ ψ 1 ‖a‖`.
 - `Weight.IsFinite.toOrderUnitContinuousLinearMap` : a finite weight as a continuous functional.
 
+## iii. Table of contents
+
+- A. Positive functionals are bounded
+- B. Finite weights as continuous functionals
+
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
 
+
+namespace PositiveLinearMap
+open ProbabilisticTheory
 open ArchimedeanOrderUnitSpace
 
 variable {E : Type*} [ArchimedeanOrderUnitSpace E]
 
-namespace PositiveLinearMap
+/-!
+
+## A. Positive functionals are bounded
+
+-/
 
 /-- A positive functional is order-unit-norm bounded, with bound given by its value at the order
 unit.  For a normalized positive functional this specializes to the contractive state bound. -/
@@ -65,6 +83,18 @@ lemma toOrderUnitContinuousLinearMap_apply (f : E →ₚ[ℝ] ℝ) (x : E) :
 
 end PositiveLinearMap
 
+/-!
+
+## B. Finite weights as continuous functionals
+
+-/
+
+namespace ProbabilisticTheory
+
+open ArchimedeanOrderUnitSpace
+
+variable {E : Type*} [ArchimedeanOrderUnitSpace E]
+
 namespace Weight.IsFinite
 
 /-- The canonical continuous linear extension of a finite weight to the order-unit-norm copy. -/
@@ -79,3 +109,5 @@ lemma toOrderUnitContinuousLinearMap_apply_of_nonneg {w : Weight E} (hw : w.IsFi
     toPositiveLinearMap_apply_of_nonneg]
 
 end Weight.IsFinite
+
+end ProbabilisticTheory
