@@ -96,6 +96,7 @@ public import PhyslibAlpha.CondensedMatter.TightBindingChain.VelocityBand.Basic
 public import PhyslibAlpha.CondensedMatter.TightBindingChain.VelocityBand.Width
 public import PhyslibAlpha.Electromagnetism.BoxChargeConservation
 public import PhyslibAlpha.Electromagnetism.TemperedDistributional.WireJunction
+public import PhyslibAlpha.Mathematics.AnalyticNonvanishing
 public import PhyslibAlpha.Mathematics.Analysis.Normed.HolderDual
 public import PhyslibAlpha.Mathematics.Analysis.RealBounds
 public import PhyslibAlpha.Mathematics.Convex.Choquet.BoundaryRepresentation
@@ -125,7 +126,6 @@ public import PhyslibAlpha.Mathematics.Order.PositiveDual.RieszKantorovich
 public import PhyslibAlpha.Mathematics.Order.PositiveDual.UpperEnvelope
 public import PhyslibAlpha.Mathematics.Order.StrongUnit
 public import PhyslibAlpha.Mathematics.Order.VectorLattice
-public import PhyslibAlpha.Mathematics.AnalyticNonvanishing
 public import PhyslibAlpha.Mathematics.PartialDerivativeTest
 public import PhyslibAlpha.Mathematics.Probability.Kernel.Factorization
 public import PhyslibAlpha.Mathematics.RepresentationTheory.Sl2.AngularMomentum
