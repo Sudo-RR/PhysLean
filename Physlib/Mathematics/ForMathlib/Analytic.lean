@@ -5,8 +5,8 @@ Authors: Rithwik Ranganathan
 -/
 module
 
+-- `Uniqueness` imports this module privately; the auxiliary analyticity lemmas need its public API.
 public import Mathlib.Analysis.Analytic.Constructions
-public import Mathlib.Analysis.Analytic.Linear
 public import Mathlib.Analysis.Analytic.Uniqueness
 public import Mathlib.Analysis.InnerProductSpace.PiL2
 /-!
