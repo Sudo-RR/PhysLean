@@ -11,19 +11,24 @@ public import Physlib.Mathematics.Calculus.Gradient
 
 # Central forces
 
-Hamiltonian and partial gradients of a particle in a smooth radial potential.
+Hamiltonian and partial gradients of a particle in a conservative central potential.
 
 ## i. Overview
 
-A particle of mass `m` in three-dimensional space moving under a *central force* is pushed along
-the line joining it to a fixed centre, by a force derived from a potential `V (‖q‖)` which depends
-only on the distance `‖q‖` from the centre. Its Hamiltonian, as a function of the momentum `p` and
-the position `q`, is
+This file models a particle of mass `m` in three-dimensional space under a conservative central
+force centred at the origin. The force is derived from a potential `V (‖q‖)` which depends only on
+the distance `‖q‖` from the origin. Its Hamiltonian, as a function of the momentum `p` and the
+position `q`, is
 
 $$H(p, q) = \frac{\langle p, p\rangle}{2m} + V(\|q\|).$$
 
 The Kepler problem, `V r = -k / r`, and the isotropic harmonic oscillator, `V r = k r² / 2`, are
 the most important examples.
+
+The radial potential `V` is represented by a function on all of `ℝ`, with smoothness required
+only for positive radii. Its value at zero is part of this total-function representation; the
+position-gradient and smoothness results apply only when `q ≠ 0`, allowing potentials singular
+at the physical centre.
 
 This file defines the Hamiltonian and computes its partial gradients: the momentum gradient is the
 velocity `p / m`, and away from the centre the position gradient `V'(‖q‖) q / ‖q‖` is parallel to
@@ -62,9 +67,8 @@ open scoped ContDiff
 
 -/
 
-/-- A particle in three-dimensional space under a central force, specified by its mass `m` and a
-potential `V`, a function of the distance from the centre of force which is smooth away from the
-centre. -/
+/-- A particle in three-dimensional space under a conservative central force centred at the origin,
+specified by its mass `m` and a radial potential `V` smooth at positive radii. -/
 structure CentralForce where
   /-- The mass of the particle. -/
   m : ℝ
@@ -80,6 +84,7 @@ namespace CentralForce
 variable (S : CentralForce)
 
 /-- The mass of the particle is non-zero. -/
+@[simp]
 lemma m_ne_zero : S.m ≠ 0 := S.m_pos.ne'
 
 /-!
