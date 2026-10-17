@@ -5,11 +5,13 @@ Authors: Rithwik Ranganathan
 -/
 module
 
-public import PhyslibAlpha.Mathematics.HasGradient
 public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Physlib.Mathematics.Calculus.Gradient
 /-!
 
 # Central forces
+
+Hamiltonian and partial gradients of a particle in a smooth radial potential.
 
 ## i. Overview
 

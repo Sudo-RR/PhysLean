@@ -20,8 +20,8 @@ public import PhyslibAlpha.ClassicalFieldTheory.Local.TotalDerivative
 public import PhyslibAlpha.ClassicalFieldTheory.Local.TotalDivergence
 public import PhyslibAlpha.ClassicalFieldTheory.Local.TotalDivergenceEquivalence
 public import PhyslibAlpha.ClassicalFieldTheory.Local.Variation
-public import PhyslibAlpha.ClassicalMechanics.CoupledSpringPotential
 public import PhyslibAlpha.ClassicalMechanics.CentralForce.Basic
+public import PhyslibAlpha.ClassicalMechanics.CoupledSpringPotential
 public import PhyslibAlpha.ClassicalMechanics.MomentMap.Basic
 public import PhyslibAlpha.ClassicalMechanics.MomentMap.Cohomology
 public import PhyslibAlpha.ClassicalMechanics.MomentMap.GalileanMass
@@ -126,7 +126,6 @@ public import PhyslibAlpha.Mathematics.Order.PositiveDual.RieszKantorovich
 public import PhyslibAlpha.Mathematics.Order.PositiveDual.UpperEnvelope
 public import PhyslibAlpha.Mathematics.Order.StrongUnit
 public import PhyslibAlpha.Mathematics.Order.VectorLattice
-public import PhyslibAlpha.Mathematics.HasGradient
 public import PhyslibAlpha.Mathematics.PartialDerivativeTest
 public import PhyslibAlpha.Mathematics.Probability.Kernel.Factorization
 public import PhyslibAlpha.Mathematics.RepresentationTheory.Sl2.AngularMomentum
