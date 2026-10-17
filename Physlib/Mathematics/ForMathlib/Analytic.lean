@@ -5,6 +5,8 @@ Authors: Rithwik Ranganathan
 -/
 module
 
+public import Mathlib.Analysis.Analytic.Constructions
+public import Mathlib.Analysis.Analytic.Linear
 public import Mathlib.Analysis.Analytic.Uniqueness
 public import Mathlib.Analysis.InnerProductSpace.PiL2
 /-!
