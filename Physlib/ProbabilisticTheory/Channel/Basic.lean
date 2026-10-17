@@ -6,6 +6,7 @@ Authors: Tom Ole Diem
 module
 
 public import Mathlib.Algebra.Order.Module.PositiveLinearMap
+public import Mathlib.Basic.NNReal.Defs
 
 /-!
 # Positive unital maps
@@ -22,13 +23,19 @@ which is not expressible using the order-unit structure alone.
 ## ii. Key results
 
 - `UnitalPositiveLinearMap` : a positive linear map preserving `1`, notated `E →ₚ₁[R] F`.
+- `PositiveLinearMap` scalar action : positive linear maps can be scaled by nonnegative reals.
 - `UnitalPositiveLinearMap.ofLinearMap` : bundle a linear map after checking positivity and
   unitality.
+- `UnitalPositiveLinearMap.ofPositiveLinearMap` : bundle a positive linear map after checking
+  unitality.
+- `UnitalPositiveLinearMap.id`, `UnitalPositiveLinearMap.comp` : the identity and composition of
+  unital positive linear maps.
 
 ## iii. Table of contents
 
 - A. Unital positive linear maps
 - B. Constructing unital positive linear maps
+- C. Scaling positive linear maps
 
 ## iv. References
 
@@ -55,9 +62,12 @@ notation:25 E " →ₚ₁[" R:25 "] " F:0 => UnitalPositiveLinearMap R E F
 
 namespace UnitalPositiveLinearMap
 
-variable {R E F : Type*} [Semiring R]
+section Basic
+
+variable {R E F G : Type*} [Semiring R]
   [AddCommMonoid E] [PartialOrder E] [AddCommMonoid F] [PartialOrder F]
-  [Module R E] [Module R F] [One E] [One F]
+  [AddCommMonoid G] [PartialOrder G] [Module R E] [Module R F] [Module R G]
+  [One E] [One F] [One G]
 
 instance : FunLike (E →ₚ₁[R] F) E F where
   coe f := f.toFun
@@ -73,6 +83,11 @@ instance : OrderHomClass (E →ₚ₁[R] F) E F where
 instance : OneHomClass (E →ₚ₁[R] F) E F where
   map_one f := f.map_one'
 
+instance : Coe (E →ₚ₁[R] F) (E →ₚ[R] F) := ⟨toPositiveLinearMap⟩
+
+@[simp]
+lemma toPositiveLinearMap_apply (f : E →ₚ₁[R] F) (x : E) : f.toPositiveLinearMap x = f x := rfl
+
 /-- Unital positive linear maps are determined by their underlying positive linear map. -/
 lemma toPositiveLinearMap_injective :
     Function.Injective (toPositiveLinearMap (R := R) (E := E) (F := F)) :=
@@ -83,9 +98,28 @@ lemma toLinearMap_injective : Function.Injective (fun f : E →ₚ₁[R] F => f.
   fun _ _ h ↦ toPositiveLinearMap_injective
     (PositiveLinearMap.toLinearMap_injective h)
 
-end UnitalPositiveLinearMap
+variable (R E) in
+/-- The identity as a unital positive linear map. -/
+def id : E →ₚ₁[R] E where
+  toPositiveLinearMap := PositiveLinearMap.id R E
+  map_one' := rfl
 
-namespace UnitalPositiveLinearMap
+/-- The composition of unital positive linear maps. -/
+def comp (g : F →ₚ₁[R] G) (f : E →ₚ₁[R] F) : E →ₚ₁[R] G where
+  toPositiveLinearMap := g.toPositiveLinearMap.comp f.toPositiveLinearMap
+  map_one' := by simp
+
+@[simp] lemma id_apply (x : E) : UnitalPositiveLinearMap.id R E x = x := rfl
+
+@[simp] lemma comp_apply (g : F →ₚ₁[R] G) (f : E →ₚ₁[R] F) (x : E) : g.comp f x = g (f x) := rfl
+
+@[simp] lemma comp_id (f : E →ₚ₁[R] F) : f.comp (.id R E) = f := rfl
+
+@[simp] lemma id_comp (f : E →ₚ₁[R] F) : (UnitalPositiveLinearMap.id R F).comp f = f := rfl
+
+end Basic
+
+section Construction
 
 variable {R E F : Type*} [Semiring R]
   [AddCommGroup E] [PartialOrder E] [IsOrderedAddMonoid E]
@@ -103,4 +137,40 @@ def ofLinearMap (f : E →ₗ[R] F) (hpos : ∀ x, 0 ≤ x → 0 ≤ f x) (hone 
   toPositiveLinearMap := PositiveLinearMap.mk₀ f hpos
   map_one' := hone
 
+/-- Bundle a positive linear map after proving only that it preserves `1`. -/
+def ofPositiveLinearMap (f : E →ₚ[R] F) (hone : f 1 = 1) : E →ₚ₁[R] F where
+  toPositiveLinearMap := f
+  map_one' := hone
+
+omit [IsOrderedAddMonoid E] [IsOrderedAddMonoid F] in
+@[simp]
+lemma ofPositiveLinearMap_apply (f : E →ₚ[R] F) (hone : f 1 = 1) (x : E) :
+    ofPositiveLinearMap f hone x = f x := rfl
+
+end Construction
+
 end UnitalPositiveLinearMap
+
+/-!
+
+## C. Scaling positive linear maps
+
+Positive linear maps are closed under addition and under scaling by nonnegative reals, but
+unital ones are not closed under scaling.
+
+-/
+
+namespace PositiveLinearMap
+
+variable {R E F : Type*} [Semiring R]
+  [AddCommMonoid E] [PartialOrder E] [AddCommMonoid F] [PartialOrder F]
+  [Module R E] [Module R F] [Module NNReal F] [SMulCommClass R NNReal F] [PosSMulMono NNReal F]
+
+instance : SMul NNReal (E →ₚ[R] F) where
+  smul c f := .mk (c • f.toLinearMap) fun _ _ h ↦ by
+    simpa using smul_le_smul_of_nonneg_left (OrderHomClass.mono f h) zero_le
+
+@[simp]
+lemma nnreal_smul_apply (c : NNReal) (f : E →ₚ[R] F) (x : E) : (c • f) x = c • f x := rfl
+
+end PositiveLinearMap
