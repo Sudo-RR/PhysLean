@@ -21,10 +21,10 @@ By the identity principle, an analytic function on a connected normed space whic
 non-empty open set vanishes everywhere. Hence an analytic function which is non-zero at one point
 is non-zero on a dense set.
 
-This is how domains of phase space cut out by the non-vanishing of polynomial functions of the
-coordinates are shown to be dense, for instance the domains on which Hamiltonian systems are shown
-to be Liouville integrable. To make the analyticity of such polynomial functions automatic, the
-coordinate functionals on Euclidean space are shown to be analytic and tagged for `fun_prop`.
+The coordinate functionals on Euclidean space are registered with `fun_prop` to automate proofs of
+analyticity for polynomial expressions in the coordinates. Combined with the density lemma, this
+shows that the non-vanishing set of such an expression is dense whenever it is non-zero at some
+point. Applications include domains in phase space used in proofs of Liouville integrability.
 
 ## ii. Key results
 
