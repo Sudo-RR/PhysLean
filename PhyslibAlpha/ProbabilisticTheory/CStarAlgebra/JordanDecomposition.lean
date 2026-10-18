@@ -14,6 +14,8 @@ public import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpo
 
 # Positive and negative parts of observables
 
+Every observable of a C⋆-algebra splits uniquely into orthogonal positive and negative parts.
+
 ## i. Overview
 
 Every observable `a` of a C⋆-algebra splits uniquely as `a = a⁺ - a⁻` with `a⁺`, `a⁻` positive and
@@ -33,9 +35,15 @@ functional calculus; here they are positive observables.
 - A. Positive observables
 - B. Positive and negative parts
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 variable {A : Type*} [CStarAlgebra A] [PartialOrder A] [StarOrderedRing A]
 
@@ -91,3 +99,5 @@ lemma posPart_negPart_unique (a : Observable A) (b c : PositiveObservable A)
   exact ⟨Subtype.ext (Subtype.ext hb), Subtype.ext (Subtype.ext hc)⟩
 
 end Observable
+
+end ProbabilisticTheory

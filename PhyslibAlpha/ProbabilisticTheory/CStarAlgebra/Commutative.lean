@@ -12,6 +12,8 @@ public import Mathlib.Analysis.CStarAlgebra.GelfandDuality
 /-!
 # Commutative C⋆-algebras are classical
 
+The observables of a commutative C⋆-algebra form a classical system, via its characters.
+
 ## i. Overview
 
 A commutative C⋆-algebra is the algebra of continuous functions on its characters, the pure
@@ -33,13 +35,18 @@ self-adjoint part of a commutative C⋆-algebra is a classical system.
 - B. Order through characters
 - C. Classicality
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
 
-open scoped ComplexOrder
 
 namespace CommCStarAlgebra
+open ProbabilisticTheory
+open scoped ComplexOrder
 
 variable {A : Type*} [CommCStarAlgebra A]
 
@@ -133,3 +140,4 @@ lemma isClassical : IsClassical (selfAdjoint A) :=
   hasRieszDecomposition.hasLatticeDualCone
 
 end CommCStarAlgebra
+

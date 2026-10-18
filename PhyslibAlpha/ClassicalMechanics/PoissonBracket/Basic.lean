@@ -5,14 +5,16 @@ Authors: Rithwik Ranganathan
 -/
 module
 
-public import Physlib.ClassicalMechanics.PoissonBracket
+public import Physlib.ClassicalMechanics.HamiltonianMechanics.PoissonBracket
 /-!
 
 # Computing Poisson brackets
 
+Helper lemmas for computing Poisson brackets of conserved quantities.
+
 ## i. Overview
 
-Further properties of `poissonBracket` from `Physlib.ClassicalMechanics.PoissonBracket`, used to
+Further properties of `poissonBracket` from the Hamiltonian mechanics API, used to
 compute the brackets between the conserved quantities of Hamiltonian systems: the bracket of a
 function with itself vanishes, and the bracket of two functions whose partial gradients are known,
 in the form of `HasGradientAt` statements, is given explicitly by those gradients.
@@ -26,6 +28,10 @@ in the form of `HasGradientAt` statements, is given explicitly by those gradient
 
 - A. The bracket of a function with itself
 - B. The bracket from known gradients
+
+## iv. References
+
+See `Physlib.ClassicalMechanics.HamiltonianMechanics.PoissonBracket` for references and conventions.
 -/
 
 @[expose] public section

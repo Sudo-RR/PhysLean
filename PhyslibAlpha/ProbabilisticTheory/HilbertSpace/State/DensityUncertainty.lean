@@ -8,10 +8,13 @@ module
 public import PhyslibAlpha.ProbabilisticTheory.CStarAlgebra.Uncertainty
 public import PhyslibAlpha.ProbabilisticTheory.HilbertSpace.State.Density
 public import PhyslibAlpha.ProbabilisticTheory.HilbertSpace.State.Vector
+public import Mathlib.Analysis.InnerProductSpace.Trace
 
 /-!
 
 # Uncertainty in density-operator states
+
+Expectation, covariance, variance and Robertson–Schrödinger for density-operator states.
 
 ## i. Overview
 
@@ -34,9 +37,15 @@ traces against `ρ`, and the state of a rank-one projection `|ψ⟩⟨ψ|` is th
 - B. Robertson–Schrödinger for density operators
 - C. Vector states as rank-one density states
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 open scoped ComplexOrder InnerProductSpace selfAdjoint
 open ContinuousLinearMap
@@ -107,3 +116,5 @@ lemma ofDensity_rankOne {ψ : H} (h : ‖ψ‖ = 1) :
   rfl
 
 end UnitalPositiveLinearMap
+
+end ProbabilisticTheory

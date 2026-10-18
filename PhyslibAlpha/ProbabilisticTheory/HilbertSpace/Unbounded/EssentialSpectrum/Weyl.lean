@@ -12,6 +12,8 @@ public import PhyslibAlpha.ProbabilisticTheory.HilbertSpace.Unbounded.EssentialS
 
 # Weyl's theorem on the essential spectrum
 
+Weyl's theorem: compact resolvent differences preserve the essential spectrum.
+
 ## i. Overview
 
 If the resolvents at `i` of two self-adjoint operators differ by a compact operator, the operators
@@ -41,6 +43,8 @@ not change the essential spectrum.
 @[expose] public section
 
 noncomputable section
+
+namespace ProbabilisticTheory
 
 open Filter Topology Complex
 open scoped InnerProductSpace
@@ -228,3 +232,5 @@ lemma essSpectrum_eq_of_isCompactOperator_perturb
     (isCompactOperator_resolvent_sub_of_isCompactOperator_perturb hA hB hRA hRB hdom W hW hVW)
 
 end QuantumMechanics.Essential
+
+end ProbabilisticTheory

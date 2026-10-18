@@ -12,6 +12,8 @@ public import PhyslibAlpha.ProbabilisticTheory.StarAlgebra.SelfAdjoint
 
 # Restricting positive maps
 
+Restricting positive linear maps to submodules and to the self-adjoint elements.
+
 ## i. Overview
 
 A positive linear map restricts to submodules, in particular to the self-adjoint elements, where a
@@ -22,9 +24,23 @@ complex state becomes a real one.
 - `PositiveLinearMap.restrict`, `UnitalPositiveLinearMap.restrict` : restriction to a submodule.
 - `UnitalPositiveLinearMap.restrictSA` : restriction to self-adjoint elements.
 
+## iii. Table of contents
+
+- A. Restriction to submodules
+- B. Positive maps on self-adjoint elements
+- C. Unital positive maps on self-adjoint elements
+
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
+
+/-! ## A. Restriction to submodules -/
 
 section Restrict
 
@@ -37,7 +53,7 @@ variable {R S E₁ E₂ : Type*}
 
 /-- Restrict a positive linear map to submodules it preserves. -/
 @[simps!]
-def PositiveLinearMap.restrict (f : E₁ →ₚ[R] E₂) {F₁ : Submodule S E₁} {F₂ : Submodule S E₂}
+def _root_.PositiveLinearMap.restrict (f : E₁ →ₚ[R] E₂) {F₁ : Submodule S E₁} {F₂ : Submodule S E₂}
     (h : ∀ ⦃x⦄, x ∈ F₁ → f x ∈ F₂) : F₁ →ₚ[S] F₂ where
   toLinearMap := (f.toLinearMap.restrictScalars S).restrict (by simpa)
   monotone' a b h := f.monotone (by simpa)
@@ -56,7 +72,12 @@ def UnitalPositiveLinearMap.restrict (f : E₁ →ₚ₁[R] E₂) {F₁ : Submod
 
 end Restrict
 
+end ProbabilisticTheory
+
+/-! ## B. Positive maps on self-adjoint elements -/
+
 section SelfAdjoint
+open ProbabilisticTheory
 
 variable {A₁ A₂ : Type*}
 
@@ -106,6 +127,16 @@ end Complex
 
 end PositiveLinearMap
 
+end SelfAdjoint
+
+/-! ## C. Unital positive maps on self-adjoint elements -/
+
+namespace ProbabilisticTheory
+
+section SelfAdjoint
+
+variable {A₁ A₂ : Type*}
+
 namespace UnitalPositiveLinearMap
 
 variable
@@ -153,3 +184,5 @@ lemma coe_restrictSAC_apply (f : A₁ →ₚ₁[ℂ] ℂ) (x : selfAdjoint A₁)
 end UnitalPositiveLinearMap
 
 end SelfAdjoint
+
+end ProbabilisticTheory

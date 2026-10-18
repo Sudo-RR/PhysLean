@@ -12,6 +12,8 @@ public import PhyslibAlpha.Mathematics.Order.PositiveDual.Basic
 
 # The unit of an order-unit space as an order unit
 
+The unit of an order-unit space is an order unit, so weight-zero positive functionals vanish.
+
 ## i. Overview
 
 The unit of an order-unit space is an order unit of the underlying ordered vector space, so the
@@ -29,9 +31,15 @@ functional that vanishes on the unit vanishes everywhere.
 - A. The unit as an order unit
 - B. Positive functionals
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 namespace OrderUnitSpace
 
@@ -50,6 +58,8 @@ end OrderUnitSpace
 /-! ## B. Positive functionals -/
 
 /-- A positive functional with total weight zero vanishes. -/
-lemma PositiveLinearMap.eq_zero_of_map_one_eq_zero {E : Type*} [OrderUnitSpace E]
+lemma _root_.PositiveLinearMap.eq_zero_of_map_one_eq_zero {E : Type*} [OrderUnitSpace E]
     {ψ : E →ₚ[ℝ] ℝ} (h : ψ 1 = 0) : ψ = 0 :=
-  eq_zero_of_map_eq_zero OrderUnitSpace.isOrderUnit_one h
+  PositiveLinearMap.eq_zero_of_map_eq_zero OrderUnitSpace.isOrderUnit_one h
+
+end ProbabilisticTheory

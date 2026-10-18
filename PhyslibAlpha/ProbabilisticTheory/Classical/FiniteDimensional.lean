@@ -11,6 +11,8 @@ public import PhyslibAlpha.Mathematics.Geometry.Simplex
 /-!
 # Finite classical systems
 
+A finite-dimensional system is classical exactly when its state space is a geometric simplex.
+
 ## i. Overview
 
 A system with finitely many independent observables is classical exactly when its state space is a
@@ -37,9 +39,15 @@ finitely many of them, and by the Krein–Milman theorem they span the state spa
 - A. Geometric simplices decompose uniquely
 - B. Simplices are geometric simplices
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 open StateSpace
 
@@ -174,3 +182,5 @@ lemma isSimplexStateSpace_of_affineEquiv_stdSimplexSet {ι : Type*} [Fintype ι]
     (e : WeakDual ℝ E ≃ᵃ[ℝ] (ι → ℝ)) (he : e '' stateSpace E = stdSimplexSet ι) :
     IsSimplexStateSpace E :=
   PureState.isSimplexStateSpace_of_isSimplex (isSimplex_of_affineEquiv_stdSimplexSet e he)
+
+end ProbabilisticTheory

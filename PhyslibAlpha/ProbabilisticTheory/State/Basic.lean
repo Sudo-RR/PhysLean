@@ -10,6 +10,8 @@ public import PhyslibAlpha.ProbabilisticTheory.Channel.Basic
 /-!
 # States
 
+Notation `𝓢[𝕜, A]` for states, the normalized positive linear functionals.
+
 ## i. Overview
 
 A state assigns each observable its expectation value: a positive linear functional
@@ -24,9 +26,15 @@ A state assigns each observable its expectation value: a positive linear functio
 
 - A. Notation for positive functionals and states
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 /-!
 
@@ -39,3 +47,5 @@ notation " 𝓟[" 𝕜 ", " A "] " => A →ₚ[𝕜] 𝕜
 
 /-- States on an ordered `𝕜`-vector space with a distinguished unit. -/
 notation " 𝓢[" 𝕜 ", " A "] " => A →ₚ₁[𝕜] 𝕜
+
+end ProbabilisticTheory

@@ -6,11 +6,9 @@ Authors: Alex Meiburg
 module
 
 public import QuantumInfo.Channels.Bundled
-public import QuantumInfo.Channels.CPTP
-public import QuantumInfo.Channels.Dual
 public import QuantumInfo.Channels.MatrixMap
 public import QuantumInfo.Channels.Unbundled
-public import Physlib.Meta.Sorry
+public import Physlib.Meta.Linters.Sorry
 @[expose] public section
 
 noncomputable section
@@ -29,11 +27,11 @@ namespace MState
 def fidelity (ρ σ : MState d) : ℝ :=
   (σ.M.conj ρ.M.sqrt.mat).sqrt.trace
 
-theorem fidelity_ge_zero : 0 ≤ fidelity ρ σ := by
+lemma fidelity_ge_zero : 0 ≤ fidelity ρ σ := by
   apply HermitianMat.trace_nonneg
   apply HermitianMat.sqrt_nonneg
 
-theorem fidelity_le_one : fidelity ρ σ ≤ 1 := by
+lemma fidelity_le_one : fidelity ρ σ ≤ 1 := by
   unfold fidelity
   rw [HermitianMat.sqrt_eq_cfc_rpow_half, ← HermitianMat.rpow_eq_cfc]
   calc ((σ.M.conj ρ.M.sqrt.mat) ^ (1/2 : ℝ)).trace
