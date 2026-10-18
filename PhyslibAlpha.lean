@@ -35,7 +35,6 @@ public import PhyslibAlpha.ClassicalMechanics.NortonDome.PhysicalSpace
 public import PhyslibAlpha.ClassicalMechanics.NortonDome.PosPartPow
 public import PhyslibAlpha.ClassicalMechanics.NortonDome.Solution
 public import PhyslibAlpha.ClassicalMechanics.NortonDome.Sqrt
-public import PhyslibAlpha.ClassicalMechanics.PoissonBracket.Basic
 public import PhyslibAlpha.CondensedMatter.Bloch.Algebraic
 public import PhyslibAlpha.CondensedMatter.Bloch.FiniteBloch
 public import PhyslibAlpha.CondensedMatter.Bloch.Hypercubic

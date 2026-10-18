@@ -32,6 +32,7 @@ derivatives on phase space.
 
 - `poissonBracket` : the Poisson bracket of two phase-space functions.
 - `poissonBracket_antisymm` : the bracket is antisymmetric.
+- `poissonBracket_self` : every observable Poisson-commutes with itself.
 - `poissonBracket_add_left`, `poissonBracket_add_right`, `poissonBracket_const_mul_left`,
   `poissonBracket_const_mul_right` : the bracket is bilinear, that is additive and homogeneous in
   each argument.
@@ -94,6 +95,11 @@ lemma poissonBracket_antisymm (f g : X → X → ℝ) (p q : X) :
   simp only [poissonBracket, neg_sub]
   rw [real_inner_comm (gradient (fun p' => g p' q) p) (gradient (fun q' => f p q') q),
     real_inner_comm (gradient (fun q' => g p q') q) (gradient (fun p' => f p' q) p)]
+
+/-- The Poisson bracket of a phase-space function with itself vanishes. -/
+lemma poissonBracket_self (f : X → X → ℝ) (p q : X) : poissonBracket f f p q = 0 := by
+  have h := poissonBracket_antisymm f f p q
+  linarith
 
 /-!
 
