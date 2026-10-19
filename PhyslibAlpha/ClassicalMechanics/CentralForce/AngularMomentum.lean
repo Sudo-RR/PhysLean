@@ -51,7 +51,8 @@ central-force system away from the centre of force, so `L²` and `L_z` are conse
 
 ## iv. References
 
-* H. Goldstein, C. Poole and J. Safko, *Classical Mechanics*, 3rd edition, Chapter 9.
+* H. Goldstein, C. Poole and J. Safko, *Classical Mechanics*, 3rd edition,
+  Section 9.7 (Poisson bracket relations for angular momentum) and Chapter 3 (central forces).
 -/
 
 @[expose] public section
