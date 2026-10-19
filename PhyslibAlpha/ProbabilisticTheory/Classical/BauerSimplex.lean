@@ -11,6 +11,8 @@ public import PhyslibAlpha.Mathematics.MeasureTheory.PositiveFunctionalIntegral
 /-!
 # Bauer simplices
 
+The state space is a Bauer simplex exactly when ensembles refine and pure states are closed.
+
 ## i. Overview
 
 A Bauer simplex is a classical state space whose pure states form a closed set. The pure states
@@ -43,6 +45,8 @@ is a Bauer simplex exactly when ensembles refine and the pure states are closed.
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 open StateSpace
 
@@ -82,3 +86,5 @@ lemma isBauerSimplexStateSpace_iff : IsBauerSimplexStateSpace E ↔
     EnsemblesRefine E ∧ IsClosed {ω : stateSpace E | (toState ω).IsPure} :=
   ⟨fun h => ⟨h.1.ensemblesRefine, h.2⟩,
     fun ⟨hE, hP⟩ => ⟨(isSimplexStateSpace_iff_ensemblesRefine_of_isClosed hP).2 hE, hP⟩⟩
+
+end ProbabilisticTheory

@@ -12,6 +12,8 @@ public import PhyslibAlpha.ProbabilisticTheory.JordanOrderUnit.JB.Basic
 
 # Projection resolutions
 
+Projection resolutions: projection-valued effect measures and their bounded Borel calculus.
+
 ## i. Overview
 
 A projection resolution is an effect-valued measure whose values are Jordan projections and whose
@@ -29,9 +31,15 @@ functions against it gives a bounded Borel functional calculus.
 
 - A. Bounded Borel calculus
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 open Function
 
@@ -289,3 +297,5 @@ lemma ext_of_forall_boundedBorel_eq {P Q : MeasurableProjectionResolution Ω E}
 end BoundedBorel
 
 end MeasurableProjectionResolution
+
+end ProbabilisticTheory

@@ -19,6 +19,8 @@ public import Mathlib.Analysis.Normed.Group.Uniform
 
 # Integrating bounded functions against an effect-valued measure
 
+The integral of bounded measurable functions against an effect-valued measure.
+
 ## i. Overview
 
 If the observables are complete for the order-unit norm, the integral of simple functions extends to
@@ -46,9 +48,15 @@ on simple functions.
 - C. Comparing the simple integrals of two approximations
 - D. The integral, via completeness
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 namespace EffectValuedMeasure
 
@@ -671,3 +679,5 @@ lemma integral_smul (c : ℝ) {hcf : Measurable (c • f)} {hMcf : ∀ x, |(c �
 end Definition
 
 end EffectValuedMeasure
+
+end ProbabilisticTheory

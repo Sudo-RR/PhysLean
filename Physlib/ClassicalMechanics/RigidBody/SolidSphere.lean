@@ -6,8 +6,8 @@ Authors: Joseph Tooby-Smith
 module
 
 public import Physlib.ClassicalMechanics.RigidBody.Basic
-public import Physlib.SpaceAndTime.Space.Integrals.Basic
 public import Physlib.Meta.Linters.Sorry
+public import Mathlib.MeasureTheory.Measure.Haar.Unique
 /-!
 
 # The solid sphere as a rigid body
@@ -33,7 +33,7 @@ noncomputable def solidSphere (d : ℕ) (m R : ℝ≥0) : RigidBody d where
     intro f g
     simp only [ContMDiffMap.coe_add, Pi.add_apply]
     rw [integral_add]
-    ring
+    · ring
     · exact IntegrableOn.integrable
         (ContinuousOn.integrableOn_compact (isCompact_closedBall 0 R) (by fun_prop))
     · exact IntegrableOn.integrable

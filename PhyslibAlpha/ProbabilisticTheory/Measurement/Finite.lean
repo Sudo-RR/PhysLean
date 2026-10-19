@@ -10,6 +10,8 @@ public import PhyslibAlpha.ProbabilisticTheory.Measurement.Basic
 /-!
 # Measurements with finitely many outcomes
 
+Measurements with finitely many outcomes are the families of effects summing to `1`.
+
 ## i. Overview
 
 On a finite discrete outcome space, every observable of the outcome is a combination of the
@@ -35,9 +37,15 @@ system is Archimedean.
 - B. Normality is automatic
 - C. Measurements from their outcome effects
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 open BoundedMeasurable UnitalPositiveLinearMap
 
@@ -45,7 +53,12 @@ variable {Ω E : Type*} [MeasurableSpace Ω] [Fintype Ω] [MeasurableSingletonCl
 
 /-! ## A. Observables of a finite classical system -/
 
+end ProbabilisticTheory
+
 namespace BoundedMeasurable
+open ProbabilisticTheory
+open BoundedMeasurable UnitalPositiveLinearMap
+variable {Ω E : Type*} [MeasurableSpace Ω] [Fintype Ω] [MeasurableSingletonClass Ω]
 
 /-- An observable of a finite classical system is a combination of point indicators. -/
 lemma eq_sum_indicator (f : BoundedMeasurable Ω) :
@@ -60,6 +73,11 @@ lemma sum_indicator_singleton :
   simpa using (eq_sum_indicator (1 : BoundedMeasurable Ω)).symm
 
 end BoundedMeasurable
+
+namespace ProbabilisticTheory
+
+open BoundedMeasurable UnitalPositiveLinearMap
+variable {Ω E : Type*} [MeasurableSpace Ω] [Fintype Ω] [MeasurableSingletonClass Ω]
 
 /-! ## B. Normality is automatic -/
 
@@ -161,3 +179,5 @@ lemma ext_of_singleton {M N : Measurement Ω E}
   simp only [h]
 
 end Measurement
+
+end ProbabilisticTheory

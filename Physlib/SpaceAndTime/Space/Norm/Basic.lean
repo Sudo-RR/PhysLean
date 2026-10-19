@@ -5,6 +5,7 @@ Authors: Joseph Tooby-Smith
 -/
 module
 
+public import Physlib.Mathematics.ForMathlib.Integration.Basic
 public import Physlib.SpaceAndTime.Space.Derivatives.Laplacian
 public import Physlib.SpaceAndTime.Space.Integrals.NormPow
 public import Physlib.Mathematics.Distribution.PowMul
@@ -14,17 +15,17 @@ public import Physlib.Mathematics.Distribution.PowMul
 
 ## i. Overview
 
-The main content of this file is defining `Space.normPowerSeries`, a power series which is
-differentiable everywhere, and which tends to the norm in the limit as `n → ∞`.
+The main content of this file is defining `Space.normPowerSeries`, a sequence of smooth
+functions which are differentiable everywhere, and which tend to the norm in the limit as `n → ∞`.
 
-We use properties of this power series to prove various results about distributions involving norms.
+We use properties of this sequence to prove various results about distributions involving norms.
 
 ## ii. Key results
 
-- `normPowerSeries` : A power series which is differentiable everywhere, and in the limit
+- `normPowerSeries` : A sequence of functions which are differentiable everywhere, and in the limit
   as `n → ∞` tends to `‖x‖`.
-- `normPowerSeries_differentiable` : The power series is differentiable everywhere.
-- `normPowerSeries_tendsto` : The power series tends to the norm in the limit as `n → ∞`.
+- `normPowerSeries_differentiable` : Each `normPowerSeries n` is differentiable everywhere.
+- `normPowerSeries_tendsto` : `normPowerSeries n` tends to the norm in the limit as `n → ∞`.
 - `distGrad_distOfFunction_norm_zpow` : The gradient of the distribution defined by a power of the
   norm.
 - `distGrad_distOfFunction_log_norm` : The gradient of the distribution defined by the logarithm
@@ -42,14 +43,14 @@ We use properties of this power series to prove various results about distributi
 
 ## iii. Table of contents
 
-- A. The norm as a power series
-  - A.1. Differentiability of the norm power series
-  - A.2. The limit of the norm power series
-  - A.3. The derivative of the norm power series
-  - A.4. Limits of the derivative of the power series
-  - A.5. The power series is AEStronglyMeasurable
-  - A.6. Bounds on the norm power series
-  - A.7. The `IsDistBounded` property of the norm power series
+- A. The norm as a limit of smooth functions
+  - A.1. Differentiability of the smooth approximation of the norm
+  - A.2. The limit of the smooth approximation of the norm
+  - A.3. The derivative of the smooth approximation of the norm
+  - A.4. Limits of the derivative of the smooth approximation
+  - A.5. The smooth approximation is AEStronglyMeasurable
+  - A.6. Bounds on the smooth approximation of the norm
+  - A.7. The `IsDistBounded` property of the smooth approximation of the norm
   - A.8. Differentiability of functions
   - A.9. Derivatives of functions
   - A.10. Gradients of distributions based on powers
@@ -83,11 +84,11 @@ open MeasureTheory
 
 /-!
 
-## A. The norm as a power series
+## A. The norm as a limit of smooth functions
 
 -/
 
-/-- A power series which is differentiable everywhere, and in the limit
+/-- A sequence of functions which are differentiable everywhere, and in the limit
   as `n → ∞` tends to `‖x‖`. -/
 def normPowerSeries {d} : ℕ → Space d → ℝ := fun n x =>
   √(‖x‖ ^ 2 + 1/(n + 1))
@@ -101,7 +102,7 @@ lemma normPowerSeries_eq_rpow {d} (n : ℕ) :
 
 /-!
 
-### A.1. Differentiability of the norm power series
+### A.1. Differentiability of the smooth approximation of the norm
 
 -/
 
@@ -114,27 +115,27 @@ lemma normPowerSeries_differentiable {d} (n : ℕ) :
 
 /-!
 
-### A.2. The limit of the norm power series
+### A.2. The limit of the smooth approximation of the norm
 
 -/
 open InnerProductSpace
 
 open scoped Topology BigOperators FourierTransform
 
-lemma normPowerSeries_tendsto {d} (x : Space d) (hx : x ≠ 0) :
+lemma normPowerSeries_tendsto {d} (x : Space d) :
     Filter.Tendsto (fun n => normPowerSeries n x) Filter.atTop (𝓝 (‖x‖)) := by
   have h := (Real.continuous_sqrt.tendsto _).comp
     ((tendsto_const_nhds (x := ‖x‖ ^ 2)).add (tendsto_one_div_add_atTop_nhds_zero_nat (𝕜 := ℝ)))
   simpa only [normPowerSeries_eq, Function.comp_def, add_zero,
-    Real.sqrt_sq (norm_pos_iff.mpr hx).le] using h
+    Real.sqrt_sq (norm_nonneg x)] using h
 
 lemma normPowerSeries_inv_tendsto {d} (x : Space d) (hx : x ≠ 0) :
     Filter.Tendsto (fun n => (normPowerSeries n x)⁻¹) Filter.atTop (𝓝 (‖x‖⁻¹)) :=
-  (normPowerSeries_tendsto x hx).inv₀ (norm_ne_zero_iff.mpr hx)
+  (normPowerSeries_tendsto x).inv₀ (norm_ne_zero_iff.mpr hx)
 
 /-!
 
-### A.3. The derivative of the norm power series
+### A.3. The derivative of the smooth approximation of the norm
 
 -/
 open Space
@@ -157,24 +158,31 @@ lemma fderiv_normPowerSeries {d} (n : ℕ) (x y : Space d) :
 
 /-!
 
-### A.4. Limits of the derivative of the power series
+### A.4. Limits of the derivative of the smooth approximation
 
 -/
 
-lemma deriv_normPowerSeries_tendsto {d} (x : Space d) (hx : x ≠ 0) (i : Fin d) :
+/-- The coordinate derivatives of `normPowerSeries` converge pointwise, including at zero. -/
+lemma deriv_normPowerSeries_tendsto {d} (x : Space d) (i : Fin d) :
     Filter.Tendsto (fun n => ∂[i] (normPowerSeries n) x) Filter.atTop (𝓝 (x i * (‖x‖)⁻¹)) := by
   simp only [deriv_normPowerSeries]
-  exact tendsto_const_nhds.mul (normPowerSeries_inv_tendsto x hx)
+  by_cases hx : x = 0
+  · simp [hx]
+  · exact tendsto_const_nhds.mul (normPowerSeries_inv_tendsto x hx)
 
-lemma fderiv_normPowerSeries_tendsto {d} (x y : Space d) (hx : x ≠ 0) :
+/-- For every fixed direction, the derivatives of `normPowerSeries` converge pointwise,
+including at zero. -/
+lemma fderiv_normPowerSeries_tendsto {d} (x y : Space d) :
     Filter.Tendsto (fun n => fderiv ℝ (fun (x : Space d) => normPowerSeries n x) x y)
       Filter.atTop (𝓝 (⟪y, x⟫_ℝ * (‖x‖)⁻¹)) := by
   simp only [fderiv_normPowerSeries]
-  exact tendsto_const_nhds.mul (normPowerSeries_inv_tendsto x hx)
+  by_cases hx : x = 0
+  · simp [hx]
+  · exact tendsto_const_nhds.mul (normPowerSeries_inv_tendsto x hx)
 
 /-!
 
-### A.5. The power series is AEStronglyMeasurable
+### A.5. The smooth approximation is AEStronglyMeasurable
 
 -/
 
@@ -185,7 +193,7 @@ lemma normPowerSeries_aestronglyMeasurable {d} (n : ℕ) :
 
 /-!
 
-### A.6. Bounds on the norm power series
+### A.6. Bounds on the smooth approximation of the norm
 
 -/
 
@@ -249,7 +257,7 @@ lemma normPowerSeries_log_le {d} (n : ℕ) (x : Space d) (hx : x ≠ 0) :
 
 /-!
 
-### A.7. The `IsDistBounded` property of the norm power series
+### A.7. The `IsDistBounded` property of the smooth approximation of the norm
 
 -/
 
@@ -450,7 +458,7 @@ lemma gradient_dist_normPowerSeries_zpow_tendsTo_distGrad_norm {d : ℕ} [NeZero
       (normPowerSeries_zpow_le_norm_sq_add_one n m x hx) (abs_nonneg _)
   · filter_upwards [Measure.ae_ne volume 0] with x hx
     exact tendsto_const_nhds.mul
-      ((normPowerSeries_tendsto x hx).zpow₀ m (.inl (norm_ne_zero_iff.mpr hx)))
+      ((normPowerSeries_tendsto x).zpow₀ m (.inl (norm_ne_zero_iff.mpr hx)))
 
 lemma gradient_dist_normPowerSeries_zpow_tendsTo {d : ℕ} [NeZero d] (m : ℤ)
     (hm : - (d - 1 : ℕ) + 1 ≤ m)
@@ -523,7 +531,7 @@ lemma gradient_dist_normPowerSeries_zpow_tendsTo {d : ℕ} [NeZero d] (m : ℤ)
       ring
     rw [h2]
     exact tendsto_const_nhds.mul (tendsto_const_nhds.mul (tendsto_const_nhds.mul
-      ((normPowerSeries_tendsto x hx).zpow₀ _ (.inl (norm_ne_zero_iff.mpr hx)))))
+      ((normPowerSeries_tendsto x).zpow₀ _ (.inl (norm_ne_zero_iff.mpr hx)))))
 
 /-!
 
@@ -599,7 +607,7 @@ lemma gradient_dist_normPowerSeries_log_tendsTo_distGrad_norm {d : ℕ} (hd : 2 
     exact mul_le_mul_of_nonneg_left (normPowerSeries_log_le n x hx) (abs_nonneg _)
   · filter_upwards [Measure.ae_ne volume 0] with x hx
     exact tendsto_const_nhds.mul
-      ((normPowerSeries_tendsto x hx).log (norm_ne_zero_iff.mpr hx))
+      ((normPowerSeries_tendsto x).log (norm_ne_zero_iff.mpr hx))
 
 lemma gradient_dist_normPowerSeries_log_tendsTo {d : ℕ} (hd : 2 ≤ d)
     (η : 𝓢(Space d, ℝ)) (y : EuclideanSpace ℝ (Fin d)) :
@@ -651,7 +659,7 @@ lemma gradient_dist_normPowerSeries_log_tendsTo {d : ℕ} (hd : 2 ≤ d)
       ring
     rw [h2]
     exact tendsto_const_nhds.mul (tendsto_const_nhds.mul
-      ((normPowerSeries_tendsto x hx).zpow₀ _ (.inl (norm_ne_zero_iff.mpr hx))))
+      ((normPowerSeries_tendsto x).zpow₀ _ (.inl (norm_ne_zero_iff.mpr hx))))
 
 /-!
 
@@ -852,19 +860,20 @@ private lemma distDiv_norm_zpow_smul_repr_self_apply_eq_radial_deriv
           congr
           funext n
           simp [F, Measure.volumeIoiPow]
-          erw [integral_withDensity_eq_integral_smul (by fun_prop)]
-          · congr
-            funext r
-            have hr : 0 < (r : ℝ) := r.2
-            have hnorm := norm_smul_sphere n (le_of_lt hr)
-            rw [NNReal.smul_def]
-            rw [Real.coe_toNNReal _ (pow_nonneg (le_of_lt hr) (d - 1))]
-            · simp only [smul_eq_mul]
-              rw [hnorm, ← grad_smul_inner_space (n : Space d) (⇑η)
-                (SchwartzMap.differentiable η) (r : ℝ) hr, real_inner_comm]
-              simp only [inner_smul_right]
-              rw [← radial_jacobian_zpow_mul_self hp_int hr]
-              ring
+          rw [Integration.integral_withDensity_ofReal_eq_integral_smul]
+          congr
+          funext r
+          have hr : 0 < (r : ℝ) := r.2
+          have hnorm := norm_smul_sphere n (le_of_lt hr)
+          simp only [smul_eq_mul]
+          rw [hnorm, ← grad_smul_inner_space (n : Space d) (⇑η)
+            (SchwartzMap.differentiable η) (r : ℝ) hr, real_inner_comm]
+          simp only [inner_smul_right]
+          rw [← radial_jacobian_zpow_mul_self hp_int hr]
+          ring
+          · fun_prop
+          intro r
+          exact pow_nonneg r.2.le _
 
 lemma distDiv_norm_zpow_smul_repr_self_eq_smul
     {d : ℕ} [NeZero d] (q : ℤ) (hq : 0 < q + (d : ℤ)) :
@@ -1023,13 +1032,15 @@ lemma distDiv_inv_pow_eq_dim {d : ℕ} [NeZero d] :
           congr
           funext n
           simp [Measure.volumeIoiPow]
-          erw [integral_withDensity_eq_integral_smul]
+          rw [Integration.integral_withDensity_ofReal_eq_integral_smul]
           congr
           funext r
           have hr : (0 : ℝ) < r.1 := r.2
-          rw [abs_of_nonneg hr.le, NNReal.smul_def, Real.coe_toNNReal _ (by positivity),
-            smul_eq_mul, ← mul_assoc, mul_inv_cancel₀ (pow_ne_zero (d - 1) hr.ne'), one_mul]
-          fun_prop
+          rw [abs_of_nonneg hr.le, smul_eq_mul,
+            ← mul_assoc, mul_inv_cancel₀ (pow_ne_zero (d - 1) hr.ne'), one_mul]
+          · fun_prop
+          intro r
+          exact pow_nonneg r.2.le _
       _ = - ∫ n, (-η 0) ∂(volume (α := Space d).toSphere) := by
           congr
           funext n

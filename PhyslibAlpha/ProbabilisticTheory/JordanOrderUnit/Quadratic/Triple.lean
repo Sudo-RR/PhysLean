@@ -11,6 +11,8 @@ public import PhyslibAlpha.ProbabilisticTheory.JordanOrderUnit.Operator
 
 # The Jordan triple product
 
+The Jordan triple product `{a, b, c}`: symmetry, linearity and the diagonal `{a, b, a} = U_a b`.
+
 ## i. Overview
 
 The Jordan triple product `{a, b, c} = a ∘ (b ∘ c) + c ∘ (b ∘ a) - (a ∘ c) ∘ b` is the polarization
@@ -21,15 +23,28 @@ of the quadratic representation: `{a, b, a} = U_a b`.
 - `JordanAlgebra.jordanTriple` : the triple product.
 - `JordanAlgebra.jordanTriple_diag` : `{a, b, a} = U_a b`.
 
+## iii. Table of contents
+
+- A. The triple product
+- B. Symmetry, diagonal and linearity
+
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 namespace JordanAlgebra
 
 variable {E : Type*} [NonAssocCommRing E] [Module ℝ E] [SMulCommClass ℝ E E]
 
 open scoped JordanAlgebra
+
+/-! ## A. The triple product -/
 
 /-- The Jordan triple product, written directly to retain a computable algebraic definition. -/
 def jordanTriple (a b c : E) : E := a * (b * c) + c * (b * a) - (a * c) * b
@@ -46,6 +61,8 @@ lemma jordanTriple_eq_quadRepBilin_apply (a b c : E) :
 lemma quadRepPolar_eq_two_smul_jordanTriple (a b c : E) :
     quadRepPolar a c b = (2 : ℝ) • jordanTriple a b c := by
   rw [quadRepPolar_apply, jordanTriple, mul_comm c b, mul_comm a b]
+
+/-! ## B. Symmetry, diagonal and linearity -/
 
 omit [Module ℝ E] [SMulCommClass ℝ E E] in
 /-- The Jordan triple product is symmetric in its outer variables. -/
@@ -116,3 +133,5 @@ lemma jordanTriple_smul_middle (r : ℝ) (a b c : E) :
   simp only [smul_add, smul_sub]
 
 end JordanAlgebra
+
+end ProbabilisticTheory

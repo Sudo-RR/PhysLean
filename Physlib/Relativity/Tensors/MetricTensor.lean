@@ -20,7 +20,7 @@ variable {k : Type} [RCLike k] {C : Type} {G : Type} [Group G]
     {V : C → Type} [∀ c, AddCommGroup (V c)] [∀ c, Module k (V c)]
     {basisIdx : C → Type} [∀ c, Fintype (basisIdx c)] [∀ c, DecidableEq (basisIdx c)]
     {rep : (c : C) → Representation k G (V c)} {b : (c : C) → Module.Basis (basisIdx c) k (V c)}
-    {S : TensorSpecies k C G V basisIdx rep b}
+    {S : TensorSpecies k C G V basisIdx rep b} [S.WithMetric]
 attribute [-simp] LinearEquiv.cast_apply
 
 open Tensor
@@ -77,7 +77,7 @@ lemma contrT_metricTensor_metricTensor {c : C} :
       (unitTensor (S := S) c) := by
   rw [metricTensor, metricTensor, fromConstPair, fromConstPair]
   rw [fromPairT_contr_fromPairT_eq_fromPairTContr]
-  erw [fromPairTContr_metric_metric_eq_permT_unit]
+  rw [fromPairTContr_metric_metric_eq_permT_unit]
   rw [permT_permT]
   rfl
 

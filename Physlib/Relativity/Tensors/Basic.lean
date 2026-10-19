@@ -5,12 +5,11 @@ Authors: Joseph Tooby-Smith
 -/
 module
 
-public import Physlib.Relativity.Tensors.ComponentIdx.Single
 public import Physlib.Relativity.Tensors.Reindexing
-public import Physlib.Relativity.Tensors.Contraction.SuccSuccAbove
 public import Mathlib.Topology.Algebra.Module.ModuleTopology
 public import Mathlib.Analysis.RCLike.Basic
 public import Mathlib.Tactic.Cases
+public import Physlib.Relativity.Tensors.ComponentIdx.Basic
 /-!
 
 # Tensors
@@ -618,6 +617,17 @@ lemma permT_basis_repr_symm_apply {n m : ℕ} {c : Fin n → C} {c1 : Fin m → 
   | hzero => simp
   | hsmul r t h => simp [h]
   | hadd t1 t2 h1 h2 => simp [h1, h2]
+
+/-- A reindexing whose slot map is pointwise the identity only transports the labels. -/
+lemma permT_basis_repr_of_id {n : ℕ} {c c1 : Fin n → C} {σ : Fin n → Fin n}
+    (hσ : ∀ i, σ i = i) (h : IsReindexing c c1 σ) (t : S.Tensor c)
+    (φ : ComponentIdx (S := S) c1) :
+    (basis c1).repr (permT σ h t) φ =
+    (basis c).repr t (fun i => basisIdxCongr (by rw [← h.2 i, hσ]) (φ i)) := by
+  rw [permT_basis_repr_symm_apply]
+  congr 1
+  funext i
+  exact basisIdxCongr_heq_arg _ _ (by rw [h.inv_eq_self_of_pointwise_eq hσ])
 
 lemma permT_basis {n m : ℕ} {c : Fin n → C} {c1 : Fin m → C}
     {σ : Fin m → Fin n} (h : IsReindexing c c1 σ)

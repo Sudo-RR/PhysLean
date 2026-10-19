@@ -5,7 +5,6 @@ Authors: Adam Bornemann, Gregory J. Loges
 -/
 module
 
-public import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
 public import Physlib.QuantumMechanics.HilbertSpaces.SpaceD.Basic
 /-!
 
@@ -157,7 +156,7 @@ open SpaceDHilbertSpace
 abbrev SchwartzSubmoduleOn
     {d : ℕ} (Ω : Set (Space d)) (μ : Measure (Space d) := volume) [μ.HasTemperateGrowth] :
     Submodule ℂ (SpaceDHilbertSpaceOn Ω μ) :=
-  (SchwartzSubmodule d μ).map (subspaceProjection Ω μ)
+  (SchwartzSubmodule d μ).map (subspaceProjection Ω μ).toLinearMap
 
 namespace SchwartzSubmoduleOn
 

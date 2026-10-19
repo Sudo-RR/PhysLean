@@ -11,6 +11,8 @@ public import PhyslibAlpha.ProbabilisticTheory.HilbertSpace.Unbounded.AnalyticVe
 
 # Nelson's analytic-vector theorem
 
+Nelson's theorem: a symmetric operator with dense analytic vectors is essentially self-adjoint.
+
 ## i. Overview
 
 The exponential series of an analytic vector can be restarted from any point of its orbit with a
@@ -43,7 +45,6 @@ open scoped InnerProductSpace Topology
 open Filter
 
 variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
-
 
 /-- Every entire vector supplies a `GlobalAnalyticOrbit` once the operator is known to be
 symmetric on a dense domain.  This packages the global case through the same certificate used by
@@ -573,5 +574,5 @@ lemma IsSymmetric.isEssentiallySelfAdjoint_of_denseAnalyticVectors
   exact hsym.isEssentiallySelfAdjoint_of_denseAnalyticVectors_of_globalOrbit
     hdense hOrbit
 
-
 end LinearPMap
+

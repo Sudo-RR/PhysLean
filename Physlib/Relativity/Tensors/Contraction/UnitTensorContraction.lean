@@ -115,7 +115,7 @@ private lemma crossToEnd_prodT_unitTensor {nV : ℕ} {cE : Fin nV → C} {cB : C
   -- transparency; the trailing `permT_permT` needs the full `erw`.
   rw (transparency := .instances) [key, permT_permT]
   rw [prodT_permT_right, permT_permT]
-  erw [permT_permT]
+  refine (permT_permT _ _ _).trans ?_
   apply permT_congr
   · funext i
     simp only [Function.comp_apply, id_eq, Fin.funPredPredAbove]
@@ -244,10 +244,10 @@ lemma crossToEnd_round_trip_of_unit_slot {nA : ℕ} {c : Fin (nA + 1) → C} {d 
   rw [crossToEnd_permT_right i (0 : Fin 2)
     (id : Fin 2 → Fin 2) (fun x : Fin 1 => x)
     (IsReindexing.on_id.mpr (fun i => by fin_cases i <;> rfl)) rfl]
-  -- The `id`-spelled map leaves the composite slot proof type-correct only at default
-  -- transparency, so `rw`/`simp` cannot key on it; `erw` matches up to defeq.
-  erw [crossToEnd_unitTensor (nA := nA) (cA := c) (c := c i) i rfl]
-  erw [permT_permT, permT_permT]
+  -- The `id`-spelled map leaves the contracted slot spelled `id 0`; reduce it so that `rw` can
+  -- key on `crossToEnd_unitTensor`.
+  dsimp only [id_eq]
+  rw [crossToEnd_unitTensor (nA := nA) (cA := c) (c := c i) i rfl, permT_permT, permT_permT]
   apply permT_congr
   · funext x
     refine Fin.addCases (fun a => ?_) (fun a => ?_) x

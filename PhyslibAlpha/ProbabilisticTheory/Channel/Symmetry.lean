@@ -14,6 +14,8 @@ public import Mathlib.Basic.Real.Basic
 
 # Symmetries
 
+Symmetries as channels with channel inverses, their group, action on states, and dynamics.
+
 ## i. Overview
 
 A symmetry of a system is a reversible transformation: a channel whose inverse is also a channel.
@@ -36,9 +38,15 @@ dynamics.
 - C. The induced action on states
 - D. One-parameter automorphism groups
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 variable {E : Type*} [OrderUnitSpace E]
 
@@ -233,3 +241,5 @@ lemma stateEvolution_add (α : OneParameterAutomorphismGroup E) (s t : ℝ) (ω 
   exact Symmetry.stateSMul_mul α.toSymmetryHom (Multiplicative.ofAdd s) (Multiplicative.ofAdd t) ω
 
 end OneParameterAutomorphismGroup
+
+end ProbabilisticTheory

@@ -11,6 +11,8 @@ public import PhyslibAlpha.ProbabilisticTheory.HilbertSpace.Dynamics.Automorphis
 
 # Hamiltonian dynamics
 
+The unitary evolution and Heisenberg flow of a bounded Hamiltonian, and their uniqueness.
+
 ## i. Overview
 
 A bounded Hamiltonian `H` generates the unitary evolution `U(t) = exp(-i t H / ℏ)` and the flow
@@ -36,6 +38,10 @@ unchanged, and this is the only freedom.
 - E. Hamiltonians modulo scalar shifts
 - F. Classification up to star-automorphism conjugation
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
@@ -49,6 +55,7 @@ noncomputable local instance : NormedAlgebra ℚ (H →L[ℂ] H) :=
   .restrictScalars ℚ ℂ (H →L[ℂ] H)
 
 namespace UnitaryOneParameterGroup
+open ProbabilisticTheory
 
 omit [CompleteSpace H] in
 /-- A real scalar multiple on `H →L[ℂ] H` agrees with the corresponding complex scalar multiple. -/
@@ -301,3 +308,4 @@ lemma hamiltonianFlow_iff_exists_unitary (ℏ : ℝ) (hℏ : ℏ ≠ 0) [Nontriv
     simpa [Unitary.conjStarAlgAut_apply] using hc
 
 end UnitaryOneParameterGroup
+

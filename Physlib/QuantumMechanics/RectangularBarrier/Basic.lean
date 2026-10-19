@@ -8,7 +8,6 @@ module
 public import Physlib.Meta.Informal.Basic
 public import Physlib.QuantumMechanics.Operators.Momentum
 public import Physlib.QuantumMechanics.Operators.Multiplication
-public import Physlib.QuantumMechanics.QuantumSystem.Basic
 /-!
 
 # The rectangular potential barrier
@@ -91,12 +90,8 @@ lemma potentialFunction_eq :
 -- This relies on `Space.val` being measure-preserving.
 lemma potentialFunction_aestronglyMeasurable: AEStronglyMeasurable Q.potentialFunction volume := by
   unfold potentialFunction
-  apply AEStronglyMeasurable.indicator
-  · fun_prop
-  · change (MeasurableSet ((Icc Q.lower Q.upper) ∘ (fun (x: Space 1) => x.val 0)))
-    have hi : MeasurableSet (Icc Q.lower Q.upper) := by measurability
-    have hf : Measurable ((fun x => x.val 0) : Space 1 → ℝ) := by measurability
-    exact MeasurableSet.preimage hi hf
+  have hf : Measurable ((fun x => x.val 0) : Space 1 → ℝ) := by measurability
+  exact ((measurable_const.indicator measurableSet_Icc).comp hf).aestronglyMeasurable
 
 /-!
 ## C. Hilbert space

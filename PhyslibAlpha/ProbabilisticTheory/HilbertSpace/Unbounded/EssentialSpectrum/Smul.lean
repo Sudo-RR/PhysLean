@@ -12,6 +12,8 @@ public import Physlib.QuantumMechanics.Operators.SpectralTheory.Symmetric
 
 # Scaling self-adjoint operators
 
+Real scaling preserves self-adjointness and scales the essential spectrum.
+
 ## i. Overview
 
 For a self-adjoint operator `A` and a real `c ≠ 0`, `c • A` is self-adjoint and its essential
@@ -36,6 +38,8 @@ spectrum is the essential spectrum of `A` scaled by `c`.
 @[expose] public section
 
 noncomputable section
+
+namespace ProbabilisticTheory
 
 open Filter Topology Complex
 open scoped InnerProductSpace ComplexConjugate
@@ -178,3 +182,5 @@ lemma essSpectrum_smul_real {A : H →ₗ.[ℂ] H} (hA : IsSelfAdjoint A)
     exact mem_essSpectrum_smul_real hA c hc hlam
 
 end QuantumMechanics.Essential
+
+end ProbabilisticTheory

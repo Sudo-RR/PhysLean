@@ -17,6 +17,8 @@ public import Physlib.QuantumMechanics.Operators.SpectralTheory.Symmetric
 
 # The candidate generator of a unitary group
 
+The candidate generator of a strongly continuous unitary group, and its symmetry.
+
 ## i. Overview
 
 For a strongly continuous one-parameter unitary group `U`, the candidate generator is defined on the
@@ -29,9 +31,21 @@ derivative. It is a symmetric operator.
 - `stoneCandidateGenerator` : the candidate generator.
 - `stoneCandidateGenerator_isSymmetric` : the candidate generator is symmetric.
 
+## iii. Table of contents
+
+- A. The candidate domain
+- B. The candidate generator
+- C. Symmetry of the candidate generator
+
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 namespace QuantumMechanics
 
@@ -44,6 +58,12 @@ universe u
 variable {H : Type u} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
 variable {U : ℝ → H →L[ℂ] H} (hU0 : U 0 = 1) (hUmul : ∀ s t, U (s + t) = U s * U t)
   (hUunit : ∀ t, U t ∈ unitary (H →L[ℂ] H)) (hUcont : ∀ ξ : H, Continuous (fun t : ℝ => U t ξ))
+
+/-!
+
+## A. The candidate domain
+
+-/
 
 /-- A vector is in the domain of the candidate generator when its orbit is differentiable at `0`. -/
 def stoneCandidateDomainPred (ψ : H) : Prop := ∃ φ : H, HasDerivAt (fun t : ℝ => U t ψ) φ 0
@@ -81,6 +101,12 @@ def stoneCandidateDomain : Submodule ℂ H where
   zero_mem' := stoneCandidateDomainPred_zero
   add_mem' h₁ h₂ := stoneCandidateDomainPred_add hUmul h₁ h₂
   smul_mem' c _ h := stoneCandidateDomainPred_smul c h
+
+/-!
+
+## B. The candidate generator
+
+-/
 
 /-- The derivative witness for a vector in the candidate domain, chosen once and for all via
 choice; `-Complex.I` times this is the candidate generator's action. -/
@@ -130,6 +156,12 @@ omit [CompleteSpace H] in
 lemma stoneCandidateGenerator_apply (ψ : (stoneCandidateGenerator (U := U) hUmul).domain) :
     stoneCandidateGenerator (U := U) hUmul ψ = (-Complex.I) • stoneCandidateDeriv hUmul ψ := rfl
 
+/-!
+
+## C. Symmetry of the candidate generator
+
+-/
+
 include hU0 hUunit in
 /-- **The candidate generator is symmetric.** The inner product `⟪U t ψ₁, U t ψ₂⟫` is constant in
 `t`; differentiating at `0` gives the symmetry. -/
@@ -158,3 +190,8 @@ lemma stoneCandidateGenerator_isSymmetric :
   have hconjI : (starRingEnd ℂ) (-Complex.I) = Complex.I := by simp
   rw [hconjI]
   linear_combination Complex.I * hzero
+
+end
+end QuantumMechanics
+
+end ProbabilisticTheory

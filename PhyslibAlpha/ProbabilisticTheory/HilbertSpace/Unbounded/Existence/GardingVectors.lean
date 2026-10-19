@@ -15,6 +15,8 @@ public import Mathlib.Analysis.Calculus.ParametricIntegral
 
 # Gårding vectors
 
+Gårding vectors: heat-kernel smoothings along a unitary group, dense in the domain.
+
 ## i. Overview
 
 Smoothing a vector `ψ` along the orbit of a unitary group against the heat kernel `gₑ(t) = (π
@@ -34,9 +36,15 @@ by smoothing against the derivative of the kernel.
 
 - A. The generator on Gårding vectors
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 namespace QuantumMechanics
 
@@ -385,8 +393,8 @@ lemma stoneCandidateGenerator_analyticGardingVector (hUunit : ∀ t, U t ∈ uni
     rw [neg_smul]
   rw [hneg, smul_neg, neg_smul, neg_neg]
 
-
-
 end
 
 end QuantumMechanics
+
+end ProbabilisticTheory
