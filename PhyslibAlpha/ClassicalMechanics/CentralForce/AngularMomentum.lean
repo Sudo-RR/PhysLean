@@ -5,12 +5,14 @@ Authors: Rithwik Ranganathan
 -/
 module
 
-public import PhyslibAlpha.ClassicalMechanics.CentralForce.Basic
-public import PhyslibAlpha.ClassicalMechanics.PoissonBracket.Basic
 public import Mathlib.LinearAlgebra.CrossProduct
+public import Physlib.ClassicalMechanics.HamiltonianMechanics.PoissonBracket
+public import PhyslibAlpha.ClassicalMechanics.CentralForce.Basic
 /-!
 
-# Angular momentum and its conservation under a central force
+# Angular-momentum observables under a central force
+
+Squared angular momentum, its axial component, and their Poisson brackets for central forces.
 
 ## i. Overview
 
@@ -44,12 +46,13 @@ central-force system away from the centre of force, so `L²` and `L_z` are conse
 - B. Gradients
 - C. Poisson brackets
   - C.1. The squared magnitude and the z-component are in involution
-  - C.2. Conservation under a rotationally invariant Hamiltonian
+  - C.2. Poisson brackets for radial partial gradients
   - C.3. Conservation under a central force
 
 ## iv. References
 
-* H. Goldstein, C. Poole and J. Safko, *Classical Mechanics*, 3rd edition, Chapter 9.
+* H. Goldstein, C. Poole and J. Safko, *Classical Mechanics*, 3rd edition,
+  Section 9.7 (Poisson bracket relations for angular momentum) and Chapter 3 (central forces).
 -/
 
 @[expose] public section
@@ -207,11 +210,11 @@ lemma poissonBracket_angularMomentumSq_angularMomentumZ (p q : EuclideanSpace �
 
 /-!
 
-### C.2. Conservation under a rotationally invariant Hamiltonian
+### C.2. Poisson brackets for radial partial gradients
 
-A Hamiltonian whose momentum gradient is parallel to the momentum and whose position gradient is
-parallel to the position, such as one depending only on `‖p‖` and `‖q‖`, is invariant under
-rotations, and so Poisson-commutes with the angular momentum.
+At a phase-space point where the momentum gradient of a Hamiltonian is parallel to the momentum
+and its position gradient is parallel to the position, its Poisson brackets with `L²` and `L_z`
+vanish. These sufficient conditions apply to the central-force Hamiltonian away from the centre.
 
 -/
 

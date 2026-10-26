@@ -5,12 +5,14 @@ Authors: Rithwik Ranganathan
 -/
 module
 
-public import PhyslibAlpha.ClassicalMechanics.PoissonBracket.Basic
 public import Mathlib.Analysis.InnerProductSpace.PiL2
 public import Mathlib.LinearAlgebra.LinearIndependent.Basic
+public import Physlib.ClassicalMechanics.HamiltonianMechanics.PoissonBracket
 /-!
 
 # Liouville integrable systems
+
+Liouville integrability on an open dense domain and conservation along Hamiltonian trajectories.
 
 ## i. Overview
 
@@ -21,18 +23,18 @@ A Hamiltonian system on a `2d`-dimensional phase space is *Liouville integrable*
 - pairwise Poisson-commuting ("in involution"), and
 - functionally independent, i.e. their phase-space gradients are linearly independent.
 
-Functional independence cannot hold at every point of phase space in any interesting example: the
+Functional independence need not hold at every point of phase space: the
 gradient of the Hamiltonian of the harmonic oscillator vanishes at the equilibrium, and the Kepler
 Hamiltonian is singular at the origin of position space. The definition therefore asks for the
 conditions on an open *domain* `U` of phase space, which must be dense so that the conditions hold
 generically. Without density the empty domain would make every Hamiltonian integrable.
 
-This is the hypothesis of the Liouville–Arnold theorem, which further concludes the existence of
-action-angle coordinates and invariant tori for the motion; that conclusion is not formalized here
-(see the `TODO` below). What is formalized is the definition itself, together with its immediate
+These are the integrability conditions used in the Liouville–Arnold theorem. Its conclusions about
+invariant tori and action-angle coordinates require further hypotheses on common level sets and
+are not formalized here (see the `TODO` below). What is formalized is the definition itself and its
 consequence: each of the `d` conserved quantities really is conserved along the Hamiltonian flow
 inside `U`, by reducing to `deriv_comp_eq_poissonBracket` from
-`Physlib.ClassicalMechanics.PoissonBracket`.
+`Physlib.ClassicalMechanics.HamiltonianMechanics.PoissonBracket`.
 
 With one degree of freedom the conditions collapse: the Hamiltonian is the only conserved quantity,
 involution is automatic, and independence says only that the gradient of the Hamiltonian does not

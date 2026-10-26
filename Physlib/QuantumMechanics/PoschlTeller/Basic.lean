@@ -5,11 +5,8 @@ Authors: Afiq Hatta
 -/
 module
 
-public import Physlib.QuantumMechanics.Operators.Momentum
-public import Physlib.QuantumMechanics.Operators.Multiplication
 public import Physlib.QuantumMechanics.SpaceDQuantumSystem
-public import Physlib.Mathematics.Trigonometry.Tanh
-public import Physlib.Meta.TODO.Basic
+public import Physlib.Mathematics.ForMathlib.Trigonometry.Tanh
 /-!
 
 # 1d Pöschl-Teller
@@ -180,9 +177,7 @@ lemma potential_continuous : Continuous Q.potential :=
 
 /-- The Pöschl-Teller system as a `SpaceDQuantumSystem` of dimension `1`. Its kinetic, potential
   and Hamiltonian operators are those of `SpaceDQuantumSystem`. -/
-abbrev toSpaceDQuantumSystem : SpaceDQuantumSystem := ⟨1, Q.m, Q.m_pos, Q.potential⟩
-
-lemma toSpaceDQuantumSystem_d : Q.toSpaceDQuantumSystem.d = 1 := rfl
+abbrev toSpaceDQuantumSystem : SpaceDQuantumSystem 1 := ⟨Q.m, Q.m_pos, Q.potential⟩
 
 lemma toSpaceDQuantumSystem_m : Q.toSpaceDQuantumSystem.m = Q.m := rfl
 

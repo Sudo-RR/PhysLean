@@ -6,7 +6,8 @@ Authors: Joseph Tooby-Smith
 module
 
 public import Mathlib.Algebra.Lie.Classical
-public import Mathlib.Analysis.Normed.Ring.Lemmas
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Tactic.NoncommRing
 /-!
 
 # The Minkowski matrix

@@ -13,6 +13,8 @@ public import Mathlib.Analysis.SpecificLimits.Basic
 /-!
 # Interpolation of complete observables
 
+Exact interpolants and the Riesz decomposition for complete observables with a lattice dual cone.
+
 ## i. Overview
 
 Given finitely many lower observables `a i` below finitely many upper observables `b j`, an
@@ -33,9 +35,15 @@ exact interpolants exist. Then the observables have the Riesz decomposition.
 - A. Closed order intervals
 - B. Exact interpolants
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 /-! ## A. Closed order intervals -/
 
@@ -70,7 +78,10 @@ end ArchimedeanOrderUnitSpace
 
 /-! ## B. Exact interpolants -/
 
+end ProbabilisticTheory
+
 namespace HasLatticeDualCone
+open ProbabilisticTheory
 
 open scoped ArchimedeanOrderUnitSpace
 open Filter Topology ArchimedeanOrderUnitSpace
@@ -174,10 +185,13 @@ lemma exists_interpolant [CompleteSpace F] [NeZero n] [NeZero m] :
 
 end HasLatticeDualCone
 
+namespace ProbabilisticTheory
+
+
 open scoped ArchimedeanOrderUnitSpace in
 /-- On a complete Archimedean order-unit space whose positive functionals form a lattice,
 observables have the Riesz decomposition. -/
-lemma HasLatticeDualCone.hasRieszDecomposition {F : Type*} [ArchimedeanOrderUnitSpace F]
+lemma _root_.HasLatticeDualCone.hasRieszDecomposition {F : Type*} [ArchimedeanOrderUnitSpace F]
     [CompleteSpace F] (hF : HasLatticeDualCone F) : HasRieszDecomposition F := by
   intro f₁ f₂ g hf₁ hf₂ hg
   obtain ⟨c, hlo, hhi⟩ := hF.exists_interpolant (a := ![0, g - f₂]) (b := ![g, f₁]) <| by
@@ -185,3 +199,5 @@ lemma HasLatticeDualCone.hasRieszDecomposition {F : Type*} [ArchimedeanOrderUnit
     exact ⟨⟨hg.1, hf₁⟩, sub_le_self _ hf₂, sub_le_iff_le_add.2 hg.2⟩
   simp only [Fin.forall_fin_two, Matrix.cons_val_zero, Matrix.cons_val_one] at hlo hhi
   exact ⟨c, ⟨hlo.1, hhi.2⟩, sub_nonneg.2 hhi.1, sub_le_comm.1 hlo.2⟩
+
+end ProbabilisticTheory

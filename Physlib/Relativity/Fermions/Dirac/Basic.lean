@@ -6,8 +6,6 @@ Authors: Joseph Tooby-Smith
 module
 
 public import Physlib.Relativity.Fermions.Weyl.LeftHanded
-public import Physlib.Relativity.Fermions.Weyl.RightHanded
-public import Physlib.Relativity.Fermions.Weyl.DualLeftHanded
 public import Physlib.Relativity.Fermions.Weyl.DualRightHanded
 /-!
 

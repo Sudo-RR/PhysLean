@@ -5,33 +5,72 @@ Authors: Alex Meiburg
 -/
 module
 
-public import QuantumInfo.Channels.Bundled
-public import QuantumInfo.Channels.CPTP
-public import QuantumInfo.Channels.Dual
-public import QuantumInfo.Channels.MatrixMap
-public import QuantumInfo.Channels.Unbundled
-public import Physlib.Meta.TODO.Basic
+public import QuantumInfo.ForMathlib.HermitianMat.Unitary
 
 /-!
-Quantum theory and operations specific to qubits.
- - Standard named (single-qubit) gates: Z, X, Y, H, S, T
- - Controlled versions of gates
- - Completeness of the PPT test: a state is separable iff it is PPT.
- - Fidelity for qubits: `F(ρ,σ) = 2√(ρ.det * σ.det)`.
- - The singlet/triplet split.
+
+# Qubits
+
+## i. Overview
+
+A qubit is a two-level quantum system. In this module the computational basis of a qubit is
+indexed by `Qubit`, an abbreviation for `Fin 2`, and a gate on a qubit is an element of
+`𝐔[Qubit]`, the group of unitary `2 × 2` complex matrices. The standard single-qubit gates are
+defined by their matrices in the computational basis, and the basic identities between them are
+proved. For a unitary matrix `g` indexed by a finite type `k`, the controlled gate `C[g]` acts on
+`Qubit × k`: it is the identity when the `Qubit` component, the control, is `0`, and applies `g`
+when it is `1`. The CNOT gate is `C[X]`.
+
+Most proofs use the tactic `matrix_expand`, defined at the start of the module, which reduces an
+equality of small matrices to its entries and tries to close them with `simp`, `norm_num`,
+`field_simp` and `ring_nf`.
+
+## ii. Key results
+
+- `Qubit` : the index type `Fin 2` of the computational basis of a qubit.
+- `matrix_expand` : a tactic reducing an equality of small matrices to its entries and
+  simplifying them.
+- `Qubit.X`, `Qubit.Y`, `Qubit.Z` : the Pauli gates.
+- `Qubit.H`, `Qubit.S`, `Qubit.T` : the Hadamard gate and the gates `S = diag(1, i)` and
+  `T = diag(1, (1 + i) / √2)`.
+- `Qubit.X_Y_anticomm`, `Qubit.Y_Z_anticomm`, `Qubit.Z_X_anticomm` : the Pauli gates
+  anticommute.
+- `Qubit.controllize` : the controlled gate `C[g]` of a unitary `g`.
+- `Qubit.CNOT`, `Qubit.CNOT_matrix` : the CNOT gate and its `4 × 4` matrix, with `Fin 2 × Fin 2`
+  reindexed by `finProdFinEquiv`.
+- `Qubit.X_controllize_X` : conjugating `C[g]` by `X` on the control qubit gives
+  `(1 ⊗ᵤ g) * C[g⁻¹]`.
+
+## iii. Table of contents
+
+- A. The qubit index type and the `matrix_expand` tactic
+- B. The single-qubit gates
+- C. Identities between the single-qubit gates
+- D. Controlled gates
+
+## iv. References
+
+* M. A. Nielsen and I. L. Chuang, Quantum Computation and Quantum Information, Cambridge
+  University Press (2010). [ref: nielsen_chuang_qci]
+
 -/
 
 @[expose] public section
 
-TODO "Improve the module doc-string of the `Qubit` file, to explain the
-  current implementation."
+/-!
 
+## A. The qubit index type and the `matrix_expand` tactic
+
+-/
+
+/-- The index type of the computational basis of a qubit. -/
 abbrev Qubit := Fin 2
 
 open Lean.Parser.Tactic in
 open Lean in
 /--
-Proves goals equating small matrices by expanding out products and simpliying standard Real arithmetic.
+Proves goals equating small matrices by expanding out products and simplifying standard Real
+arithmetic.
 -/
 syntax (name := matrix_expand) "matrix_expand"
   (" [" ((simpStar <|> simpErase <|> simpLemma),*,?) "]")?
@@ -62,6 +101,12 @@ open Complex
 
 variable {k : Type*} [Fintype k] [DecidableEq k]
 
+/-!
+
+## B. The single-qubit gates
+
+-/
+
 /-- The Pauli Z gate on a qubit. -/
 def Z : 𝐔[Qubit] :=
   ⟨!![1, 0; 0, -1], by constructor <;> matrix_expand⟩
@@ -86,31 +131,38 @@ def S : 𝐔[Qubit] :=
 noncomputable def T : 𝐔[Qubit] :=
   ⟨!![1, 0; 0, (1 + I)/√2], by constructor <;> matrix_expand⟩
 
+/-!
+
+## C. Identities between the single-qubit gates
+
+-/
+
 @[simp]
-theorem Z_sq : Z * Z = 1 := by
+lemma Z_sq : Z * Z = 1 := by
   matrix_expand [Z]
 
 @[simp]
-theorem X_sq : X * X = 1 := by
+lemma X_sq : X * X = 1 := by
   matrix_expand [X]
 
 @[simp]
-theorem Y_sq : Y * Y = 1 := by
+lemma Y_sq : Y * Y = 1 := by
   matrix_expand [Y]
 
 @[simp]
-theorem H_sq : H * H = 1 := by
+lemma H_sq : H * H = 1 := by
   matrix_expand [H]
 
 @[simp]
-theorem S_sq : S * S = Z := by
+lemma S_sq : S * S = Z := by
   matrix_expand [S, Z]
 
 @[simp]
-theorem T_sq : T * T = S := by
+lemma T_sq : T * T = S := by
   matrix_expand [T, S]
 
-/-- The anticommutator `{X,Y}` is zero. Marked simp as to put Pauli products in a canonical Y-X-Z order. -/
+/-- The anticommutator `{X,Y}` is zero. Marked simp as to put Pauli products in a canonical Y-X-Z
+order. -/
 @[simp]
 theorem X_Y_anticomm : X * Y = -Y * X := by
   matrix_expand [X, Y]
@@ -124,27 +176,33 @@ theorem Z_X_anticomm : Z * X = -X * Z := by
   matrix_expand [Z, X]
 
 @[simp]
-theorem H_mul_X_eq_Z_mul_H : H * X = Z * H := by
+lemma H_mul_X_eq_Z_mul_H : H * X = Z * H := by
   matrix_expand [H, X, Z]
 
 @[simp]
-theorem H_mul_Z_eq_X_mul_H : H * Z = X * H := by
+lemma H_mul_Z_eq_X_mul_H : H * Z = X * H := by
   matrix_expand [H, X, Z]
 
 @[simp]
-theorem S_Z_comm : Z * S = S * Z := by
+lemma S_Z_comm : Z * S = S * Z := by
   simp [← S_sq, mul_assoc]
 
 @[simp]
-theorem T_Z_comm : Z * T = T * Z := by
+lemma T_Z_comm : Z * T = T * Z := by
   simp [← S_sq, ← T_sq, mul_assoc]
 
 @[simp]
-theorem S_T_comm : S * T = T * S := by
+lemma S_T_comm : S * T = T * S := by
   simp [← T_sq, mul_assoc]
 
-/-- Given a unitary `U` on some Hilbert space `k`, we have the controllized version that acts on `Fin 2 ⊗ k`
-where `U` is conditionally applied if the first qubit is `1`. -/
+/-!
+
+## D. Controlled gates
+
+-/
+
+/-- The controlled version `C[g]` of a unitary matrix `g` indexed by `k`, acting on `Qubit × k`:
+the identity when the `Qubit` component, the control, is `0`, and `g` when it is `1`. -/
 def controllize (g : 𝐔[k]) : 𝐔[Qubit × k] :=
   ⟨Matrix.of fun (q₁,t₁) (q₂,t₂) ↦
     if (q₁,q₂) = (0,0) then
@@ -160,6 +218,7 @@ def controllize (g : 𝐔[k]) : 𝐔[Qubit × k] :=
       · exact congrFun₂ g.2.2 ti tj
     ⟩
 
+/-- `C[g]` is the controlled gate `controllize g`. -/
 scoped notation "C[" g "]" => controllize g
 
 /-- Controlled-NOT gate on two qubits.
@@ -180,36 +239,35 @@ lemma CNOT_matrix :
 variable (g : 𝐔[k]) (j₁ j₂ : k)
 
 @[simp]
-theorem controllize_apply_zero_zero : C[g] (0, j₁) (0, j₂) = (1 : 𝐔[k]) j₁ j₂ := by
+lemma controllize_apply_zero_zero : C[g] (0, j₁) (0, j₂) = (1 : 𝐔[k]) j₁ j₂ := by
   rfl
 
 @[simp]
-theorem controllize_apply_zero_one : C[g] (0, j₁) (1, j₂) = 0 := by
+lemma controllize_apply_zero_one : C[g] (0, j₁) (1, j₂) = 0 := by
   rfl
 
 @[simp]
-theorem controllize_apply_one_zero : C[g] (1, j₁) (0, j₂) = 0 := by
+lemma controllize_apply_one_zero : C[g] (1, j₁) (0, j₂) = 0 := by
   rfl
 
 @[simp]
-theorem controllize_apply_one_one : C[g] (1, j₁) (1, j₂) = g j₁ j₂ := by
+lemma controllize_apply_one_one : C[g] (1, j₁) (1, j₂) = g j₁ j₂ := by
   rfl
 
 @[simp]
-theorem controllize_mul (g₁ g₂ : 𝐔[k]) : C[g₁] * C[g₂] = C[g₁ * g₂] := by
+lemma controllize_mul (g₁ g₂ : 𝐔[k]) : C[g₁] * C[g₂] = C[g₁ * g₂] := by
   matrix_expand
 
 @[simp]
-theorem controllize_one : C[(1 : 𝐔[k])] = 1 := by
+lemma controllize_one : C[(1 : 𝐔[k])] = 1 := by
   matrix_expand
 
-@[simp]
-theorem controllize_mul_inv : C[g] * C[g⁻¹] = 1 := by
+lemma controllize_mul_inv : C[g] * C[g⁻¹] = 1 := by
   simp
 
 open scoped Matrix in
 @[simp]
-theorem X_controllize_X : (X ⊗ᵤ 1) * C[g] * (X ⊗ᵤ 1) = (1 ⊗ᵤ g) * C[g⁻¹] := by
+lemma X_controllize_X : (X ⊗ᵤ 1) * C[g] * (X ⊗ᵤ 1) = (1 ⊗ᵤ g) * C[g⁻¹] := by
   matrix_expand [X, -Complex.ext_iff] with ki kj;
   suffices (1 : Matrix k k ℂ) ki kj = (g * g⁻¹) ki kj by
     convert! this

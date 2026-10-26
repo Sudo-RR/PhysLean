@@ -14,6 +14,8 @@ public import PhyslibAlpha.ProbabilisticTheory.HilbertSpace.Unbounded.Flow.Stone
 
 # Stone's theorem: reconstruction of the group
 
+Stone's theorem, reconstruction: a unitary group is exp(i t T) for its generator.
+
 ## i. Overview
 
 Let `T` be the candidate generator of a strongly continuous unitary group `U`, and `V t = exp(i t
@@ -29,9 +31,21 @@ so `U = V`.
 - `stoneCandidateGenerator_reconstruction` : **Stone's theorem, reconstruction**: `U t = exp(i t
   T)`.
 
+## iii. Table of contents
+
+- A. The reconstructed unitary group
+- B. Uniqueness for the evolution equation
+- C. Reconstruction of the group
+
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 namespace QuantumMechanics
 
@@ -44,6 +58,12 @@ universe u
 variable {H : Type u} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
 variable {U : ℝ → H →L[ℂ] H} (hU0 : U 0 = 1) (hUmul : ∀ s t, U (s + t) = U s * U t)
   (hUunit : ∀ t, U t ∈ unitary (H →L[ℂ] H)) (hUcont : ∀ ξ : H, Continuous (fun t : ℝ => U t ξ))
+
+/-!
+
+## A. The reconstructed unitary group
+
+-/
 
 include hU0 hUmul hUunit hUcont in
 /-- The Cayley-transform spectral measure for `stoneCandidateGenerator hUmul`'s essential
@@ -65,6 +85,12 @@ include hU0 hUmul hUunit hUcont in
 /-- The unitary group `exp(i t T)` of the closure of the candidate generator. -/
 noncomputable def stoneReconstructionUnitaryGroup (t : ℝ) : H →L[ℂ] H :=
   ContinuousLinearMapWOT.toCLM ((stoneReconstructionData hU0 hUmul hUunit hUcont).expUnitaryGroup t)
+
+/-!
+
+## B. Uniqueness for the evolution equation
+
+-/
 
 section Uniqueness
 
@@ -121,6 +147,12 @@ lemma hasDerivAt_generator_unique {y z : ℝ → H} (hTsym : T.IsSymmetric)
   exact sub_eq_zero.mp hw0
 
 end Uniqueness
+
+/-!
+
+## C. Reconstruction of the group
+
+-/
 
 include hU0 hUmul hUunit hUcont in
 /-- **Stone's theorem, reconstruction direction.** `U` agrees with the concrete unitary group
@@ -216,3 +248,5 @@ lemma stoneCandidateGenerator_reconstruction (x : H) (t : ℝ) :
 
 end
 end QuantumMechanics
+
+end ProbabilisticTheory

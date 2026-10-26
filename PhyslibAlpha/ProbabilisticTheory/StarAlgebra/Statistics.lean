@@ -12,6 +12,8 @@ public import PhyslibAlpha.ProbabilisticTheory.StarAlgebra.Jordan
 
 # Expectation, variance and covariance
 
+Expectation values, centered observables, covariance and variance of observables in a state.
+
 ## i. Overview
 
 A state assigns expectation values `ω⟨a⟩` to observables. Subtracting the expectation gives the
@@ -33,9 +35,15 @@ this needs a norm, and positivity of the variance uses only that `star x * x ≥
 - C. Reversing a product
 - D. Covariance and variance
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 open scoped ComplexOrder
 open scoped selfAdjoint
@@ -154,7 +162,8 @@ lemma covariance_eq_re_apply_centered_mul (ω : 𝓢[ℂ, A]) (a b : Observable 
       ((expectation ω (x * y) : ℝ) : ℂ) = (((2 : ℝ)⁻¹ : ℝ) : ℂ) *
           (2 * ((ω ((x : A) * y)).re : ℂ)) := hval.symm
       _ = ((ω ((x : A) * y)).re : ℂ) := by
-        apply Complex.ext <;> (norm_num <;> ring)
+        apply Complex.ext <;> norm_num
+        ring
   exact_mod_cast hval'
 
 /-- The variance is the expectation of the squared fluctuation. -/
@@ -208,3 +217,5 @@ lemma variance_nonneg (ω : 𝓢[ℂ, A]) (a : Observable A) :
   exact (RCLike.nonneg_iff.mp (ω.map_nonneg h)).1
 
 end UnitalPositiveLinearMap
+
+end ProbabilisticTheory

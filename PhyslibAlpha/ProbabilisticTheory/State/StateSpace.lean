@@ -12,6 +12,8 @@ public import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
 /-!
 # The state space
 
+The weak-star state space: compact, convex, with the pure states as its extreme points.
+
 ## i. Overview
 
 A state is a normalized positive functional: it gives the certain outcome `1` the value `1` and
@@ -42,9 +44,15 @@ On `𝓢[ℝ, E]` itself the states carry the finer state metric.
 - D. Compactness
 - E. Convexity and pure states
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 open ArchimedeanOrderUnitSpace MeasureTheory Filter Topology
 
@@ -203,3 +211,5 @@ lemma isPure_iff_mem_extremePoints (ω : stateSpace E) :
   rwa [range_ofState] at this
 
 end StateSpace
+
+end ProbabilisticTheory

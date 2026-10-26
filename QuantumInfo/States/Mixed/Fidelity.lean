@@ -6,11 +6,9 @@ Authors: Alex Meiburg
 module
 
 public import QuantumInfo.Channels.Bundled
-public import QuantumInfo.Channels.CPTP
-public import QuantumInfo.Channels.Dual
 public import QuantumInfo.Channels.MatrixMap
 public import QuantumInfo.Channels.Unbundled
-public import Physlib.Meta.Sorry
+public import Physlib.Meta.Informal.Basic
 @[expose] public section
 
 noncomputable section
@@ -29,11 +27,11 @@ namespace MState
 def fidelity (ρ σ : MState d) : ℝ :=
   (σ.M.conj ρ.M.sqrt.mat).sqrt.trace
 
-theorem fidelity_ge_zero : 0 ≤ fidelity ρ σ := by
+lemma fidelity_ge_zero : 0 ≤ fidelity ρ σ := by
   apply HermitianMat.trace_nonneg
   apply HermitianMat.sqrt_nonneg
 
-theorem fidelity_le_one : fidelity ρ σ ≤ 1 := by
+lemma fidelity_le_one : fidelity ρ σ ≤ 1 := by
   unfold fidelity
   rw [HermitianMat.sqrt_eq_cfc_rpow_half, ← HermitianMat.rpow_eq_cfc]
   calc ((σ.M.conj ρ.M.sqrt.mat) ^ (1/2 : ℝ)).trace
@@ -128,10 +126,13 @@ theorem fidelity_symm : fidelity ρ σ = fidelity σ ρ := by
   show ((σ.M.conj ρ.M.sqrt.mat).cfc Real.sqrt).trace = ((ρ.M.conj σ.M.sqrt.mat).cfc Real.sqrt).trace
   rw [HermitianMat.trace_cfc_eq, HermitianMat.trace_cfc_eq, h_eig]
 
-/-- The fidelity cannot decrease under the application of a channel. -/
-@[sorryful]
-theorem fidelity_channel_nondecreasing [DecidableEq d₂] (Λ : CPTPMap d d₂) : fidelity (Λ ρ) (Λ σ) ≥ fidelity ρ σ :=
-  sorry
+/-- The fidelity cannot decrease under the application of a channel.
+
+  Formal statement: [DecidableEq d₂] (Λ : CPTPMap d d₂) : fidelity (Λ ρ) (Λ σ) ≥ fidelity ρ σ
+  -/
+informal_lemma fidelity_channel_nondecreasing where
+  deps := [``fidelity, ``CPTPMap]
+  tag := "QI-fid-mono"
 
 --TODO: Real.arccos ∘ fidelity forms a metric (triangle inequality), the Fubini–Study metric.
 --Matches with classical (squared) Bhattacharyya coefficient

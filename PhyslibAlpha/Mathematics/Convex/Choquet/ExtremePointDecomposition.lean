@@ -12,6 +12,8 @@ public import PhyslibAlpha.Mathematics.MeasureTheory.IntegrationFunctional
 /-!
 # Every point is a mixture of extreme points
 
+Choquet's theorem: each point of a metrizable compact convex set is a mixture of extreme points.
+
 ## i. Overview
 
 Let `S` be a compact convex set that is metrizable and whose points are separated by countably many
@@ -37,6 +39,10 @@ closed set.
 - A. The extreme points are Borel
 - B. Splitting mass between endpoints
 - C. The boundary theorem
+
+## iv. References
+
+* None.
 
 -/
 
@@ -151,8 +157,13 @@ lemma exists_decomposition_lift (mu : ProbabilityMeasure S) (n : ℕ)
         ProbabilityMeasure.condition mu (nontrivialMixSet hS n) hpos :=
   ProbabilityMeasure.exists_map_eq_of_continuous_of_compl_range_null _
     (continuous_decompositionMidpoint hS n) _ <| by
-      rw [show range (decompositionMidpoint hS n) = nontrivialMixSet hS n from
-        (image_eq_range _ _).symm]
+      rw [show range (decompositionMidpoint hS n) = nontrivialMixSet hS n by
+        ext x
+        constructor
+        · rintro ⟨p, rfl⟩
+          exact ⟨p.1, p.2, rfl⟩
+        · rintro ⟨p, hp, rfl⟩
+          exact ⟨⟨p, hp⟩, rfl⟩]
       exact ProbabilityMeasure.condition_compl_apply mu
         (isClosed_nontrivialMixSet hS n).measurableSet hpos
 

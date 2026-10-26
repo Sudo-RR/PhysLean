@@ -8,16 +8,12 @@ module
 public import Mathlib.Algebra.Module.Submodule.Lattice
 public import Mathlib.Analysis.Subadditive
 public import Mathlib.CategoryTheory.Functor.FullyFaithful
-public import Mathlib.CategoryTheory.Monoidal.Braided.Basic
 public import Mathlib.Data.EReal.Basic
 public import Mathlib.Tactic
 public import QuantumInfo.Entropy.VonNeumann
-public import QuantumInfo.Entropy.SSA
 public import QuantumInfo.Entropy.Relative
-public import QuantumInfo.Entropy.DPI
 public import QuantumInfo.Channels.Bundled
 public import QuantumInfo.Channels.CPTP
-public import QuantumInfo.Channels.Dual
 public import QuantumInfo.Channels.MatrixMap
 public import QuantumInfo.Channels.Unbundled
 
@@ -78,7 +74,7 @@ noncomputable def prodRelabel (ρ₁ : MState (H i)) (ρ₂ : MState (H j)) : MS
 @[inherit_doc]
 scoped infixl:65 " ⊗ᵣ " => prodRelabel
 
-theorem prodRelabel_assoc (ρ₁ : MState (H i)) (ρ₂ : MState (H j)) (ρ₃ : MState (H k)) :
+lemma prodRelabel_assoc (ρ₁ : MState (H i)) (ρ₂ : MState (H j)) (ρ₃ : MState (H k)) :
     ρ₁ ⊗ᵣ ρ₂ ⊗ᵣ ρ₃ ≍ ρ₁ ⊗ᵣ (ρ₂ ⊗ᵣ ρ₃) := by
   simp [prodRelabel, MState.relabel_kron]
   have h_equiv := hAssoc i j k
@@ -114,7 +110,7 @@ noncomputable def prodCPTPMap (M₁ : CPTPMap (H i) (H j)) (M₂ : CPTPMap (H k)
 scoped notation M₁ " ⊗ᶜᵖᵣ " M₂ => prodCPTPMap M₁ M₂
 
 open ComplexOrder in
-theorem PosDef.prod {ρ : MState (H i)} {σ : MState (H j)} (hρ : ρ.m.PosDef) (hσ : σ.m.PosDef)
+lemma PosDef.prod {ρ : MState (H i)} {σ : MState (H j)} (hρ : ρ.m.PosDef) (hσ : σ.m.PosDef)
     : (ρ ⊗ᵣ σ).m.PosDef := by
   have : (ρ ⊗ᴹ σ).m.PosDef := MState.PosDef.kron hρ hσ
   rw [prodRelabel]
@@ -152,12 +148,12 @@ theorem PosDef.prod {ρ : MState (H i)} {σ : MState (H j)} (hρ : ρ.m.PosDef) 
 --   · rfl
 
 @[simp]
-theorem qRelEntropy_prodRelabel (ρ₁ ρ₂ : MState (H i)) (σ₁ σ₂ : MState (H j)):
+lemma qRelEntropy_prodRelabel (ρ₁ ρ₂ : MState (H i)) (σ₁ σ₂ : MState (H j)):
     𝐃(ρ₁ ⊗ᵣ σ₁‖ρ₂ ⊗ᵣ σ₂) = 𝐃(ρ₁‖ρ₂) + 𝐃(σ₁‖σ₂) := by
   simp [prodRelabel]
 
 @[simp]
-theorem sandwichedRelRentropy_prodRelabel {α : ℝ} (ρ₁ ρ₂ : MState (H i)) (σ₁ σ₂ : MState (H j)):
+lemma sandwichedRelRentropy_prodRelabel {α : ℝ} (ρ₁ ρ₂ : MState (H i)) (σ₁ σ₂ : MState (H j)):
     D̃_ α(ρ₁ ⊗ᵣ σ₁‖ρ₂ ⊗ᵣ σ₂) = D̃_ α(ρ₁‖ρ₂) + D̃_ α(σ₁‖σ₂) := by
   simp [prodRelabel]
 
@@ -193,24 +189,24 @@ noncomputable def spacePow (i : ι) (n : ℕ) : ι :=
 scoped notation i "⊗^H[" n "]" => spacePow i n
 
 @[simp]
-theorem spacePow_zero (i : ι) : i ^ 0 = 1 := by
+lemma spacePow_zero (i : ι) : i ^ 0 = 1 := by
   rfl
 
 @[simp]
-theorem spacePow_one (i : ι) : i ^ 1 = i := by
+lemma spacePow_one (i : ι) : i ^ 1 = i := by
   simp
 
-theorem spacePow_succ (i : ι) (n : ℕ) : i ^ (n + 1) = (i ^ n) * i := by
+lemma spacePow_succ (i : ι) (n : ℕ) : i ^ (n + 1) = (i ^ n) * i := by
   rfl
 
-theorem spacePow_add (m n : ℕ) :
+lemma spacePow_add (m n : ℕ) :
     i ^ (m + n) = (i ^ m) * (i ^ n) := by
   induction n
   · simp
   · rename_i n ih
     rw [spacePow_succ, ← mul_assoc, ← add_assoc, ← ih, spacePow_succ]
 
-theorem spacePow_mul (m n : ℕ) :
+lemma spacePow_mul (m n : ℕ) :
     i ^ (m * n) = (i ^ m) ^ n :=
   pow_mul i m n
 
@@ -223,20 +219,20 @@ noncomputable def statePow (ρ : MState (H i)) (n : ℕ) : MState (H (i ^ n)) :=
 scoped notation ρ " ⊗ᵣ^[" n "]" => statePow ρ n
 
 @[simp]
-theorem statePow_zero (ρ : MState (H i)) : ρ ⊗ᵣ^[0] = default :=
+lemma statePow_zero (ρ : MState (H i)) : ρ ⊗ᵣ^[0] = default :=
   rfl
 
 @[simp]
-theorem statePow_one (ρ : MState (H i)) : ρ ⊗ᵣ^[1] ≍ ρ := by
+lemma statePow_one (ρ : MState (H i)) : ρ ⊗ᵣ^[1] ≍ ρ := by
   rw [← eq_cast_iff_heq]; swap
   · rw [spacePow_one]
   · rw [eq_cast_iff_heq, statePow]
     exact default_prod ρ
 
-theorem statePow_succ (ρ : MState (H i)) (n : ℕ) : ρ ⊗ᵣ^[n + 1] = ρ ⊗ᵣ^[n] ⊗ᵣ ρ := by
+lemma statePow_succ (ρ : MState (H i)) (n : ℕ) : ρ ⊗ᵣ^[n + 1] = ρ ⊗ᵣ^[n] ⊗ᵣ ρ := by
   rfl
 
-theorem statePow_add (ρ : MState (H i)) (m n : ℕ) : ρ ⊗ᵣ^[m + n] ≍ ρ ⊗ᵣ^[m] ⊗ᵣ ρ ⊗ᵣ^[n] := by
+lemma statePow_add (ρ : MState (H i)) (m n : ℕ) : ρ ⊗ᵣ^[m + n] ≍ ρ ⊗ᵣ^[m] ⊗ᵣ ρ ⊗ᵣ^[n] := by
   rw [← eq_cast_iff_heq]; swap
   · rw [spacePow_add]
   rw [eq_cast_iff_heq]
@@ -249,7 +245,7 @@ theorem statePow_add (ρ : MState (H i)) (m n : ℕ) : ρ ⊗ᵣ^[m + n] ≍ ρ 
     congr
     apply spacePow_add
 
-theorem statePow_add_relabel (ρ : MState (H i)) (m n : ℕ) :
+lemma statePow_add_relabel (ρ : MState (H i)) (m n : ℕ) :
     ρ ⊗ᵣ^[m + n] = (ρ ⊗ᵣ^[m] ⊗ᵣ ρ ⊗ᵣ^[n]).relabel (Equiv.cast (by congr; exact pow_add i m n)) := by
   have h := statePow_add ρ m n
   rw [heq_iff_exists_eq_cast] at h
@@ -257,7 +253,7 @@ theorem statePow_add_relabel (ρ : MState (H i)) (m n : ℕ) :
   rw [h₂, MState.relabel_cast]
 
 set_option backward.isDefEq.respectTransparency false in
-theorem statePow_mul (ρ : MState (H i)) (m n : ℕ) : ρ ⊗ᵣ^[m * n] ≍ (ρ ⊗ᵣ^[m]) ⊗ᵣ^[n] := by
+lemma statePow_mul (ρ : MState (H i)) (m n : ℕ) : ρ ⊗ᵣ^[m * n] ≍ (ρ ⊗ᵣ^[m]) ⊗ᵣ^[n] := by
   rw [← eq_cast_iff_heq]; swap
   · rw [spacePow_mul]
   rw [eq_cast_iff_heq]
@@ -282,7 +278,7 @@ theorem statePow_mul (ρ : MState (H i)) (m n : ℕ) : ρ ⊗ᵣ^[m * n] ≍ (ρ
       · rw [pow_mul]
       · rw [mul_one]
 
-theorem statePow_mul_relabel {i : ι} (ρ : MState (H i)) (m n : ℕ) :
+lemma statePow_mul_relabel {i : ι} (ρ : MState (H i)) (m n : ℕ) :
    ρ ⊗ᵣ^[m * n] = (ρ ⊗ᵣ^[m]) ⊗ᵣ^[n].relabel (Equiv.cast (congrArg H (pow_mul i m n))) := by
   have h := statePow_mul ρ m n
   rw [heq_iff_exists_eq_cast] at h
@@ -290,21 +286,21 @@ theorem statePow_mul_relabel {i : ι} (ρ : MState (H i)) (m n : ℕ) :
   rw [h₂, MState.relabel_cast]
 
 open ComplexOrder in
-theorem PosDef.npow {ρ : MState (H i)} (hρ : ρ.m.PosDef) (n : ℕ)
+lemma PosDef.npow {ρ : MState (H i)} (hρ : ρ.m.PosDef) (n : ℕ)
     : (ρ ⊗ᵣ^[n]).m.PosDef := by
   induction n
   · rw [statePow_zero, spacePow_zero]
     exact MState.posDef_of_unique default
   · apply ResourcePretheory.PosDef.prod ‹_› hρ
 
-theorem statePow_rw {n m : ℕ} (h : n = m) (ρ : MState (H i)) :
+lemma statePow_rw {n m : ℕ} (h : n = m) (ρ : MState (H i)) :
     ρ ⊗ᵣ^[n] = (ρ ⊗ᵣ^[m]).relabel (Equiv.cast (by congr)) := by
   subst n
   simp
 
 set_option backward.isDefEq.respectTransparency false in
 @[simp]
-theorem qRelEntropy_statePow (ρ σ : MState (H i)) (n : ℕ) :
+lemma qRelEntropy_statePow (ρ σ : MState (H i)) (n : ℕ) :
     𝐃(ρ ⊗ᵣ^[n] ‖ σ  ⊗ᵣ^[n]) = n * 𝐃(ρ‖σ) := by
   induction n
   · simp
@@ -312,7 +308,7 @@ theorem qRelEntropy_statePow (ρ σ : MState (H i)) (n : ℕ) :
     rw [statePow_succ, statePow_succ, qRelEntropy_prodRelabel]
     simp [ih, add_mul]
 
-theorem sInf_spectrum_rprod {j : ι} (ρ : MState (H i)) (σ : MState (H j)) :
+lemma sInf_spectrum_rprod {j : ι} (ρ : MState (H i)) (σ : MState (H j)) :
     sInf (spectrum ℝ (ρ ⊗ᵣ σ).m) = sInf (spectrum ℝ ρ.m) * sInf (spectrum ℝ σ.m) := by
   rw [← MState.sInf_spectrum_prod, prodRelabel, MState.spectrum_relabel]
 
@@ -332,7 +328,7 @@ lemma sInf_spectrum_spacePow (σ : MState (H i)) (n : ℕ) :
 
 set_option backward.isDefEq.respectTransparency false in
 @[simp]
-theorem sandwichedRelRentropy_statePow {α : ℝ} (ρ σ : MState (H i)) (n : ℕ) :
+lemma sandwichedRelRentropy_statePow {α : ℝ} (ρ σ : MState (H i)) (n : ℕ) :
     D̃_ α(ρ ⊗ᵣ^[n] ‖ σ ⊗ᵣ^[n]) = n * D̃_ α(ρ‖σ) := by
   induction n
   · rw [statePow_zero, statePow_zero, spacePow_zero]
@@ -359,9 +355,9 @@ class FreeStateTheory (ι : Type*) extends ResourcePretheory ι where
   /-- The set F(H) of free states is convex (more precisely, their matrices are) -/
   free_convex : Convex ℝ (MState.M '' (@IsFree i))
   /-- The set of free states is closed under tensor product -/
-  free_prod {ρ₁ : MState (H i)} {ρ₂ : MState (H j)} (h₁ : IsFree ρ₁) (h₂ : IsFree ρ₂) : IsFree (ρ₁ ⊗ᵣ ρ₂)
+  free_prod {ρ₁ : MState (H i)} {ρ₂ : MState (H j)} (h₁ : ρ₁ ∈ IsFree) (h₂ : ρ₂ ∈ IsFree) : (ρ₁ ⊗ᵣ ρ₂) ∈ IsFree
   /-- The set F(H) of free states contains a full-rank state `ρfull`, equivalently `ρfull` is positive definite. -/
-  free_fullRank (i : ι) : open ComplexOrder in ∃ (ρ : MState (H i)), ρ.m.PosDef ∧ IsFree ρ
+  free_fullRank (i : ι) : open ComplexOrder in ∃ (ρ : MState (H i)), ρ.m.PosDef ∧ ρ ∈ IsFree
 
 namespace FreeStateTheory
 
@@ -370,7 +366,7 @@ variable {ι : Type*} [FreeStateTheory ι] {i : ι}
 noncomputable instance Inhabited_IsFree : Inhabited (IsFree (i := i)) :=
   ⟨⟨(free_fullRank i).choose, (free_fullRank i).choose_spec.right⟩⟩
 
-theorem IsFree.of_unique [Unique (H i)] (ρ : MState (H i)) : ρ ∈ IsFree := by
+lemma IsFree.of_unique [Unique (H i)] (ρ : MState (H i)) : ρ ∈ IsFree := by
   obtain ⟨σ, h₁, h₂⟩ := free_fullRank i
   convert! h₂
   apply Subsingleton.allEq
@@ -382,8 +378,8 @@ theorem IsCompact_IsFree : IsCompact (IsFree (i := i)) :=
 --Also this needs to be generalized to other convex sets. I think it should work for any
 --(well-behaved?) Mixable instance, it certainly works for any `Convex` set (of which `IsFree`
 -- is one, the only relevant property here is `free_convex`.
-theorem IsFree.mix {ι : Type*} [FreeStateTheory ι] {i : ι} {σ₁ σ₂ : MState (H i)}
-    (hσ₁ : IsFree σ₁) (hσ₂ : IsFree σ₂) (p : Prob) : IsFree (p [σ₁ ↔ σ₂]) := by
+lemma IsFree.mix {ι : Type*} [FreeStateTheory ι] {i : ι} {σ₁ σ₂ : MState (H i)}
+    (hσ₁ : σ₁ ∈ IsFree) (hσ₂ : σ₂ ∈ IsFree) (p : Prob) : (p [σ₁ ↔ σ₂]) ∈ IsFree := by
   obtain ⟨m, hm₁, hm₂⟩ := free_convex (i := i) ⟨σ₁, hσ₁, rfl⟩ ⟨σ₂, hσ₂, rfl⟩ p.zero_le (1 - p).zero_le (by simp)
   simp [Mixable.mix, Mixable.mix_ab, MState.instMixable]
   simp at hm₂
@@ -403,8 +399,8 @@ namespace UnitalFreeStateTheory
 
 variable {ι : Type*} [UnitalFreeStateTheory ι] {i : ι}
 
-theorem _root_.FreeStateTheory.IsFree.npow {i : ι} {ρ : MState (H i)}
-    (hρ : IsFree ρ) (n : ℕ) : IsFree (ρ ⊗ᵣ^[n]) := by
+lemma _root_.FreeStateTheory.IsFree.npow {i : ι} {ρ : MState (H i)}
+    (hρ : ρ ∈ IsFree) (n : ℕ) : (ρ ⊗ᵣ^[n]) ∈ IsFree := by
   induction n
   · rw [statePow_zero, spacePow_zero]
     apply IsFree.of_unique
@@ -412,7 +408,7 @@ theorem _root_.FreeStateTheory.IsFree.npow {i : ι} {ρ : MState (H i)}
     exact FreeStateTheory.free_prod ‹_› hρ
 
 @[simp]
-theorem relabel_cast_isFree {i j : ι} (ρ : MState (H i)) (h : j = i) {h' : H j = H i}:
+lemma relabel_cast_isFree {i j : ι} (ρ : MState (H i)) (h : j = i) {h' : H j = H i}:
     ρ.relabel (Equiv.cast h') ∈ IsFree ↔ ρ ∈ IsFree := by
   subst h
   simp
@@ -441,7 +437,7 @@ noncomputable def RelativeEntResource : MState (H i) → ℝ≥0 :=
 scoped notation "𝑅ᵣ" => RelativeEntResource
 
 set_option backward.isDefEq.respectTransparency false in
-theorem exists_isFree_relativeEntResource (ρ : MState (H i)) :
+lemma exists_isFree_relativeEntResource (ρ : MState (H i)) :
     ∃ σ ∈ IsFree, 𝐃(ρ‖σ) = 𝑅ᵣ ρ := by
   obtain ⟨σ, hσ₁, hσ₂⟩ := IsCompact_IsFree.exists_isMinOn_lowerSemicontinuousOn
     (s := IsFree (i := i)) (f := fun σ ↦ 𝐃(ρ‖σ))
@@ -450,7 +446,8 @@ theorem exists_isFree_relativeEntResource (ρ : MState (H i)) :
   rw [RelativeEntResource, ← hσ₂.iInf_eq hσ₁, ENNReal.ofNNReal, WithTop.coe_untop, iInf_subtype']
 
 set_option backward.isDefEq.respectTransparency false in
-theorem RelativeEntResource.Subadditive (ρ : MState (H i)) : Subadditive fun n ↦ 𝑅ᵣ (ρ ⊗ᵣ^[n]) := by
+lemma RelativeEntResource.Subadditive (ρ : MState (H i)) :
+    Subadditive fun n ↦ (𝑅ᵣ (ρ ⊗ᵣ^[n]) : ℝ) := by
   intro m n
   obtain ⟨σ₂, hσ₂f, hσ₂d⟩ := exists_isFree_relativeEntResource (ρ ⊗ᵣ^[m])
   obtain ⟨σ₃, hσ₃f, hσ₃d⟩ := exists_isFree_relativeEntResource (ρ ⊗ᵣ^[n])
@@ -506,7 +503,7 @@ RG is `GlobalRobustness` and `ρ_n` is any sequence of free states. Equivalently
 over operations and states) on the left-hand side inside the limit.
 -/
 def IsAsymptoticallyNongenerating (dI dO : ι) (f : (n : ℕ) → CPTPMap (H (dI⊗^H[n])) (H (dO⊗^H[n]))) : Prop :=
-  ∀ (ρs : (n : ℕ) → MState (H (dI⊗^H[n]))), (∀ n, IsFree (ρs n)) →
+  ∀ (ρs : (n : ℕ) → MState (H (dI⊗^H[n]))), (∀ n, ρs n ∈ IsFree) →
   Filter.atTop.Tendsto (fun n ↦ GlobalRobustness ((f n) (ρs n))) (𝓝 0)
 
 end UnitalFreeStateTheory

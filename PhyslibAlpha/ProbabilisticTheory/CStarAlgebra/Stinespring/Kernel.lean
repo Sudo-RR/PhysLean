@@ -10,11 +10,14 @@ public import Mathlib.Analysis.CStarAlgebra.CStarMatrix
 public import Mathlib.Analysis.InnerProductSpace.PiL2
 public import Mathlib.Analysis.InnerProductSpace.Positive
 public import Mathlib.Analysis.InnerProductSpace.StarOrder
+public import Mathlib.Analysis.CStarAlgebra.ContinuousLinearMap
 public import Mathlib.Analysis.CStarAlgebra.SpecialFunctions.PosPart
 
 /-!
 
 # Completely positive maps as positive kernels
+
+Completely positive maps give positive operator-valued kernels; Stinespring witnesses.
 
 ## i. Overview
 
@@ -36,9 +39,15 @@ operator `V : H → K` with `J a = V⋆ π(a) V`.
 - B. The CP-map positivity kernel
 - C. Stinespring witnesses
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 open scoped ComplexOrder CStarAlgebra
 open ContinuousLinearMap
@@ -298,3 +307,7 @@ lemma map_eq_apply (a : A) :
   W.map_eq a
 
 end StinespringWitness
+
+end
+
+end ProbabilisticTheory

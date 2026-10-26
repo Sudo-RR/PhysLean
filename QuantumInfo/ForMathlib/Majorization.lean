@@ -5,8 +5,9 @@ Authors: Alex Meiburg
 -/
 module
 
-public import Mathlib
+public import Mathlib.Data.Set.PowersetCard
 public import QuantumInfo.ForMathlib.Matrix
+public import Mathlib.Tactic.Cases
 
 /-! # Majorization and weak log-majorization
 
@@ -83,7 +84,7 @@ lemma sum_singularValues_rpow_eq_sum_sorted (A : Matrix d d ℂ) (p : ℝ) :
   have h_sum_eq : Multiset.sum (Multiset.map (fun x => x ^ p) (Multiset.map (fun i => singularValues A i) Finset.univ.val)) = Multiset.sum (Multiset.map (fun x => x ^ p) (Multiset.map (fun i => singularValuesSorted A i) Finset.univ.val)) := by
     rw [h_perm]
   convert h_sum_eq using 1
-  · erw [Multiset.map_map, Finset.sum_eq_multiset_sum]
+  · rw [Multiset.map_map, Finset.sum_eq_multiset_sum]
     rfl
   · simp [Finset.sum]
     rfl

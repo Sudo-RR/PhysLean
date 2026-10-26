@@ -15,6 +15,8 @@ public import Mathlib.MeasureTheory.VectorMeasure.WithDensityVec
 
 # The spectral measure of the Cayley transform
 
+The spectral measure of the Cayley transform, pulled back to a spectral measure on ℝ.
+
 ## i. Overview
 
 The Cayley transform `U` of a self-adjoint operator `T` is a unitary. The continuous functional
@@ -34,11 +36,17 @@ measure on `ℝ`, the candidate spectral measure of `T`.
 - A. Spectral data from the functional calculus
   - A.1. A bounded extension of the Cayley difference multiplier
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
 
 noncomputable section
+
+namespace ProbabilisticTheory
 
 open MeasureTheory Set Topology
 open scoped ComplexOrder CStarAlgebra InnerProductSpace
@@ -500,7 +508,6 @@ lemma cayleyBoundedOperator_one_eigenspace_eq_bot
       rw [hy']
       simp
 
-
 lemma cayleyBoundedSpectralMeasure_id_integrable
     (T : H →ₗ.[ℂ] H) (hT : IsSelfAdjoint T) (x y : H) :
     ((cayleyBoundedSpectralMeasure T hT).scalarMeasure x y).Integrable id := by
@@ -838,5 +845,7 @@ lemma cayleyMap_cayleyRealSpectralMeasure
   exact (cayleyBoundedUnitarySpectralData T hT).cayleyMap_realSpectralMeasure
 
 end QuantumMechanics
+
+end ProbabilisticTheory
 
 end

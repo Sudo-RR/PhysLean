@@ -7,11 +7,11 @@ module
 
 public import Physlib.Relativity.MinkowskiMatrix
 public import Physlib.Meta.TODO.Basic
-public import Mathlib.Analysis.Complex.Basic
 public import Mathlib.Topology.Instances.Matrix
 public import Mathlib.Topology.Algebra.Group.Units
-public import Mathlib.Topology.Maps.Basic
 public import Mathlib.Topology.Algebra.Group.ClosedSubgroup
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.Topology.Algebra.Ring.Real
 /-!
 # The Lorentz Group
 
@@ -448,6 +448,12 @@ lemma toComplex_inv (Λ : LorentzGroup d) : (toComplex Λ)⁻¹ = toComplex Λ�
   refine inv_eq_right_inv ?h
   rw [← toComplex.map_mul, mul_inv_cancel]
   simp
+
+/-- The entries of `toComplex Λ` are real. -/
+@[simp]
+lemma star_toComplex_apply (Λ : LorentzGroup d) (i j : Fin 1 ⊕ Fin d) :
+    star (toComplex Λ i j) = toComplex Λ i j := by
+  simp [toComplex]
 
 @[simp]
 lemma toComplex_mul_minkowskiMatrix_mul_transpose (Λ : LorentzGroup d) :

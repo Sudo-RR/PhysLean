@@ -12,6 +12,8 @@ public import Mathlib.Algebra.DirectSum.Module
 
 # Schur's lemma for covariant channels
 
+Schur's lemma as a hypothesis: equivariant maps and covariant channels are scalar on blocks.
+
 ## i. Overview
 
 If the observables split into invariant blocks `E = ⨁ᵢ Wᵢ` on each of which every equivariant map
@@ -35,9 +37,15 @@ The Schur property of a block is therefore a hypothesis, `IsSchurBlock`.
 - B. The multiplicity-free classification theorem
 - C. Covariant channels
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 /-! ## A. The Schur hypothesis on a single block -/
 
@@ -96,9 +104,11 @@ lemma UnitalPositiveLinearMap.IsCovariant.exists_scalar_of_isSchurBlock
     (hSchur : ∀ i, IsSchurBlock (fun g x => (ρ g).1 x) (W i))
     (hφ_block : ∀ i, ∀ x ∈ W i, φ x ∈ W i) :
     ∃ c : ι → ℝ, ∀ i, ∀ x ∈ W i, φ x = c i • x := by
-  refine _root_.exists_scalar_of_isSchurBlock (fun g x => (ρ g).1 x) W hsum hW_inv hSchur
-    φ.toLinearMap (fun g x => ?_) hφ_block
+  refine ProbabilisticTheory.exists_scalar_of_isSchurBlock (fun g x => (ρ g).1 x) W hsum hW_inv
+    hSchur φ.toLinearMap (fun g x => ?_) hφ_block
   have := DFunLike.congr_fun (hφ g) x
   exact this
 
 end CovariantChannel
+
+end ProbabilisticTheory

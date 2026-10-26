@@ -7,6 +7,7 @@ module
 
 public import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Abs
 public import Mathlib.Analysis.InnerProductSpace.StarOrder
+public import Mathlib.Analysis.CStarAlgebra.ContinuousLinearMap
 public import Mathlib.Analysis.InnerProductSpace.l2Space
 public import Mathlib.Analysis.InnerProductSpace.Trace
 public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
@@ -18,6 +19,8 @@ public import Mathlib.Topology.Algebra.Module.ContinuousLinearMap.Idempotent
 /-!
 
 # Trace-class operators
+
+Defines trace-class operators, their trace norm and trace, and shows basis independence.
 
 ## i. Overview
 
@@ -50,11 +53,17 @@ dimensional.
   - A.1. Basis independence
 - B. Finite multiplicity
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
 
 noncomputable section
+
+namespace ProbabilisticTheory
 
 open scoped ComplexOrder InnerProductSpace
 
@@ -712,5 +721,7 @@ lemma HasFiniteMultiplicity.trace_eq_finrank_range_of_finiteDimensional
         p hp.2.choose_spec.choose).symm
     _ = (Module.finrank ℂ (LinearMap.range p.toLinearMap) : ℂ) :=
       (LinearMap.IsIdempotentElem.isProj_range p.toLinearMap hpIdem).trace
+
+end ProbabilisticTheory
 
 end

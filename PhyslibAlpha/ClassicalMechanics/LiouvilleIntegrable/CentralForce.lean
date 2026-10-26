@@ -5,47 +5,33 @@ Authors: Rithwik Ranganathan
 -/
 module
 
+public import Physlib.Mathematics.ForMathlib.Analytic
 public import PhyslibAlpha.ClassicalMechanics.CentralForce.AngularMomentum
 public import PhyslibAlpha.ClassicalMechanics.LiouvilleIntegrable.Basic
-public import PhyslibAlpha.Mathematics.AnalyticNonvanishing
 /-!
 
 # Central-force systems are Liouville integrable
 
+Independence and involution of the Hamiltonian, squared angular momentum and axial component.
+
 ## i. Overview
 
-A particle in three-dimensional space under a central force has three degrees of freedom and three
-conserved quantities in involution: the Hamiltonian `H`, the squared magnitude `L²` of the angular
-momentum, and its z-component `L_z`. We show that they are functionally independent on the domain
-`CentralForce.integrabilityDomain` of phase space where
+The Hamiltonian `H`, squared angular momentum `L²` and axial component `L_z` are independent
+and in involution on the open dense domain where the radial momentum is non-zero and the
+angular momentum is not parallel to the z-axis. This proves Liouville integrability for every
+central-force system. The domain is sufficient; no maximality claim is made.
 
-- the radial momentum `⟪q, p⟫` is non-zero, and
-- the angular momentum is not parallel to the z-axis, `L_x² + L_y² ≠ 0`.
-
-This domain excludes the centre of force, where `H` is singular, the points where `L²` and `L_z`
-are dependent, and the circular orbits, at which the gradient of `H` is a combination of those of
-`L²` and `L_z`. It also excludes the turning points of the radial motion on every other orbit,
-where the three quantities are still independent, so it is smaller than it needs to be. It is
-open, and it is dense because it is cut out by the non-vanishing of a polynomial in the
-coordinates which is not identically zero, which is all that Liouville integrability requires.
-Hence every central-force system is Liouville integrable.
-
-Independence is shown by pairing a vanishing linear combination `α ∇H + β ∇L² + γ ∇L_z = 0` of the
-phase-space gradients with four tangent vectors. The radial change of momentum `(q, 0)` is seen
-only by `H`, and gives `α ⟪q, p⟫ / m = 0`. The infinitesimal rotations about the x- and y-axes are
-seen only by `L_z`, and give `γ L_y = 0` and `γ L_x = 0`. The scaling `(p, 0)` of the momentum
-then gives `2 β L² = 0`.
+Independence follows by pairing a vanishing combination of gradients with radial changes of
+momentum, infinitesimal rotations and momentum scaling, successively eliminating its coefficients.
 
 ## ii. Key results
 
-- `CentralForce.integrabilityDomain` : the domain of phase space on which central-force systems
-  are shown to be Liouville integrable.
-- `CentralForce.isOpen_integrabilityDomain`, `CentralForce.dense_integrabilityDomain` : it is open
-  and dense.
-- `CentralForce.conservedQuantities` : the conserved quantities `H`, `L²` and `L_z`.
-- `CentralForce.linearIndependent_conservedQuantities` : on the domain, they are functionally
-  independent.
-- `CentralForce.liouvilleIntegrable` : every central-force system is Liouville integrable.
+- `CentralForce.integrabilityDomain` : the chosen domain in phase space.
+- `CentralForce.isOpen_integrabilityDomain`, `CentralForce.dense_integrabilityDomain` : it is
+  open and dense.
+- `CentralForce.snd_ne_zero_of_mem_integrabilityDomain` : it excludes the centre of force.
+- `CentralForce.linearIndependent_conservedQuantities` : the observables are independent there.
+- `CentralForce.liouvilleIntegrable` : the resulting Liouville-integrability construction.
 
 ## iii. Table of contents
 
@@ -62,9 +48,7 @@ then gives `2 β L² = 0`.
 
 @[expose] public section
 
-namespace ClassicalMechanics
-
-namespace CentralForce
+namespace ClassicalMechanics.CentralForce
 
 open InnerProductSpace
 open scoped ContDiff
@@ -77,14 +61,12 @@ attribute [local fun_prop] analyticAt_fst analyticAt_snd
 
 -/
 
-/-- The domain of phase space on which central-force systems are shown to be Liouville integrable:
-the points where the radial momentum `⟪q, p⟫` is non-zero and the angular momentum is not parallel
-to the z-axis. -/
+/-- The phase-space domain where the radial momentum is non-zero and the angular momentum
+is not parallel to the z-axis, used to establish central-force integrability. -/
 def integrabilityDomain : Set (EuclideanSpace ℝ (Fin 3) × EuclideanSpace ℝ (Fin 3)) :=
   {x | ⟪x.2, x.1⟫_ℝ ≠ 0 ∧ angularMomentum x.1 x.2 0 ^ 2 + angularMomentum x.1 x.2 1 ^ 2 ≠ 0}
 
-/-- The domain of integrability is the set where a polynomial in the coordinates of phase space
-does not vanish. -/
+/-- The domain is the non-vanishing set of a polynomial in the phase-space coordinates. -/
 lemma integrabilityDomain_eq : integrabilityDomain =
     {x | (x.1 0 * x.2 0 + x.1 1 * x.2 1 + x.1 2 * x.2 2) *
       ((x.2 1 * x.1 2 - x.2 2 * x.1 1) ^ 2 + (x.2 2 * x.1 0 - x.2 0 * x.1 2) ^ 2) ≠ 0} := by
@@ -93,19 +75,19 @@ lemma integrabilityDomain_eq : integrabilityDomain =
     angularMomentum_apply_one, PiLp.inner_apply, Fin.sum_univ_three, RCLike.inner_apply,
     conj_trivial]
 
-/-- The domain of integrability is open. -/
+/-- The chosen central-force domain is open. -/
 lemma isOpen_integrabilityDomain : IsOpen integrabilityDomain := by
   rw [integrabilityDomain_eq]
   exact isOpen_ne_fun (by fun_prop) continuous_const
 
-/-- The domain of integrability is dense. -/
+/-- The chosen central-force domain is dense. -/
 lemma dense_integrabilityDomain : Dense integrabilityDomain := by
   rw [integrabilityDomain_eq]
   refine AnalyticOnNhd.dense_setOf_ne_zero (𝕜 := ℝ) (fun z _ => by fun_prop)
     (x₀ := (!₂[1, 0, 1], !₂[1, 0, 0])) ?_
   norm_num [Matrix.cons_val_two]
 
-/-- The domain of integrability excludes the centre of force. -/
+/-- The chosen domain excludes the centre of force. -/
 lemma snd_ne_zero_of_mem_integrabilityDomain
     {x : EuclideanSpace ℝ (Fin 3) × EuclideanSpace ℝ (Fin 3)} (hx : x ∈ integrabilityDomain) :
     x.2 ≠ 0 := by
@@ -260,6 +242,4 @@ noncomputable def liouvilleIntegrable :
     S.poissonBracket_conservedQuantities i j x.1 (snd_ne_zero_of_mem_integrabilityDomain hx)
   independent _ hx := S.linearIndependent_conservedQuantities hx
 
-end CentralForce
-
-end ClassicalMechanics
+end ClassicalMechanics.CentralForce

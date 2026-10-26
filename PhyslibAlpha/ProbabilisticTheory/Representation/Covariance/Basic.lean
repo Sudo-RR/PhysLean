@@ -15,6 +15,8 @@ public import Mathlib.MeasureTheory.MeasurableSpace.Basic
 
 # Covariant measurements and channels
 
+Symmetries acting on effects, measurable actions on outcomes, covariant measures and channels.
+
 ## i. Overview
 
 A measurement is covariant under a symmetry group when transforming the outcome transforms the
@@ -32,9 +34,15 @@ bijections, and a channel is covariant when it intertwines two symmetry actions.
 
 - A. Covariant channels: the general intertwiner picture
 
+## iv. References
+
+* None.
+
 -/
 
 @[expose] public section
+
+namespace ProbabilisticTheory
 
 open scoped Pointwise
 
@@ -134,3 +142,5 @@ lemma UnitalPositiveLinearMap.IsCovariant.comp {ρ₁ : G →* Symmetry E₁} {�
   simpa only [UnitalPositiveLinearMap.comp_apply] using (congrArg ψ hφx).trans hψx
 
 end CovariantChannel
+
+end ProbabilisticTheory
